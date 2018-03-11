@@ -1,10 +1,10 @@
 package fr.feasil.svgtomap;
 
-public class InscapeMapCoord {
+public class InkscapeMapCoord {
 	private int x;
 	private int y;
 	
-	public InscapeMapCoord(int x, int y) {
+	public InkscapeMapCoord(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}

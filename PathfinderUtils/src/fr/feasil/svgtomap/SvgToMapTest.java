@@ -14,13 +14,13 @@ public class SvgToMapTest {
 	{
 		
 		
-		List<InscapeMapElement> listeElements = readCoords();
+		List<InkscapeMapElement> listeElements = readCoords();
 		readDesc(listeElements);
 		
 		
 		
 		
-		for ( InscapeMapElement e : listeElements )
+		for ( InkscapeMapElement e : listeElements )
 		{
 			System.out.println(e.toHtml());
 //			System.out.println(e.getShape() + "  " + e.getId());
@@ -42,7 +42,7 @@ public class SvgToMapTest {
 	
 	
 	
-	private static void readDesc(List<InscapeMapElement> listeElements) {
+	private static void readDesc(List<InkscapeMapElement> listeElements) {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader("in/inkscape/descs.txt"));
@@ -51,7 +51,7 @@ public class SvgToMapTest {
 			String id, style;
 			StringBuilder sbDesc = null;
 			String title;
-			InscapeMapElement element = null;
+			InkscapeMapElement element = null;
 			
 			while ((line = br.readLine()) != null) {
 				if ( line.length() > 0 )
@@ -108,9 +108,9 @@ public class SvgToMapTest {
 	}
 	
 	
-	private static InscapeMapElement getElement(List<InscapeMapElement> listeElements, String id) 
+	private static InkscapeMapElement getElement(List<InkscapeMapElement> listeElements, String id) 
 	{
-		for ( InscapeMapElement e : listeElements )
+		for ( InkscapeMapElement e : listeElements )
 			if ( e.getId().equals(id) )
 				return e;
 		return null;
@@ -121,8 +121,8 @@ public class SvgToMapTest {
 	
 	
 	
-	private static List<InscapeMapElement> readCoords() {
-		List<InscapeMapElement> listeElements = new ArrayList<>();
+	private static List<InkscapeMapElement> readCoords() {
+		List<InkscapeMapElement> listeElements = new ArrayList<>();
 		
 		BufferedReader br = null;
 		try {
@@ -130,13 +130,13 @@ public class SvgToMapTest {
 			
 			String line;
 			String[] tab, tab2;
-			InscapeMapElement element;
+			InkscapeMapElement element;
 			
 			while ((line = br.readLine()) != null) {
 				if ( line.length() > 0 && !line.startsWith("//") )
 				{//polygon;path4563;557,485,553,529,542,530,534,520,517,516,522,483;
 					tab = line.split(";");
-					element = new InscapeMapElement(tab[0], tab[1]);
+					element = new InkscapeMapElement(tab[0], tab[1]);
 					listeElements.add(element);
 					tab2 = tab[2].split(",");
 					int x = -1;
@@ -145,7 +145,7 @@ public class SvgToMapTest {
 						if ( i%2 == 0 )
 							x = Integer.parseInt(tab2[i]);
 						else
-							element.getCoordonnees().add(new InscapeMapCoord(x, Integer.parseInt(tab2[i]) + DELTA_Y));
+							element.getCoordonnees().add(new InkscapeMapCoord(x, Integer.parseInt(tab2[i]) + DELTA_Y));
 					}
 				}
 			}

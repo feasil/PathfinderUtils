@@ -3,16 +3,16 @@ package fr.feasil.svgtomap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InscapeMapElement {
+public class InkscapeMapElement {
 	private String shape;
 	private String id;
-	private List<InscapeMapCoord> coordonnees;
+	private List<InkscapeMapCoord> coordonnees;
 	
 	private String title;
 	private String style;
 	private String description;
 	
-	public InscapeMapElement(String shape, String id) 
+	public InkscapeMapElement(String shape, String id) 
 	{
 		this.shape = shape;
 		this.id = id;
@@ -26,7 +26,7 @@ public class InscapeMapElement {
 	public String getId() {
 		return id;
 	}
-	public List<InscapeMapCoord> getCoordonnees() {
+	public List<InkscapeMapCoord> getCoordonnees() {
 		return coordonnees;
 	}
 	
