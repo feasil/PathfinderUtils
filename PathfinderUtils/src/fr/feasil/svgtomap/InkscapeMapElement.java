@@ -96,8 +96,9 @@ public class InkscapeMapElement {
 		sb.append(Utils.escape(getDescription()));
 		sb.append("', backdrop: true, size: 'large'})\" \ntitle=\"");
 		sb.append(Utils.escape(getTitle()));
-		sb.append("\" data-followcursor=\"true\" data-duration=\"0\" data-theme=\"light\" data-size=\"small\"  data-arrow=\"true\" data-position=\"bottom\"");
-		sb.append(" style=\"cursor: pointer;\" ");
+		sb.append("\" ");
+		//sb.append("data-followcursor=\"true\" data-duration=\"0\" data-theme=\"light\" data-size=\"small\"  data-arrow=\"true\" data-position=\"bottom\" ");
+		//sb.append("style=\"cursor: pointer;\" ");
 		//sb.append("\ndata-maphilight='{\"fillColor\":\"" + getColor() + "\", \"shadowColor\":\"" + getColor() + "\"}'");
 		sb.append("\n/>");
 		
