@@ -233,7 +233,7 @@ monte sur scène pour livrer ses observations sur la
 situation politique à Magnimar.</desc>
 <title id="title4692">Taverne de La Dent Cassée (18)</title>
 </path>
-<path id="path4600" style="fill:#dcfe1f;fill-opacity:0.57142861;stroke:#000000;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+<path id="path4600" style="fill:#dcff1f;fill-opacity:0.57142861;stroke:#000000;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
 <desc id="desc4751">La maison des Pierres Bleues : ce long bâtiment en
 pierre au sol en pierres bleues polies a été construit
 10 ans après Pointesable. Fondé par un moine errant
@@ -710,7 +710,7 @@ de cause la mer se charge que l'entassement ne soit
 jamais trop élevé.</desc>
 <title id="title4861">Le bord du dépotoir (6)</title>
 </path>
-<path id="path4980" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+<path id="path4980" style="fill:#ff72ff;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
 <desc id="desc4984">Les odeurs qui émanent de cette boulangerie luttent
 tous les matins, sauf le dimanche, contre le gout
 salée de la mer. Détenue et exploitée par la famille

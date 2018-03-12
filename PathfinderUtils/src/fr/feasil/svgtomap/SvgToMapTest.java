@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SvgToMapTest {
@@ -23,16 +25,31 @@ public class SvgToMapTest {
 		for ( InkscapeMapElement e : listeElements )
 		{
 			System.out.println(e.toHtml());
-//			System.out.println(e.getShape() + "  " + e.getId());
-//			for ( int i = 0 ; i < e.getCoordonnees().size() ; i++ )
-//			{
-//				System.out.print((i==0?"":", ") + e.getCoordonnees().get(i).getX() + "," + e.getCoordonnees().get(i).getY());
-//			}
-//			System.out.println();
-//			System.out.println(e.getShape());
-//			System.out.println(e.getStyle());
-//			System.out.println(e.getTitle());
-//			System.out.println(Utils.escape(e.getDescription()).replace("'", "&#8217;"));
+		}
+		
+		System.out.println();
+		System.out.println();
+		
+		
+		Collections.sort(listeElements, new Comparator<InkscapeMapElement>() {
+			@Override
+			public int compare(InkscapeMapElement i1, InkscapeMapElement i2) {
+				if ( i1.getCategorie() == null && i2.getCategorie() == null )
+					return i1.getTitle().compareTo(i1.getTitle());
+				if ( i1.getCategorie() == null )
+					return -1;
+				if ( i2.getCategorie() == null )
+					return 1;
+				
+				if ( i1.getCategorie().equals(i2.getCategorie()) )
+					return i1.getTitle().compareTo(i1.getTitle());
+				
+				return i1.getCategorie().compareTo(i2.getCategorie());
+			}
+		});
+		for ( InkscapeMapElement e : listeElements )
+		{
+			System.out.println(e.toHtmlLight());
 		}
 	}
 	
@@ -48,7 +65,7 @@ public class SvgToMapTest {
 			br = new BufferedReader(new FileReader("in/inkscape/descs.txt"));
 			
 			String line;
-			String id, style;
+			String id, style, color;
 			StringBuilder sbDesc = null;
 			String title;
 			InkscapeMapElement element = null;
@@ -61,9 +78,12 @@ public class SvgToMapTest {
 //<path id="path4561" style="fill:#dcff1f;fill-opacity:0.57142861;stroke:#000000;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
 						id = line.substring(10, 18);
 						style = line.substring(27, line.length()-2);
+						color = style.substring(style.indexOf("fill:#")+6, style.indexOf("fill:#")+12);
+						
 						element = getElement(listeElements, id);
 						
 						element.setStyle(style);
+						element.setColor(color);
 					}
 					else if ( line.startsWith("<desc") )
 					{//début de desc
@@ -122,7 +142,7 @@ public class SvgToMapTest {
 	
 	
 	private static List<InkscapeMapElement> readCoords() {
-		List<InkscapeMapElement> listeElements = new ArrayList<>();
+		List<InkscapeMapElement> listeElements = new ArrayList<InkscapeMapElement>();
 		
 		BufferedReader br = null;
 		try {
