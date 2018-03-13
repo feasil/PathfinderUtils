@@ -29,7 +29,7 @@ public class SvgToMapTest {
 		System.out.println();
 		System.out.println();
 		
-		System.out.println("<div class=\"blockList\">\n<div class=\"bouton\">\n<span id=\"buttonChangeMap\" class=\"mapButton\">switch map</span>&nbsp;<span id=\"hideShowListes\" class=\"mapButton hideShowButton\">hide</span>\n</div>");
+		System.out.println("<div class=\"blockList\">\n<div class=\"boutons\">\n<span id=\"moveListes\" class=\"mapButton moveButton\">&#8644;</span>&nbsp;<span id=\"hideShowListes\" class=\"mapButton hideShowButton\">&#9651;</span>&nbsp;<span id=\"buttonChangeMap\" class=\"mapButton switchMapButton\">switch map</span>\n</div>");
 		
 		System.out.println();
 		System.out.println();
