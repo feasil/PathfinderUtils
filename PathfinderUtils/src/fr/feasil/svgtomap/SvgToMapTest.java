@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class SvgToMapTest {
@@ -21,36 +20,34 @@ public class SvgToMapTest {
 		
 		
 		
-		
+		System.out.println("<div class=\"blockMap\">\n<img id=\"mapPathfinder\" class=\"map\" src=\"\" data-imageid=\"0\" width=\"853\" height=\"1113\" usemap=\"#world\">\n<map name=\"world\">");
 		for ( InkscapeMapElement e : listeElements )
-		{
 			System.out.println(e.toHtml());
-		}
+		System.out.println("</map>\n</div>");
+		
 		
 		System.out.println();
 		System.out.println();
 		
+		System.out.println("<div class=\"blockList\">\n<div class=\"bouton\">\n<span id=\"buttonChangeMap\" class=\"mapButton\">switch map</span>&nbsp;<span id=\"hideShowListes\" class=\"mapButton hideShowButton\">hide</span>\n</div>");
 		
-		Collections.sort(listeElements, new Comparator<InkscapeMapElement>() {
-			@Override
-			public int compare(InkscapeMapElement i1, InkscapeMapElement i2) {
-				if ( i1.getCategorie() == null && i2.getCategorie() == null )
-					return i1.getTitle().compareTo(i1.getTitle());
-				if ( i1.getCategorie() == null )
-					return -1;
-				if ( i2.getCategorie() == null )
-					return 1;
-				
-				if ( i1.getCategorie().equals(i2.getCategorie()) )
-					return i1.getTitle().compareTo(i1.getTitle());
-				
-				return i1.getCategorie().compareTo(i2.getCategorie());
-			}
-		});
+		System.out.println();
+		System.out.println();
+		
+		Collections.sort(listeElements);
+		System.out.println("<div class=\"listes\">\n<div class=\"liste1\">");
+		boolean beforeTavern = true;
 		for ( InkscapeMapElement e : listeElements )
 		{
+			if ( beforeTavern && e.getCategorie() == Categorie.TAVERNE )
+			{
+				System.out.println("</div><div class=\"liste2\">");
+				beforeTavern = false;
+			}
 			System.out.println(e.toHtmlLight());
 		}
+		System.out.println("</div>\n</div>\n</div>");
+		
 	}
 	
 	

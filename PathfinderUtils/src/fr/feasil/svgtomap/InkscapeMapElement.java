@@ -3,16 +3,18 @@ package fr.feasil.svgtomap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InkscapeMapElement {
+public class InkscapeMapElement implements Comparable<InkscapeMapElement> 
+{
 	private String shape;
 	private String id;
 	private List<InkscapeMapCoord> coordonnees;
 	
 	private String title;
+	private String numero;
 	private String style;
 	private String color;
 	private String description;
-	private String categorie = null;
+	private Categorie categorie = Categorie.INCONNUE;
 	
 	public InkscapeMapElement(String shape, String id) 
 	{
@@ -34,10 +36,14 @@ public class InkscapeMapElement {
 	
 	
 	public void setTitle(String title) {
-		this.title = title;
+		this.title = title.substring(0, title.indexOf(" ("));
+		this.numero = title.substring(title.indexOf(" (") + 2, title.length()-1);
 	}
 	public String getTitle() {
 		return title;
+	}
+	public String getNumero() {
+		return numero;
 	}
 	public void setStyle(String style) {
 		this.style = style;
@@ -48,18 +54,7 @@ public class InkscapeMapElement {
 	public void setColor(String color) {
 		this.color = color;
 		
-		if ( color.equals("dcff1f") )
-			categorie = "spirituel";
-		else if ( color.equals("ff0000") )
-			categorie = "taverne";
-		else if ( color.equals("ff72ff") )
-			categorie = "commerce";
-		else if ( color.equals("2fffff") )
-			categorie = "divers";
-		else if ( color.equals("00fa27") )
-			categorie = "administration";
-		else if ( color.equals("001efb") )
-			categorie = "industrie";
+		categorie = Categorie.getCategorie(color);
 	}
 	public String getColor() {
 		return color;
@@ -71,9 +66,7 @@ public class InkscapeMapElement {
 		return description;
 	}
 	
-	public String getCategorie() {
-		if ( categorie == null )
-			return "/";
+	public Categorie getCategorie() {
 		return categorie;
 	}
 	
@@ -86,21 +79,25 @@ public class InkscapeMapElement {
 		//title="Cool huh?" data-followcursor="true" data-duration="0" data-theme="light" data-size="small" style="cursor: pointer;" 
 		///>
 		sb.append("<area id=\"" + getId() + "\" class=\"area area");
-		sb.append(getCategorie());
+		sb.append(getCategorie().getLibelle());
 		sb.append("\" shape=\"poly\" alt=\"");
 		sb.append(Utils.escape(getTitle()));
 		sb.append("\" coords=\"");
 		for ( int i = 0 ; i < getCoordonnees().size() ; i++ )
 			sb.append((i==0?"":", ") + getCoordonnees().get(i).getX() + "," + getCoordonnees().get(i).getY());
-		sb.append("\" \nonClick=\"bootbox.alert({message: '");
+		sb.append("\" data-message=\"");
 		sb.append(Utils.escape(getDescription()));
-		sb.append("', backdrop: true, size: 'large'})\" \ntitle=\"");
+		sb.append("\" data-titre=\"");
 		sb.append(Utils.escape(getTitle()));
-		sb.append("\" ");
+		sb.append("\" data-numero=\"");
+		sb.append(getNumero());
+		sb.append("\" title=\"");
+		sb.append(getNumero()); sb.append(" - <b>"); sb.append(Utils.escape(getTitle())); 
+		sb.append("</b>\" ");
 		//sb.append("data-followcursor=\"true\" data-duration=\"0\" data-theme=\"light\" data-size=\"small\"  data-arrow=\"true\" data-position=\"bottom\" ");
 		//sb.append("style=\"cursor: pointer;\" ");
 		//sb.append("\ndata-maphilight='{\"fillColor\":\"" + getColor() + "\", \"shadowColor\":\"" + getColor() + "\"}'");
-		sb.append("\n/>");
+		sb.append("/>");
 		
 		return sb.toString();
 	}
@@ -111,26 +108,41 @@ public class InkscapeMapElement {
 		//<a class="hilightMult" value=".commerce" style="background-color:#dcff1f" ><b>C</b></a>
 		//<a class="hilightlink" value="#aaaa1" style="cursor: pointer;" href="#">cathédrale</a>
 		sb.append("<span class=\"hilightMult categ");
-		sb.append(getCategorie());
-		sb.append("\" data-arearef=\".");
-		sb.append(getCategorie());
+		sb.append(getCategorie().getLibelle());
+		sb.append("\" data-categorie=\"");
+		sb.append(getCategorie().getLibelle());
 		//sb.append("\" style=\"background-color:#");
 		//sb.append(getColor());
 		//sb.append("; width:20px; float:left; text-align:center; font-weight:bold;\">");
 		sb.append("\">");
-		sb.append(getCategorie().substring(0, 1).toUpperCase());
+		sb.append(getCategorie().getSymbole());
 		sb.append("</span>&nbsp;");
 		
 		sb.append("<a class=\"hilightlink ");
-		sb.append(getCategorie());
-		sb.append("\" data-arearef=\"#");
+		sb.append(getCategorie().getLibelle());
+		sb.append("\" data-areaid=\"");
 		sb.append(getId());
 //		sb.append("\" data-areacolor=\"#");//style="background-color:#ff72ff"
 //		sb.append(getColor());
 		sb.append("\" href=\"#\">");//style=\"cursor: pointer;\" style=\"clear: right;\" 
-		sb.append(Utils.escape(getTitle()));
+		sb.append(Utils.escape(getTitle())); sb.append(" ("); sb.append(getNumero()); sb.append(")");
 		sb.append("</a><br/>");
 		
 		return sb.toString();
+	}
+	
+	
+	
+
+	@Override
+	public int compareTo(InkscapeMapElement i2) 
+	{
+		if ( i2 == null )
+			return 1;
+		
+		if ( getCategorie().getOrdre() == i2.getCategorie().getOrdre() )
+			return getTitle().compareTo(i2.getTitle());
+		
+		return (getCategorie().getOrdre() - i2.getCategorie().getOrdre());
 	}
 }
