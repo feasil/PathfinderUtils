@@ -20,7 +20,7 @@ public class SvgToMapTest {
 		
 		
 		
-		System.out.println("<div class=\"blockMap\">\n<img id=\"mapPathfinder\" class=\"map\" src=\"\" data-imageid=\"0\" width=\"853\" height=\"1113\" usemap=\"#world\">\n<map name=\"world\">");
+		System.out.println("<div class=\"blockMap\">\n<img id=\"mapPathfinder\" class=\"map\" src=\"Pointesable.jpg\" data-imageid=\"1\" width=\"853\" height=\"1113\" usemap=\"#world\">\n<map name=\"world\">");
 		for ( InkscapeMapElement e : listeElements )
 			System.out.println(e.toHtml());
 		System.out.println("</map>\n</div>");
@@ -29,7 +29,7 @@ public class SvgToMapTest {
 		System.out.println();
 		System.out.println();
 		
-		System.out.println("<div class=\"blockList\">\n<div class=\"boutons\">\n<span id=\"moveListes\" class=\"mapButton moveButton\">&#8644;</span>&nbsp;<span id=\"hideShowListes\" class=\"mapButton hideShowButton\">&#9651;</span>&nbsp;<span id=\"buttonChangeMap\" class=\"mapButton switchMapButton\">switch map</span>\n</div>");
+		System.out.println("<div class=\"blockList\">\n<div class=\"boutons\">\n<span id=\"moveListes\" class=\"mapButton mapButtonV2 moveButton\">&#8644;</span>&nbsp;<span id=\"hideShowListes\" class=\"mapButton mapButtonV2 hideShowButton\">&#9651;</span>&nbsp;<span id=\"buttonChangeMap\" class=\"mapButton mapButtonV2 switchMapButton\">switch map</span>\n</div>");
 		
 		System.out.println();
 		System.out.println();
