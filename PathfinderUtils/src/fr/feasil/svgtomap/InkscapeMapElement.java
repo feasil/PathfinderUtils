@@ -35,6 +35,10 @@ public class InkscapeMapElement implements Comparable<InkscapeMapElement>
 	}
 	
 	
+	public String getPathId() {
+		return "path" + numero;
+	}
+	
 	public void setTitle(String title) {
 		this.title = title.substring(0, title.indexOf(" ("));
 		this.numero = title.substring(title.indexOf(" (") + 2, title.length()-1);
@@ -71,15 +75,15 @@ public class InkscapeMapElement implements Comparable<InkscapeMapElement>
 	}
 	
 	
-	public String toHtml() 
+	public String toAreaMap1() 
 	{
 		StringBuilder sb = new StringBuilder();
 		//<area class="area" shape="poly" alt="15" coords="458,414, 446,427, 428,406, 443,393" 
 		//onClick="bootbox.alert({message: 'Le plus grand et le plus r&#233;cent ... titre personnel.', backdrop: true, size: 'large'})" 
 		//title="Cool huh?" data-followcursor="true" data-duration="0" data-theme="light" data-size="small" style="cursor: pointer;" 
 		///>
-		sb.append("<area id=\"" + getId() + "\" class=\"area area");
-		sb.append(getCategorie().getLibelle());
+		sb.append("<area id=\"" + getPathId() + "\" class=\"area");
+//		sb.append(getCategorie().getLibelle());
 		sb.append("\" shape=\"poly\" alt=\"");
 		sb.append(Utils.escape(getTitle()));
 		sb.append("\" coords=\"");
@@ -94,17 +98,37 @@ public class InkscapeMapElement implements Comparable<InkscapeMapElement>
 		sb.append("\" title=\"");
 		sb.append(getNumero()); sb.append(" - <b>"); sb.append(Utils.escape(getTitle())); 
 		sb.append("</b>\" ");
+		sb.append("data-categorie=\"");
+		sb.append(getCategorie().getLibelle());
+		sb.append("\" ");
 		//sb.append("data-followcursor=\"true\" data-duration=\"0\" data-theme=\"light\" data-size=\"small\"  data-arrow=\"true\" data-position=\"bottom\" ");
 		//sb.append("style=\"cursor: pointer;\" ");
 		//sb.append("\ndata-maphilight='{\"fillColor\":\"" + getColor() + "\", \"shadowColor\":\"" + getColor() + "\"}'");
-		sb.append("/>\n");
+		sb.append("/>");
+		/*
 		sb.append("<area id=\"" + getId() + "bis\" class=\"areabis area");
 		sb.append(getCategorie().getLibelle());
 		sb.append("\" shape=\"poly\" coords=\"");
 		for ( int i = 0 ; i < getCoordonnees().size() ; i++ )
 			sb.append((i==0?"":", ") + getCoordonnees().get(i).getX() + "," + getCoordonnees().get(i).getY());
 		sb.append("\" />");
+		*/
 		//<area id="path4559bis" class="areabis areaspirituel" shape="poly" coords="667,214, 628,254, 621,253, 626,259, 629,264, 632,269, 633,275, 633,281, 632,287, 630,293, 626,300, 621,306, 617,296, 604,296, 600,309, 589,312, 587,325, 595,331, 589,335, 584,338, 578,339, 572,340, 566,340, 560,339, 554,336, 548,332, 542,327, 554,326, 554,313, 541,310, 537,297, 523,296, 520,309, 514,301, 510,294, 508,287, 508,280, 508,274, 510,268, 513,262, 517,256, 521,251, 523,262, 539,262, 538,260, 538,257, 539,255, 539,253, 540,251, 541,250, 543,248, 545,248, 547,247, 554,245, 538,229, 597,177, 603,184, 624,164" />
+		
+		return sb.toString();
+	}
+	public String toAreaMapBis() 
+	{
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("<area id=\"" + getPathId() + "bis\" class=\"areabis");
+//		sb.append(getCategorie().getLibelle());
+		sb.append("\" shape=\"poly\" coords=\"");
+		for ( int i = 0 ; i < getCoordonnees().size() ; i++ )
+			sb.append((i==0?"":", ") + getCoordonnees().get(i).getX() + "," + getCoordonnees().get(i).getY());
+		sb.append("\" data-categorie=\"");
+		sb.append(getCategorie().getLibelle());
+		sb.append("\" />");
 		
 		return sb.toString();
 	}
@@ -125,12 +149,12 @@ public class InkscapeMapElement implements Comparable<InkscapeMapElement>
 		sb.append(getCategorie().getSymbole());
 		sb.append("</span>&nbsp;");
 		
-		sb.append("<a class=\"hilightlink ");
-		sb.append(getCategorie().getLibelle());
+		sb.append("<a class=\"hilightlink");
+//		sb.append(getCategorie().getLibelle());
 		sb.append("\" data-areaid=\"");
-		sb.append(getId());
-//		sb.append("\" data-areacolor=\"#");//style="background-color:#ff72ff"
-//		sb.append(getColor());
+		sb.append(getPathId());
+		sb.append("\" data-categorie=\"");
+		sb.append(getCategorie().getLibelle());
 		sb.append("\" href=\"#\">");//style=\"cursor: pointer;\" style=\"clear: right;\" 
 		sb.append(Utils.escape(getTitle())); sb.append(" ("); sb.append(getNumero()); sb.append(")");
 		sb.append("</a><br/>");

@@ -20,10 +20,16 @@ public class SvgToMapTest {
 		
 		
 		
-		System.out.println("<div class=\"blockMap\">\n<img id=\"mapPathfinder\" class=\"map\" src=\"Pointesable.jpg\" data-imageid=\"1\" width=\"853\" height=\"1113\" usemap=\"#world\">\n<map name=\"world\">");
+		System.out.println("<div class=\"blockMap\">\n<img id=\"mapPathfinder\" class=\"map\" src=\"Pointesable.jpg\" width=\"853\" height=\"1113\" usemap=\"#world\">\n");
+		System.out.println("<map id=\"map1\" name=\"world\">");
 		for ( InkscapeMapElement e : listeElements )
-			System.out.println(e.toHtml());
-		System.out.println("</map>\n</div>");
+			System.out.println(e.toAreaMap1());
+		System.out.println("</map>\n");
+		System.out.println("<map id=\"map2\" name=\"world\">");
+		for ( InkscapeMapElement e : listeElements )
+			System.out.println(e.toAreaMapBis());
+		System.out.println("</map>\n");
+		System.out.println("\n</div>");
 		
 		
 		System.out.println();
