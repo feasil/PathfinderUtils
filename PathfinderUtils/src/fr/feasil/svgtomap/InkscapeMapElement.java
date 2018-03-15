@@ -164,6 +164,54 @@ public class InkscapeMapElement implements Comparable<InkscapeMapElement>
 	
 	
 	
+	
+	public String toCsv() {
+		//areaid
+		//area shape
+		//area coords ==> si shape = poly
+		
+		//categorie libelle		//categorie Symbole ? (juste prendre la première lettre du libelle ?)
+		//numero
+		//titre
+		//description
+		//areaid;shape;coords;categorie;numero;titre;description
+		final char SEPARATOR = ',';
+		final char PROTECTOR = '"';
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(PROTECTOR); 
+		sb.append("path-"); sb.append(getNumero());  
+		sb.append(PROTECTOR); sb.append(SEPARATOR);
+		
+		sb.append(PROTECTOR);
+		sb.append("poly"); 
+		sb.append(PROTECTOR); sb.append(SEPARATOR);
+		
+		sb.append(PROTECTOR);
+		for ( int i = 0 ; i < getCoordonnees().size() ; i++ )
+			sb.append((i==0?"":", ") + getCoordonnees().get(i).getX() + "," + getCoordonnees().get(i).getY());
+		sb.append(PROTECTOR); sb.append(SEPARATOR);
+		
+		sb.append(PROTECTOR); 
+		sb.append(getCategorie().getLibelle()); 
+		sb.append(PROTECTOR); sb.append(SEPARATOR);
+		
+		sb.append(PROTECTOR); 
+		sb.append(getNumero()); 
+		sb.append(PROTECTOR); sb.append(SEPARATOR);
+		
+		sb.append(PROTECTOR); 
+		sb.append(getTitle());
+		sb.append(PROTECTOR); sb.append(SEPARATOR);
+		
+		sb.append(PROTECTOR); 
+		sb.append(getDescription().replace("&quot;",  "'")); 
+		sb.append(PROTECTOR);
+		
+		return sb.toString();
+	}
+	
+	
 
 	@Override
 	public int compareTo(InkscapeMapElement i2) 

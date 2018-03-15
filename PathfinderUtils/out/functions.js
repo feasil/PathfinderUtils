@@ -40,19 +40,6 @@ $(function() {
 		cursor: 'move',
 		handle: '#moveListes',
 		containment : 'window', 
-		/*drag: function( event, ui){ 
-			var dragXLeft = 0;
-			var dragXRight = $('.blockList').css('width').substr(0, $('.blockList').css('width').length-2);
-			var dragYTop = 0;
-			//var dragYBottom = parseFloat($('.blockList').css('width').substr(0, $('.blockList').css('height').length-2)) + 50;
-			
-			ui.position.left = Math.max(ui.position.left, ui.helper.prev().offset().left + getPxIgnoreZoom(dragXLeft));
-			ui.position.left = Math.min(ui.position.left,  ui.helper.next().offset().left + ui.helper.next().width() - dragXRight);
-			
-			ui.position.top = Math.max(ui.position.top, ui.helper.prev().offset().top + getPxIgnoreZoom(dragYTop));
-			//ui.position.top = Math.min(ui.position.top,  ui.helper.next().offset().top + ui.helper.next().height() - dragYBottom); 
-			
-		}, */
 		start:  function( event, ui){ 
 			$(document).bind('scroll',function () { 
 				window.scrollTo(0,0); 
@@ -63,12 +50,6 @@ $(function() {
 		}
 	});
 	
-	$('.area').click(function(e) {
-		var varNumero = $(this).data('numero');
-		var varTitre = $(this).data('titre');
-		var varMessage = $(this).data('message');
-		bootbox.alert({message: '<center>' + varNumero + ' - <b>' + varTitre + '</b></center><hr/>' + varMessage, backdrop: true, size: 'large'})
-	});
 });
 //-------- fin des boutons ----------
 
@@ -92,26 +73,15 @@ $(function() {
 		$('.area[data-categorie='.concat($(this).data('categorie')).concat(']')).mouseout();
 	}).click(function(e) { 
 		//e.preventDefault();
+	
 	});
 	//----------
-
-	//Ajout de l'id sur les liens (pour référence area -> lien)
-	$('.hilightlink').each(function() {
-		$(this).attr('id', 'lien'.concat($(this).data('areaid')));
-	});
-	//Références area -> lien
-	$('.area').mouseover(function(e) {
-		$('#lien'.concat($(this).attr('id'))).addClass('categ'.concat($(this).data('categorie')));
-	}).mouseout(function(e) {
-		$('#lien'.concat($(this).attr('id'))).removeClass('categ'.concat($(this).data('categorie')));
-	});
-	//---------------------
 });
 //------- fin des elements de liste --------
 
 
 
-
+// Si on redimentionne la fenêtre (ou zoom), on change le rendu de la liste d'éléments ==> elle garde toujours le même rendu
 $(window).resize(function(e) {
 	hideListes();
 	$('div.blockList').css({'font-size': getPxIgnoreZoom(12) + 'px'});
@@ -125,8 +95,9 @@ $(window).resize(function(e) {
 	$('.hideShowButton').css({'width': getPxIgnoreZoom(24) + 'px'});
 	$('.moveButton').css({'width': getPxIgnoreZoom(24) + 'px'});
 });
+//On force le resize pour initialiser
 $(window).resize();
-
+//----------------------------------
 
 
 
@@ -141,26 +112,65 @@ function switchImageMap() {
 	
 	$('#mapPathfinder').attr('data-areabisactive', areabisactive);
 	
-	$('.area').each(function() {
+	initMapHilights();
+}
+
+function initMapHilights() {
+	var areabisactive = ($('#mapPathfinder').attr('data-areabisactive') === "true");
+	
+	$('area').each(function() {
+		var regex = /areabis/i;
+		var isBis = regex.test($(this).attr('class'));
 		var couleur = "000000";
-		if ( !areabisactive )
-		{
-			//var regExp = /area area([^ ]+)/;
-			//var matches = regExp.exec($(this).attr('class'));
-			//couleur = hexc($('.categ'.concat(matches[1])).css('backgroundColor'));
+		var couleurStroke = hexc($('.categ'.concat($(this).data('categorie'))).css('borderLeftColor'));;
+		if ( isBis || !areabisactive )
 			couleur = hexc($('.categ'.concat($(this).data('categorie'))).css('backgroundColor'));
+		
+		$(this).data('maphilight', {fillColor:couleur, shadowColor:couleur, strokeColor:couleurStroke, alwaysOn: false, neverOn: false, shadow: false});
+		if ( isBis )
+		{
+			$(this).data('maphilight').alwaysOn=areabisactive;
+			$(this).data('maphilight').neverOn=!areabisactive;
 		}
-		$(this).data('maphilight').fillColor=couleur;
-		$(this).data('maphilight').shadowColor=couleur;
-		//$(this).data('maphilight').strokeColor=couleur;
-	});
-	$('.areabis').each(function() {
-		$(this).data('maphilight').alwaysOn=areabisactive;
-		$(this).data('maphilight').neverOn=!areabisactive;
 	});
 	
 	$('.map').maphilight();
+	
+	initAreas();
 }
+
+function initAreas() {
+	tippy('.area', {
+		placement: 'right',
+		theme: 'light',
+		duration: 0,
+		followCursor: true,
+		size: 'small',
+		arrow: true, 
+		livePlacement: true
+	});
+	
+	
+	$('.area').click(function(e) {
+		var varNumero = $(this).data('numero');
+		var varTitre = $(this).data('titre');
+		var varMessage = $(this).data('message');
+		bootbox.alert({message: '<center>' + varNumero + ' - <b>' + varTitre + '</b></center><hr/>' + varMessage, backdrop: true, size: 'large'})
+	});
+	//si on sélectionne une area ça surligne le lien
+	$('.area').mouseover(function(e) {
+		$('[data-areaid='.concat($(this).attr('id')).concat(']')).addClass('categ'.concat($(this).data('categorie')));
+	}).mouseout(function(e) {
+		$('[data-areaid='.concat($(this).attr('id')).concat(']')).removeClass('categ'.concat($(this).data('categorie')));
+	});
+	//---------------------
+	
+}
+
+
+
+
+
 function hideListes() {
 	$('.listes').hide();
 	$('#hideShowListes').html("&#9660;");

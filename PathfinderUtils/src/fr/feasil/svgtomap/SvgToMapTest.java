@@ -18,8 +18,21 @@ public class SvgToMapTest {
 		List<InkscapeMapElement> listeElements = readCoords();
 		readDesc(listeElements);
 		
+		//toHtml(listeElements);
 		
+		toCsv(listeElements);
 		
+	}
+	private static void toCsv(List<InkscapeMapElement> listeElements) 
+	{
+		Collections.sort(listeElements);
+		System.out.println("\"areaid\",\"shape\",\"coords\",\"categorie\",\"numero\",\"titre\",\"description\"");
+		for ( InkscapeMapElement e : listeElements )
+			System.out.println(e.toCsv());
+	}
+	
+	private static void toHtml(List<InkscapeMapElement> listeElements) 
+	{
 		System.out.println("<div class=\"blockMap\">\n<img id=\"mapPathfinder\" class=\"map\" src=\"Pointesable.jpg\" width=\"853\" height=\"1113\" usemap=\"#world\">\n");
 		System.out.println("<map id=\"map1\" name=\"world\">");
 		for ( InkscapeMapElement e : listeElements )
@@ -53,8 +66,9 @@ public class SvgToMapTest {
 			System.out.println(e.toHtmlLight());
 		}
 		System.out.println("</div>\n</div>\n</div>");
-		
 	}
+	
+	
 	
 	
 	
