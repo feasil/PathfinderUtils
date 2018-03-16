@@ -31,12 +31,12 @@ $(function() {
 		switchImageMap();
 	});
 	$('#hideShowListes').click(function() {
-		if ( $('.listes').is(':visible') )
+		if ( $('#listes').is(':visible') )
 			hideListes();
 		else
 			showListes();
 	});
-	$('.blockList').draggable({
+	$('#blockList').draggable({
 		cursor: 'move',
 		handle: '#moveListes',
 		containment : 'window', 
@@ -47,6 +47,11 @@ $(function() {
 		}, 
 		stop:  function( event, ui){ 
 			$(document).unbind('scroll');
+			
+			if ( $(this).css('top').replace(/[^-\d\.]/g, '') < 0 )
+				$(this).css('top', '0px');
+			if ( $(this).css('left').replace(/[^-\d\.]/g, '') < 0 )
+				$(this).css('left', '0px');
 		}
 	});
 	
@@ -54,46 +59,21 @@ $(function() {
 //-------- fin des boutons ----------
 
 
-//Pour les onMouseOver sur les elements de liste
-$(function() {
-	//si on sélectionne un lien, ça sélectionne l'area correspondante
-	$('.hilightlink').mouseover(function(e) {
-		$('#'.concat($(this).data('areaid'))).mouseover();
-	}).mouseout(function(e) {
-		$('#'.concat($(this).data('areaid'))).mouseout();
-	}).click(function(e) { 
-		e.preventDefault();
-		$('#'.concat($(this).data('areaid'))).click();
-	});
-	//----------
-	//si on sélectionne une catégorie, ça sélectionne les areas correspondantes
-	$('.hilightMult').mouseover(function(e) {
-		$('.area[data-categorie='.concat($(this).data('categorie')).concat(']')).mouseover();
-	}).mouseout(function(e) {
-		$('.area[data-categorie='.concat($(this).data('categorie')).concat(']')).mouseout();
-	}).click(function(e) { 
-		//e.preventDefault();
-	
-	});
-	//----------
-});
-//------- fin des elements de liste --------
 
 
 
 // Si on redimentionne la fenêtre (ou zoom), on change le rendu de la liste d'éléments ==> elle garde toujours le même rendu
 $(window).resize(function(e) {
-	hideListes();
-	$('div.blockList').css({'font-size': getPxIgnoreZoom(12) + 'px'});
-	$('div.boutons').css({'margin-top': getPxIgnoreZoom(5) + 'px', 'margin-bottom': getPxIgnoreZoom(5) + 'px', 'margin-left': getPxIgnoreZoom(5) + 'px', 'margin-right': getPxIgnoreZoom(5) + 'px'});
-	$('div.listes').css({'padding': getPxIgnoreZoom(5) + 'px ' + getPxIgnoreZoom(5) + 'px ' + getPxIgnoreZoom(5) + 'px ' + getPxIgnoreZoom(5) + 'px'});
-	$('div.liste1').css({'padding-right': getPxIgnoreZoom(5) + 'px'});
+	//hideListes();
+	$('div#blockList').css({'font-size': getPxIgnoreZoom(12) + 'px'});
+	$('div#boutons').css({'margin-top': getPxIgnoreZoom(5) + 'px', 'margin-bottom': getPxIgnoreZoom(5) + 'px', 'margin-left': getPxIgnoreZoom(5) + 'px', 'margin-right': getPxIgnoreZoom(5) + 'px'});
+	$('div#listes').css({'padding': getPxIgnoreZoom(5) + 'px ' + getPxIgnoreZoom(5) + 'px ' + getPxIgnoreZoom(5) + 'px ' + getPxIgnoreZoom(5) + 'px'});
+	$('div#liste1').css({'padding-right': getPxIgnoreZoom(5) + 'px'});
 	
 	$('.hilightMult').css({'width': getPxIgnoreZoom(20) + 'px'});
 	$('.mapButtonV2').css({'padding': getPxIgnoreZoom(2) + 'px ' + getPxIgnoreZoom(4) + 'px','-moz-box-shadow': 'inset 0px ' + getPxIgnoreZoom(1) + 'px 0px 0 px #a6827e', '-webkit-box-shadow': 'inset 0px ' + getPxIgnoreZoom(1) + 'px 0px 0px #a6827e', 'box-shadow': 'inset 0px ' + getPxIgnoreZoom(1) + 'px 0px 0px #a6827e', '-moz-border-radius': getPxIgnoreZoom(3) + 'px', '-webkit-border-radius': getPxIgnoreZoom(3) + 'px', 'border-radius': getPxIgnoreZoom(3) + 'px', 'border': getPxIgnoreZoom(1) + 'px solid #54381e', 'text-shadow': '0px ' + getPxIgnoreZoom(1) + 'px 0px #4d3534'});
 	$('.switchMapButton').css({'width': getPxIgnoreZoom(100) + 'px'});
-	$('.hideShowButton').css({'width': getPxIgnoreZoom(24) + 'px'});
-	$('.moveButton').css({'width': getPxIgnoreZoom(24) + 'px'});
+	$('.littleButton').css({'width': getPxIgnoreZoom(26) + 'px'});
 });
 //On force le resize pour initialiser
 $(window).resize();
@@ -112,7 +92,13 @@ function switchImageMap() {
 	
 	$('#mapPathfinder').attr('data-areabisactive', areabisactive);
 	
+	initMap();
+}
+
+function initMap() {
 	initMapHilights();
+	initAreas();
+	initHilights();
 }
 
 function initMapHilights() {
@@ -150,44 +136,80 @@ function initAreas() {
 		livePlacement: true
 	});
 	
+	$('.area').unbind('click').unbind('mouseover').unbind('mouseout');
 	
 	$('.area').click(function(e) {
-		var varNumero = $(this).data('numero');
-		var varTitre = $(this).data('titre');
-		var varMessage = $(this).data('message');
-		bootbox.alert({message: '<center>' + varNumero + ' - <b>' + varTitre + '</b></center><hr/>' + varMessage, backdrop: true, size: 'large'})
-	});
-	//si on sélectionne une area ça surligne le lien
-	$('.area').mouseover(function(e) {
+		if ( $(this).data('categorie') !== 'special' )
+		{
+			var varNumero = $(this).data('numero');
+			var varTitre = $(this).data('titre');
+			var varMessage = $(this).data('message');
+			bootbox.alert({message: '<center>' + varNumero + ' - <b>' + varTitre + '</b></center><hr/>' + varMessage, backdrop: true, size: 'large'})
+		}
+	}).mouseover(function(e) {//si on sélectionne une area ça surligne le lien
 		$('[data-areaid='.concat($(this).attr('id')).concat(']')).addClass('categ'.concat($(this).data('categorie')));
 	}).mouseout(function(e) {
 		$('[data-areaid='.concat($(this).attr('id')).concat(']')).removeClass('categ'.concat($(this).data('categorie')));
 	});
 	//---------------------
-	
 }
+
+
+//Pour les onMouseOver sur les elements de liste
+function initHilights() {
+	$('.hilightlink').unbind('click').unbind('mouseover').unbind('mouseout');
+	$('.hilightMult').unbind('click').unbind('mouseover').unbind('mouseout');
+	
+	//si on sélectionne un lien, ça sélectionne l'area correspondante
+	$('.hilightlink').mouseover(function(e) {
+		if ( typeof $(this).data('areaid') !== "undefined")
+			$('#'.concat($(this).data('areaid'))).mouseover();
+		else
+			$('.area[data-categorie='.concat($(this).data('categorie')).concat(']')).mouseover();
+	}).mouseout(function(e) {
+		if ( typeof $(this).data('areaid') !== "undefined")
+			$('#'.concat($(this).data('areaid'))).mouseout();
+		else
+			$('.area[data-categorie='.concat($(this).data('categorie')).concat(']')).mouseout();
+	}).click(function(e) { 
+		e.preventDefault();
+		if ( typeof $(this).data('areaid') !== "undefined")
+			$('#'.concat($(this).data('areaid'))).click();
+	});
+	//----------
+	//si on sélectionne une catégorie, ça sélectionne les areas correspondantes
+	$('.hilightMult').mouseover(function(e) {
+		$('.area[data-categorie='.concat($(this).data('categorie')).concat(']')).mouseover();
+	}).mouseout(function(e) {
+		$('.area[data-categorie='.concat($(this).data('categorie')).concat(']')).mouseout();
+	}).click(function(e) { 
+		//e.preventDefault();
+	});
+	//----------
+}
+//------- fin des elements de liste --------
 
 
 
 
 
 function hideListes() {
-	$('.listes').hide();
+	$('#listes').hide();
 	$('#hideShowListes').html("&#9660;");
 }
 function showListes() {
-	$('.listes').show();
+	$('#listes').show();
 	$('#hideShowListes').html("&#9651;");
 	
-	var left = parseFloat($('.blockList').css('left').substr(0, $('.blockList').css('left').length-2));
+	var left = parseFloat($('#blockList').css('left').substr(0, $('#blockList').css('left').length-2));
 	var difLeft = getPxIgnoreZoom(536);
 	var difTop = getPxIgnoreZoom(548);
 	if ( left > ($(window).width() - difLeft) )
-		$('.blockList').css('left', Math.max(0, ($(window).width() - difLeft)) + 'px' );
+		$('#blockList').css('left', Math.max(0, ($(window).width() - difLeft)) + 'px' );
 	
-	var top = parseFloat($('.blockList').css('top').substr(0, $('.blockList').css('top').length-2));
+	var top = parseFloat($('#blockList').css('top').substr(0, $('#blockList').css('top').length-2));
 	if ( top > ($(window).height() - difTop) )
-		$('.blockList').css('top', Math.max(0, ($(window).height() - difTop)) + 'px' );
+		$('#blockList').css('top', Math.max(0, ($(window).height() - difTop)) + 'px' );
 }
 
 

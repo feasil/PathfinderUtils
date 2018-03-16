@@ -20,8 +20,10 @@ public class SvgToMapTest {
 		
 		//toHtml(listeElements);
 		
-		toCsv(listeElements);
+		//toCsv(listeElements);
 		
+		
+		Utils.giveMeAStar(349, 201);
 	}
 	private static void toCsv(List<InkscapeMapElement> listeElements) 
 	{
