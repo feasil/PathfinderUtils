@@ -40,12 +40,12 @@ $(function() {
 		cursor: 'move',
 		handle: '#moveListes',
 		containment : 'window', 
-		start:  function( event, ui){ 
+		start: function( event, ui){ 
 			$(document).bind('scroll',function () { 
 				window.scrollTo(0,0); 
 			});
 		}, 
-		stop:  function( event, ui){ 
+		stop: function( event, ui){ 
 			$(document).unbind('scroll');
 			
 			if ( $(this).css('top').replace(/[^-\d\.]/g, '') < 0 )
@@ -65,15 +65,18 @@ $(function() {
 // Si on redimentionne la fenêtre (ou zoom), on change le rendu de la liste d'éléments ==> elle garde toujours le même rendu
 $(window).resize(function(e) {
 	//hideListes();
-	$('div#blockList').css({'font-size': getPxIgnoreZoom(12) + 'px'});
-	$('div#boutons').css({'margin-top': getPxIgnoreZoom(5) + 'px', 'margin-bottom': getPxIgnoreZoom(5) + 'px', 'margin-left': getPxIgnoreZoom(5) + 'px', 'margin-right': getPxIgnoreZoom(5) + 'px'});
-	$('div#listes').css({'padding': getPxIgnoreZoom(5) + 'px ' + getPxIgnoreZoom(5) + 'px ' + getPxIgnoreZoom(5) + 'px ' + getPxIgnoreZoom(5) + 'px'});
-	$('div#liste1').css({'padding-right': getPxIgnoreZoom(5) + 'px'});
+	$('div#blockList').css({'font-size': getPxIgnoreZoom(11) + 'px'});
 	
-	$('.hilightMult').css({'width': getPxIgnoreZoom(20) + 'px'});
 	$('.mapButtonV2').css({'padding': getPxIgnoreZoom(2) + 'px ' + getPxIgnoreZoom(4) + 'px','-moz-box-shadow': 'inset 0px ' + getPxIgnoreZoom(1) + 'px 0px 0 px #a6827e', '-webkit-box-shadow': 'inset 0px ' + getPxIgnoreZoom(1) + 'px 0px 0px #a6827e', 'box-shadow': 'inset 0px ' + getPxIgnoreZoom(1) + 'px 0px 0px #a6827e', '-moz-border-radius': getPxIgnoreZoom(3) + 'px', '-webkit-border-radius': getPxIgnoreZoom(3) + 'px', 'border-radius': getPxIgnoreZoom(3) + 'px', 'border': getPxIgnoreZoom(1) + 'px solid #54381e', 'text-shadow': '0px ' + getPxIgnoreZoom(1) + 'px 0px #4d3534'});
-	$('.switchMapButton').css({'width': getPxIgnoreZoom(100) + 'px'});
-	$('.littleButton').css({'width': getPxIgnoreZoom(26) + 'px'});
+	
+	//$('div#listes').css({'padding': getPxIgnoreZoom(5) + 'px ' + getPxIgnoreZoom(5) + 'px ' + getPxIgnoreZoom(5) + 'px ' + getPxIgnoreZoom(5) + 'px'});
+	//$('div#liste1').css({'padding-right': getPxIgnoreZoom(5) + 'px'});
+	
+	//$('div#boutons').css({'margin-top': getPxIgnoreZoom(5) + 'px', 'margin-right': getPxIgnoreZoom(5) + 'px', 'margin-bottom': getPxIgnoreZoom(5) + 'px', 'margin-left': getPxIgnoreZoom(5) + 'px'});
+	//$('.hilightMult').css({'width': getPxIgnoreZoom(20) + 'px'});
+	//$('.switchMapButton').css({'width': getPxIgnoreZoom(100) + 'px'});
+	//$('.littleButton').css({'width': getPxIgnoreZoom(26) + 'px'});
+	
 });
 //On force le resize pour initialiser
 $(window).resize();
@@ -108,9 +111,9 @@ function initMapHilights() {
 		var regex = /areabis/i;
 		var isBis = regex.test($(this).attr('class'));
 		var couleur = "000000";
-		var couleurStroke = hexc($('.categ'.concat($(this).data('categorie'))).css('borderLeftColor'));;
+		var couleurStroke = hexc($('.categ' + $(this).data('categorie')).css('borderLeftColor'));;
 		if ( isBis || !areabisactive )
-			couleur = hexc($('.categ'.concat($(this).data('categorie'))).css('backgroundColor'));
+			couleur = hexc($('.categ' + $(this).data('categorie')).css('backgroundColor'));
 		
 		$(this).data('maphilight', {fillColor:couleur, shadowColor:couleur, strokeColor:couleurStroke, alwaysOn: false, neverOn: false, shadow: false});
 		if ( isBis )
@@ -147,9 +150,15 @@ function initAreas() {
 			bootbox.alert({message: '<center>' + varNumero + ' - <b>' + varTitre + '</b></center><hr/>' + varMessage, backdrop: true, size: 'large'})
 		}
 	}).mouseover(function(e) {//si on sélectionne une area ça surligne le lien
-		$('[data-areaid='.concat($(this).attr('id')).concat(']')).addClass('categ'.concat($(this).data('categorie')));
+		if ( $('a[data-areaid=' + $(this).attr('id') + ']').length > 0 )
+			$('a[data-areaid=' + $(this).attr('id') + ']').addClass('categ' + $(this).data('categorie'));
+		else
+			$('a[data-categorie=' + $(this).data('categorie') + ']').addClass('categ' + $(this).data('categorie'));
 	}).mouseout(function(e) {
-		$('[data-areaid='.concat($(this).attr('id')).concat(']')).removeClass('categ'.concat($(this).data('categorie')));
+		if ( $('a[data-areaid=' + $(this).attr('id') + ']').length > 0 )
+			$('a[data-areaid=' + $(this).attr('id') + ']').removeClass('categ' + $(this).data('categorie'));
+		else
+			$('a[data-categorie=' + $(this).data('categorie') + ']').removeClass('categ' + $(this).data('categorie'));
 	});
 	//---------------------
 }
@@ -163,25 +172,25 @@ function initHilights() {
 	//si on sélectionne un lien, ça sélectionne l'area correspondante
 	$('.hilightlink').mouseover(function(e) {
 		if ( typeof $(this).data('areaid') !== "undefined")
-			$('#'.concat($(this).data('areaid'))).mouseover();
+			$('#' + $(this).data('areaid')).mouseover();
 		else
-			$('.area[data-categorie='.concat($(this).data('categorie')).concat(']')).mouseover();
+			$('.area[data-categorie=' + $(this).data('categorie') + ']').mouseover();
 	}).mouseout(function(e) {
 		if ( typeof $(this).data('areaid') !== "undefined")
-			$('#'.concat($(this).data('areaid'))).mouseout();
+			$('#' + $(this).data('areaid')).mouseout();
 		else
-			$('.area[data-categorie='.concat($(this).data('categorie')).concat(']')).mouseout();
+			$('.area[data-categorie=' + $(this).data('categorie') + ']').mouseout();
 	}).click(function(e) { 
 		e.preventDefault();
 		if ( typeof $(this).data('areaid') !== "undefined")
-			$('#'.concat($(this).data('areaid'))).click();
+			$('#' + $(this).data('areaid')).click();
 	});
 	//----------
 	//si on sélectionne une catégorie, ça sélectionne les areas correspondantes
 	$('.hilightMult').mouseover(function(e) {
-		$('.area[data-categorie='.concat($(this).data('categorie')).concat(']')).mouseover();
+		$('.area[data-categorie=' + $(this).data('categorie') + ']').mouseover();
 	}).mouseout(function(e) {
-		$('.area[data-categorie='.concat($(this).data('categorie')).concat(']')).mouseout();
+		$('.area[data-categorie=' + $(this).data('categorie') + ']').mouseout();
 	}).click(function(e) { 
 		//e.preventDefault();
 	});
@@ -202,14 +211,15 @@ function showListes() {
 	$('#hideShowListes').html("&#9651;");
 	
 	var left = parseFloat($('#blockList').css('left').substr(0, $('#blockList').css('left').length-2));
-	var difLeft = getPxIgnoreZoom(536);
-	var difTop = getPxIgnoreZoom(548);
+	var difLeft = $('#blockList').width();//getPxIgnoreZoom(536);
+	var difTop = $('#blockList').height();//getPxIgnoreZoom(548);
 	if ( left > ($(window).width() - difLeft) )
 		$('#blockList').css('left', Math.max(0, ($(window).width() - difLeft)) + 'px' );
 	
 	var top = parseFloat($('#blockList').css('top').substr(0, $('#blockList').css('top').length-2));
 	if ( top > ($(window).height() - difTop) )
 		$('#blockList').css('top', Math.max(0, ($(window).height() - difTop)) + 'px' );
+	
 }
 
 

@@ -14,7 +14,7 @@
 	area { cursor: pointer; }
 	
 	.hilightMult {
-		width: 20px;
+		width: 1.5em;
 		float: left; 
 		text-align: center; 
 		font-weight: bold;
@@ -36,21 +36,26 @@
 	.categadministration { background-color: #80FF10; border-color: #000000; }
 	.categindustrie { background-color: #554CFF; border-color: #000000; }
 	
-	.categspecial { background-color: #4B0082; border-color: #ff0000; }
+	.categspecial { background-color: #4B0082; border-color: #ff0000; 
+	color: #FFFFFF;
+	}
 	
 	
 	.mapButton { -moz-box-shadow:inset 0px 1px 0px 0px #a6827e; -webkit-box-shadow:inset 0px 1px 0px 0px #a6827e; box-shadow:inset 0px 1px 0px 0px #a6827e; background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #7d5d3b), color-stop(1, #634b30)); background:-moz-linear-gradient(top, #7d5d3b 5%, #634b30 100%); background:-webkit-linear-gradient(top, #7d5d3b 5%, #634b30 100%); background:-o-linear-gradient(top, #7d5d3b 5%, #634b30 100%); background:-ms-linear-gradient(top, #7d5d3b 5%, #634b30 100%); background:linear-gradient(to bottom, #7d5d3b 5%, #634b30 100%); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d5d3b', endColorstr='#634b30',GradientType=0); background-color:#7d5d3b; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; border:1px solid #54381e; display:inline-block; color:#ffffff; padding:4px 24px; text-decoration:none; text-shadow:0px 1px 0px #4d3534; cursor: pointer; }
 	.mapButton:hover { background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #634b30), color-stop(1, #7d5d3b)); background:-moz-linear-gradient(top, #634b30 5%, #7d5d3b 100%); background:-webkit-linear-gradient(top, #634b30 5%, #7d5d3b 100%); background:-o-linear-gradient(top, #634b30 5%, #7d5d3b 100%); background:-ms-linear-gradient(top, #634b30 5%, #7d5d3b 100%); background:linear-gradient(to bottom, #634b30 5%, #7d5d3b 100%); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#634b30', endColorstr='#7d5d3b',GradientType=0); background-color:#634b30; }
 	.mapButton:active { position:relative; top:1px; }
 	
-	.mapButtonV2 { 
+	.mapButtonV2 {
+		font-size: .9em;
 		text-align: center;
 	}
 	.switchMapButton { 
-		width: 100px;
+		width: 9em;
+		height: 2em;
 	}
 	.littleButton {
-		width: 26px;
+		width: 2em;
+		height: 2em;
 	}
 	
 	#moveListes {
@@ -65,12 +70,11 @@
 		position: fixed;
 		left: 853px;
 		top: 0px;
+		white-space:nowrap;
 	}
 	div#boutons {
-		margin-top: 5px;
-		margin-bottom: 5px;
-		margin-left: 5px;
-		margin-right: 5px;
+		font-size: 1.1em;
+		margin: .4em .4em .4em .4em;
 		text-align: left;
 		
 		-moz-user-select: none; /* Firefox */
@@ -82,12 +86,22 @@
 	}
 	div#listes {
 		background-color: #FCFFE5;
-		padding: 5px 5px 5px 5px;
+		//padding: 5px 5px 5px 5px;
+		padding: .1em .4em .4em .4em;
+	}
+	div#slider-range {
+		margin: 1em 1.5em .5em 1.5em; 
+	}
+	div.slide-handle {
+		font-size: 1.4em;
+		margin-top: -.3em;
+		text-align: center;
+		line-height: 1.1em;
 	}
 	div#liste1 {
 		display: inline-block;
-		vertical-align:bottom;
-		padding-right: 5px;
+		vertical-align: bottom;
+		padding-right: .4em;
 	}
 	div#liste2 {
 		display: inline-block;
@@ -100,37 +114,36 @@
 
 <div id="blockMap">
 <img id="mapPathfinder" class="map" src="Pointesable.jpg" width="853" height="1113" usemap="#world">
-
-<map id="map1" name="world">
-
-</map>
-
-<map id="map2" name="world">
-
-</map>
-
-
+<map id="map1" name="world"></map>
+<map id="map2" name="world"></map>
 </div>
-
 
 <div id="blockList">
 <div id="boutons">
-<span id="moveListes" class="mapButton mapButtonV2 littleButton">&#8644;</span>&nbsp;<span id="hideShowListes" class="mapButton mapButtonV2 littleButton">&#9651;</span>&nbsp;<span id="buttonChangeMap" class="mapButton mapButtonV2 switchMapButton">switch map</span>
-<span id="test" class="mapButton mapButtonV2 littleButton">🌟</span>
+<span id="moveListes" class="mapButton mapButtonV2 littleButton">&#8644;</span>&nbsp;<span id="hideShowListes" class="mapButton mapButtonV2 littleButton">&#9651;</span>&nbsp;<span id="buttonChangeMap" class="mapButton mapButtonV2 switchMapButton">switch map</span>&nbsp;<span id="test" class="mapButton mapButtonV2 littleButton">&#127775;</span>
 </div>
-
 
 <div id="listes">
-<div id="liste1">
-
-</div><div id="liste2">
-
+<div id="slider-range"><div id="slide-handle-min" class="ui-slider-handle slide-handle"></div><div id="slide-handle-max" class="ui-slider-handle slide-handle"></div></div>
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1" style="font-size:.8em">De base</a></li>
+    <li><a href="#tabs-2" style="font-size:.8em">Rencontres</a></li>
+    <li><a href="#tabs-3" style="font-size:.8em">Combats</a></li>
+  </ul>
+<div id="tabs-1">
+<div id="liste1"></div>
+<div id="liste2"></div>
+</div>
+<div id="tabs-2">
+</div>
+<div id="tabs-3">
 </div>
 </div>
 </div>
 
+</div>
 
-<table id="result3" border="1"></table>
 
 
 <!--
@@ -148,6 +161,52 @@
 <script src="./functions.js"></script>
 <script type="text/javascript">
 //Initialisation de la page
+
+
+//Idees : 
+// Mettre des tabs jquery-ui
+
+//Slider 
+$( function() {
+	$('#slider-range').slider({
+		orientation: 'horizontal', //'vertical',
+		range: true,
+		min: 0, 
+		max: 6,
+		values: [ 0, 6 ],
+		create: function() {
+			$('#slide-handle-min').text( $( this ).slider('values')[0] );
+			$('#slide-handle-max').text( $( this ).slider('values')[1] );
+		},
+		slide: function( event, ui ) {
+			//console.log (ui.values[0] + " - " + ui.values[1]);
+			$('#slide-handle-min').text( ui.values[0] );
+			$('#slide-handle-max').text( ui.values[1] );
+		}
+	});
+	//$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+} );
+//--------------------
+
+//tabs
+$( function() {
+	$( "#tabs" ).tabs({
+		//collapsible: true
+	});
+} );
+//----------------
+
+
+
+
+
+
+
+
+
+
+
+
 $(function() {
 	//var cheminCSV = 'http://127.0.0.1/PathfinderUtils';
 	var cheminCSV = '.';
@@ -224,10 +283,10 @@ $(function() {
 		}
 		
 		liste = '<span class="hilightMult categspecial" ';
-		liste += 'data-categorie="special">🌟</span>&nbsp;';
+		liste += 'data-categorie="special">&#127775;</span>&nbsp;';
 		liste += '<a class="hilightlink" ';
 		liste += 'data-categorie="special" href="#">';
-		liste += '🦆🦆🦆🦆🦆🦆</a><br/>';
+		liste += '&#129414;&#129414;&#129414;&#129414;&#129414;&#129414;coincoin</a><br/>';
 		$('#liste2').append(liste);
 		initMap();
 		
@@ -235,26 +294,23 @@ $(function() {
 	
 	
 });
-//------ fin de l'initialisation --------
 
 var addStar = false;
 $('#test').click(function(e) {
 	addStar = !addStar;
 	if ( addStar )
-		$(this).html('🦆');
+		$(this).html('&#129414;');
 	else
-		$(this).html('🌟');
+		$(this).html('&#127775;');
 	
 	e.preventDefault();
 });
-
-
 
 $('#blockMap').click(function(e) {
 	if ( addStar && e.pageX < 1000 )
 	{
 		addStar = false;
-		$('#test').html('🌟');
+		$('#test').html('&#127775;');
 		
 		//$('#map1').append('<area data-categorie="special" id="toto" title="coincoin" class="area" shape="poly" coords="462, 639, 465, 648, 471, 645, 468, 651, 477, 654, 468, 657, 471, 663, 465, 660, 462, 669, 459, 660, 453, 663, 456, 657, 447, 654, 456, 651, 453, 645, 459, 648" />');
 		//$('#map2').append('<area data-categorie="special" id="totobis" class="areabis" shape="poly" coords="462, 639, 465, 648, 471, 645, 468, 651, 477, 654, 468, 657, 471, 663, 465, 660, 462, 669, 459, 660, 453, 663, 456, 657, 447, 654, 456, 651, 453, 645, 459, 648" />');
@@ -308,6 +364,7 @@ function giveMeAStar(x, y)
 	return coords;
 }
 
+//------ fin de l'initialisation --------
 </script>
 
 </body>
