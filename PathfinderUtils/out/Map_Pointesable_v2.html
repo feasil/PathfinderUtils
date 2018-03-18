@@ -13,12 +13,7 @@
 	
 	area { cursor: pointer; }
 	
-	.hilightMult {
-		width: 1.5em;
-		float: left; 
-		text-align: center; 
-		font-weight: bold;
-		cursor: default;
+	.noSelect {
 		-moz-user-select: none; /* Firefox */
 		-ms-user-select: none; /* Internet Explorer */
 		-khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
@@ -26,8 +21,16 @@
 		-webkit-touch-callout: none; /* Disable Android and iOS callouts*/
 		user-select: none;
 	}
-	.hilightlink { color: #000000; }
-	.hilightlink:hover { color: #000000; }
+	
+	.hilightMult {
+		width: 1.5em;
+		float: left; 
+		text-align: center; 
+		font-weight: bold;
+		cursor: default;
+	}
+	.hilightlink { color: #000000; cursor: pointer;}
+	.hilightlink:hover { color: #000000; text-decoration: underline; }
 	
 	.categspirituel { background-color: #FFFF60; border-color: #000000; }
 	.categtaverne { background-color: #ff1010; border-color: #000000; }
@@ -36,9 +39,9 @@
 	.categadministration { background-color: #80FF10; border-color: #000000; }
 	.categindustrie { background-color: #554CFF; border-color: #000000; }
 	
-	.categspecial { background-color: #4B0082; border-color: #ff0000; 
-	color: #FFFFFF;
-	}
+	.categspecial { background-color: #4B0082; border-color: #ff0000; color: #FFFFFF !important; }
+	.categbataille { background-color: #D2691E; border-color: #000000; color: #FFFFFF !important; }
+	.categdark { background-color: #868686; border-color: #000000; color: #FFFFFF !important; }
 	
 	
 	.mapButton { -moz-box-shadow:inset 0px 1px 0px 0px #a6827e; -webkit-box-shadow:inset 0px 1px 0px 0px #a6827e; box-shadow:inset 0px 1px 0px 0px #a6827e; background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #7d5d3b), color-stop(1, #634b30)); background:-moz-linear-gradient(top, #7d5d3b 5%, #634b30 100%); background:-webkit-linear-gradient(top, #7d5d3b 5%, #634b30 100%); background:-o-linear-gradient(top, #7d5d3b 5%, #634b30 100%); background:-ms-linear-gradient(top, #7d5d3b 5%, #634b30 100%); background:linear-gradient(to bottom, #7d5d3b 5%, #634b30 100%); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d5d3b', endColorstr='#634b30',GradientType=0); background-color:#7d5d3b; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; border:1px solid #54381e; display:inline-block; color:#ffffff; padding:4px 24px; text-decoration:none; text-shadow:0px 1px 0px #4d3534; cursor: pointer; }
@@ -54,7 +57,7 @@
 		height: 2em;
 	}
 	.littleButton {
-		width: 2em;
+		width: 2.5em;
 		height: 2em;
 	}
 	
@@ -76,37 +79,46 @@
 		font-size: 1.1em;
 		margin: .4em .4em .4em .4em;
 		text-align: left;
-		
-		-moz-user-select: none; /* Firefox */
-		-ms-user-select: none; /* Internet Explorer */
-		-khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
-		-webkit-user-select: none; /* Chrome, Safari, and Opera */
-		-webkit-touch-callout: none; /* Disable Android and iOS callouts*/
-		user-select: none;
 	}
 	div#listes {
 		background-color: #FCFFE5;
-		//padding: 5px 5px 5px 5px;
 		padding: .1em .4em .4em .4em;
 	}
+	.tab {
+		font-size:.8em;
+	}
+	div.liste1 {
+		display: inline-block;
+		vertical-align: bottom;
+		padding-right: .4em;
+	}
+	div.liste2 {
+		display: inline-block;
+		vertical-align:bottom;
+	}
+	
+	
+	
 	div#slider-range {
-		margin: 1em 1.5em .5em 1.5em; 
+		margin: 1em 2.5em 1em 1.5em; 
 	}
 	div.slide-handle {
 		font-size: 1.4em;
 		margin-top: -.3em;
 		text-align: center;
 		line-height: 1.1em;
+		width: 2em!important;
+		
+		font-weight: bold;
 	}
-	div#liste1 {
-		display: inline-block;
-		vertical-align: bottom;
-		padding-right: .4em;
+	.ui-tabs .ui-tabs-panel {
+		padding: .2em .2em .2em .2em;
 	}
-	div#liste2 {
-		display: inline-block;
-		vertical-align:bottom;
-	}
+	
+	
+	
+//.ui-widget {font-size: 1.4em; } a bosser pour le contenu des select
+	
 	</style>
 </head>
 <body>
@@ -119,26 +131,29 @@
 </div>
 
 <div id="blockList">
-<div id="boutons">
-<span id="moveListes" class="mapButton mapButtonV2 littleButton">&#8644;</span>&nbsp;<span id="hideShowListes" class="mapButton mapButtonV2 littleButton">&#9651;</span>&nbsp;<span id="buttonChangeMap" class="mapButton mapButtonV2 switchMapButton">switch map</span>&nbsp;<span id="test" class="mapButton mapButtonV2 littleButton">&#127775;</span>
+<div id="boutons" class="noSelect">
+<span id="moveListes" class="mapButton mapButtonV2 littleButton">&#8644;</span>&nbsp;<span id="hideShowListes" class="mapButton mapButtonV2 littleButton">&#9651;</span>&nbsp;<span id="buttonChangeMap" class="mapButton mapButtonV2 switchMapButton">switch map</span>&nbsp;
+<span id="addDraw" class="mapButton mapButtonV2 littleButton">&#128291;</span><span id="addArrow" class="mapButton mapButtonV2 littleButton">&#8594;</span>
 </div>
 
 <div id="listes">
-<div id="slider-range"><div id="slide-handle-min" class="ui-slider-handle slide-handle"></div><div id="slide-handle-max" class="ui-slider-handle slide-handle"></div></div>
+    <label for="aventure">Quelle aventure ?</label>
+	<select name="aventure" id="aventure"></select>
 <div id="tabs">
-  <ul>
-    <li><a href="#tabs-1" style="font-size:.8em">De base</a></li>
-    <li><a href="#tabs-2" style="font-size:.8em">Rencontres</a></li>
-    <li><a href="#tabs-3" style="font-size:.8em">Combats</a></li>
-  </ul>
-<div id="tabs-1">
-<div id="liste1"></div>
-<div id="liste2"></div>
+	<ul>
+		<li><a href="#tabRencontre" class="noSelect tab">Rencontres</a></li>
+		<li><a href="#tabDeBase" class="noSelect tab">De base</a></li>
+	</ul>
+<div id="tabRencontre">
+<div id="slider-range"><div id="slide-handle-min" class="ui-slider-handle slide-handle noSelect"></div><div id="slide-handle-max" class="ui-slider-handle slide-handle noSelect"></div></div>
+<div id="listeRencontre-1" class="liste1"></div>
+<div id="listeRencontre-2" class="liste2"></div>
 </div>
-<div id="tabs-2">
+<div id="tabDeBase">
+<div id="listeDeBase-1" class="liste1"></div>
+<div id="listeDeBase-2" class="liste2"></div>
 </div>
-<div id="tabs-3">
-</div>
+
 </div>
 </div>
 
@@ -149,7 +164,7 @@
 <!--
 <area id="path4559sssds" class="areabis areaspecial" shape="poly" coords="462, 639, 465, 648, 471, 645, 468, 651, 477, 654, 468, 657, 471, 663, 465, 660, 462, 669, 459, 660, 453, 663, 456, 657, 447, 654, 456, 651, 453, 645, 459, 648" >
 -->
-<span class="categspecial" hidden></span>
+<div id="categories" hidden></div>
 
 <script type="text/javascript" src="./scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="./scripts/maphilight/jquery.maphilight.min.js"></script>
@@ -164,43 +179,6 @@
 
 
 //Idees : 
-// Mettre des tabs jquery-ui
-
-//Slider 
-$( function() {
-	$('#slider-range').slider({
-		orientation: 'horizontal', //'vertical',
-		range: true,
-		min: 0, 
-		max: 6,
-		values: [ 0, 6 ],
-		create: function() {
-			$('#slide-handle-min').text( $( this ).slider('values')[0] );
-			$('#slide-handle-max').text( $( this ).slider('values')[1] );
-		},
-		slide: function( event, ui ) {
-			//console.log (ui.values[0] + " - " + ui.values[1]);
-			$('#slide-handle-min').text( ui.values[0] );
-			$('#slide-handle-max').text( ui.values[1] );
-		}
-	});
-	//$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-} );
-//--------------------
-
-//tabs
-$( function() {
-	$( "#tabs" ).tabs({
-		//collapsible: true
-	});
-} );
-//----------------
-
-
-
-
-
-
 
 
 
@@ -208,116 +186,54 @@ $( function() {
 
 
 $(function() {
-	//var cheminCSV = 'http://127.0.0.1/PathfinderUtils';
-	var cheminCSV = '.';
 	
 	//activation des couleurs de fond par défaut
 	$('#mapPathfinder').attr('data-areabisactive', true);
 	//---------------
 	
 	
-	$.get(cheminCSV + '/csv/map1.csv', function(content) {
-		var data = $.csv.toObjects(content, {separator:',', delimiter:'"', onParseValue: $.csv.hooks.castToScalar});
-		
-		data.sort(function(a,b) {
-			if ( a.categorie > b.categorie )
-				return 1;
-			if ( b.categorie > a.categorie )
-				return -1;
-			if ( a.numero > b.numero)
-				return 1;
-			if ( b.numero > a.numero )
-				return -1
-			return 0;
-		}); 
-		
-		
-		$('#map1').empty();
-		$('#map2').empty();
-		$('#liste1').empty();
-		$('#liste2').empty();
-		
-		var map1 = '';
-		var map2 = '';
-		var liste = '';
-		for(var row in data) {
-			//"areaid","shape","coords","categorie","numero","titre","description"
-			//console.log(data[row].categorie + '   ' + data[row].numero);
-			map1 = '<area id="' + data[row].areaid + '" ';
-			map1 += 'class="area" shape="' + data[row].shape + '" ';
-			map1 += 'coords="' + data[row].coords + '" ';
-			map1 += 'data-categorie="' + data[row].categorie + '" ';
-			
-			map1 += 'data-numero="' + data[row].numero + '" ';
-			map1 += 'data-titre="' + data[row].titre + '" ';
-			map1 += 'data-message="' + data[row].description + '" ';
-			
-			map1 += 'title="' + data[row].numero + ' - <b>' + data[row].titre + '</b>" ';
-			map1 += '/>\n';
-			
-			
-			map2 = '<area id="' + data[row].areaid + 'bis" ';
-			map2 += 'class="areabis" shape="' + data[row].shape + '" ';
-			map2 += 'coords="' + data[row].coords + '" ';
-			map2 += 'data-categorie="' + data[row].categorie + '" ';
-			map2 += '/>\n';
-			
-			
-			liste = '<span class="hilightMult categ' + data[row].categorie + '" ';
-			liste += 'data-categorie="' + data[row].categorie + '">' + data[row].categorie.substr(0, 1).toUpperCase() + '</span>&nbsp;';
-			liste += '<a class="hilightlink" data-areaid="' + data[row].areaid + '" ';
-			liste += 'data-categorie="' + data[row].categorie + '" href="#">';
-			liste += data[row].titre + ' (' + data[row].numero + ')</a><br/>';
-			
-			//
-			
-			
-			$('#map1').append(map1);
-			$('#map2').append(map2);
-			if ( row < data.length/2 )
-				$('#liste1').append(liste);
-			else
-				$('#liste2').append(liste);
-			
-			row++;
-		}
-		
-		liste = '<span class="hilightMult categspecial" ';
-		liste += 'data-categorie="special">&#127775;</span>&nbsp;';
-		liste += '<a class="hilightlink" ';
-		liste += 'data-categorie="special" href="#">';
-		liste += '&#129414;&#129414;&#129414;&#129414;&#129414;&#129414;coincoin</a><br/>';
-		$('#liste2').append(liste);
-		initMap();
-		
-	}, 'text');
-	
 	
 });
 
-var addStar = false;
-$('#test').click(function(e) {
-	addStar = !addStar;
-	if ( addStar )
+var addArrow = false;
+var arrowStart = null;
+$('#addArrow').click(function(e) {
+	addArrow = !addArrow;
+	if ( addArrow )
 		$(this).html('&#129414;');
 	else
-		$(this).html('&#127775;');
+		$(this).html('&#8594;');
+	
+	e.preventDefault();
+});
+
+var addDraw = false;
+$('#addDraw').click(function(e) {
+	addDraw = !addDraw;
+	if ( addDraw )
+		$(this).html('&#129414;');
+	else
+		$(this).html('&#128291;');
+	
 	
 	e.preventDefault();
 });
 
 $('#blockMap').click(function(e) {
-	if ( addStar && e.pageX < 1000 )
+console.log("X : " + e.pageX + " - Y : " + e.pageY);
+	if ( addDraw )
 	{
-		addStar = false;
-		$('#test').html('&#127775;');
+		addDraw = false;
+		$('#addDraw').html('&#128291;');
 		
-		//$('#map1').append('<area data-categorie="special" id="toto" title="coincoin" class="area" shape="poly" coords="462, 639, 465, 648, 471, 645, 468, 651, 477, 654, 468, 657, 471, 663, 465, 660, 462, 669, 459, 660, 453, 663, 456, 657, 447, 654, 456, 651, 453, 645, 459, 648" />');
-		//$('#map2').append('<area data-categorie="special" id="totobis" class="areabis" shape="poly" coords="462, 639, 465, 648, 471, 645, 468, 651, 477, 654, 468, 657, 471, 663, 465, 660, 462, 669, 459, 660, 453, 663, 456, 657, 447, 654, 456, 651, 453, 645, 459, 648" />');
+		//'star', 'duck', 'fight', 'meet', 'skull'
+		console.log('"4.1","NUMEROOOO","REFFFFFFF","rc-4-IDXXXXXXX","at:meet","' + e.pageX + ',' + e.pageY + '","CATEGORIEEEEEEEEEEEE","TITREEEEEEEEE","MESSAGE"')
+		//-----------
 		
-		var coordStar = giveMeAStar(e.pageX, e.pageY);
+		//var coordStar = giveMeADraw(e.pageX, e.pageY, "duck");
+		var coordDraw = workOnDraw(e.pageX, e.pageY);
 		
-		var data = {areaid:"toto", shape:"poly", coords:coordStar, categorie:"special"};
+		var data = {areaid:"toto", shape:"poly", coords:coordDraw, categorie:"special"};
 		
 		var map1 = '';
 		var map2 = '';
@@ -332,7 +248,7 @@ $('#blockMap').click(function(e) {
 		map1 += 'data-titre="' + data[row].titre + '" ';
 		map1 += 'data-message="' + data[row].description + '" ';
 		*/
-		map1 += 'title="' + /*data[row].numero + ' - <b>' + data[row].titre*/'coincoin' + '</b>" ';
+		map1 += 'title="' + /*data[row].numero + ' - <b>' + data[row].titre*/'<b>coincoin' + '</b>" ';
 		map1 += '/>\n';
 		
 		
@@ -344,28 +260,97 @@ $('#blockMap').click(function(e) {
 		
 		$('#map1').append(map1);
 		$('#map2').append(map2);
+		
 		initMap();
+		
+		//4,231,19,247,37,237,35,231,77,197,92,203,114,207,115,189,92,180,126,150,158,180,136,186,133,206,158,201,171,194,212,229,211,236,227,247,245,234,232,215,225,214,191,175,201,158,205,134,186,134,180,157,149,127,241,36,243,10,217,11,124,104,35,11,6,8,9,36,101,127,71,157,62,136,43,133,48,159,56,173,22,216,17,214
+	}
+	
+	
+	
+	if ( addArrow && arrowStart === null )
+		arrowStart = e;
+	else if ( addArrow && arrowStart !== null )
+	{
+		$('#addArrow').html('&#8594;');
+		addArrow = false;
+		var start = arrowStart;
+		arrowStart = null;
+		
+		console.log('"4.1","NUMEROOOO","REFFFFFFF","rc-4-IDXXXXXXX","fromto:arrow","' + start.pageX + ',' + start.pageY + ', ' + e.pageX + ',' + e.pageY + '","CATEGORIEEEEEEEEEEEE","TITREEEEEEEEE","MESSAGE"')
 	}
 });
 
-function giveMeAStar(x, y)
-{
-	//int[] etoileV0 = {20, 0, 24, 16, 40, 20, 24, 24, 20, 40, 16, 24, 0, 20, 16, 16};
-	//int[] etoileV1 = {5, 0, 6, 4, 10, 5, 6, 6, 5, 10, 4, 6, 0, 5, 4, 4};
-	//int[] etoileV2 = {5,0, 6, 3, 8, 2, 7, 4, 10, 5, 7, 6, 8, 8, 6, 7,           5, 10, 4, 7, 2, 8, 3, 6, 0, 5, 3, 4, 2, 2, 4, 3};
-	var etoile = [5,0, 6, 3, 8, 2, 7, 4, 10, 5, 7, 6, 8, 8, 6, 7,           5, 10, 4, 7, 2, 8, 3, 6, 0, 5, 3, 4, 2, 2, 4, 3];
 
+function workOnDraw(centerX, centerY)
+{
+	//var test = [4,231,19,247,37,237,35,231,77,197,92,203,114,207,115,189,92,180,126,150,158,180,136,186,133,206,158,201,171,194,212,229,211,236,227,247,245,234,232,215,225,214,191,175,201,158,205,134,186,134,180,157,149,127,241,36,243,10,217,11,124,104,35,11,6,8,9,36,101,127,71,157,62,136,43,133,48,159,56,173,22,216,17,214];
+	//var test = [245,201,218,228,168,180,157,189,142,177,150,164,129,140,105,162,114,177,99,189,88,181,39,229,12,201,59,152,50,139,66,127,76,134,98,112,40,52,36,21,67,22,127,84,188,24,218,21,215,53,158,113,180,134,193,126,204,137,198,153];
+	//var test = [-centerX, -centerY, 0, 0];
+	//origine x: 227 - Y : 437
+	//destination X : 410 - Y : 421
+	//var origX = 227, origY = 437;
+	var arrow = false;
+	
+	var test = [0, -5, 1, -2, 3, -3, 2, -1, 5, 0, 2, 1, 3, 3, 1, 2, 0, 5, -1, 2, -3, 3, -2, 1, -5, 0, -2, -1, -3, -3, -1, -2];
+	
+	//var test  = [-5,1, -5,-1, -3,-1, -3,-2, 0,0, -3,2, -3,1];
+	//var tete  = [];
+	
 	var coords = '';
-	var largeur = 3;
+	var coordsZero = '';
+	var hauteur = 4;
+	var largeur = hauteur;
 	
-	for ( var i in etoile )
-		coords += (i>0?", ":"") + ((etoile[i] - 5)*largeur + (i%2==0?x:y));
 	
+	var difX = -0;
+	var difY = -0;
+	
+	//var angle = -getAngle(centerPoint, destPoint);
+	
+	var i = 0, pt, ptX, ptY;
+	while ( i < test.length-1 )
+	{
+		ptX = centerX + (test[i]+difX)*largeur;
+		ptY = centerY + (test[i+1]+difY)*hauteur;
+		pt = {x:ptX, y:ptY};
+		
+		coords += (i>0?', ':'') + Math.round(pt.x) + ', ' + Math.round(pt.y);
+		coordsZero += (i>0?", ":"") + Math.round(test[i] + difX) + ',' + Math.round(test[i+1] + difY);
+		
+		
+		/*coords += (i>0?", ":"") + Math.round(((test[i])*largeur + (i%2==0?centerX + difX*largeur:centerY + difY*largeur))); //or : coords += (i>0?", ":"") + Math.round((i%2==0?centerPoint.x + (test[i]+difX)*largeur:centerPoint.y + (test[i]+difY)*hauteur));
+		coordsZero += (i>0?", ":"") + Math.round(((test[i]) + (i%2==0?difX:difY)));*/
+		
+		i += 2;
+	}
+	
+	console.log(coordsZero);
 	return coords;
+	
 }
+
+
 
 //------ fin de l'initialisation --------
 </script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
