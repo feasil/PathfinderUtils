@@ -1,0 +1,121 @@
+html { overflow-y: scroll; }
+body { background-color:#CCCCCC; }
+
+area { cursor: pointer; }
+
+.noSelect {
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer */
+	-khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+	-webkit-user-select: none; /* Chrome, Safari, and Opera */
+	-webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+	user-select: none;
+}
+
+.hilightMult {
+	width: 1.5em;
+	float: left; 
+	text-align: center; 
+	font-weight: bold;
+	cursor: default;
+}
+.hilightlink { color: #000000; cursor: pointer;}
+.hilightlink:hover { color: #000000; text-decoration: underline; }
+
+.categspirituel { background-color: #FFFF60; border-color: #000000; }
+.categtaverne { background-color: #ff1010; border-color: #000000; }
+.categcommerce { background-color: #ffbfff; border-color: #000000; }
+.categdivers { background-color: #80FFFF; border-color: #000000; }
+.categadministration { background-color: #80FF10; border-color: #000000; }
+.categindustrie { background-color: #554CFF; border-color: #000000; }
+
+.categspecial { background-color: #4B0082; border-color: #ff0000; color: #FFFFFF !important; }
+.categbataille { background-color: #D2691E; border-color: #000000; color: #FFFFFF !important; }
+.categdark { background-color: #868686; border-color: #000000; color: #FFFFFF !important; }
+
+.light { opacity: 0.5; filter: alpha(opacity=50); /* For IE8 and earlier */ }
+
+
+.mapButton { -moz-box-shadow:inset 0px 1px 0px 0px #a6827e; -webkit-box-shadow:inset 0px 1px 0px 0px #a6827e; box-shadow:inset 0px 1px 0px 0px #a6827e; background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #7d5d3b), color-stop(1, #634b30)); background:-moz-linear-gradient(top, #7d5d3b 5%, #634b30 100%); background:-webkit-linear-gradient(top, #7d5d3b 5%, #634b30 100%); background:-o-linear-gradient(top, #7d5d3b 5%, #634b30 100%); background:-ms-linear-gradient(top, #7d5d3b 5%, #634b30 100%); background:linear-gradient(to bottom, #7d5d3b 5%, #634b30 100%); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d5d3b', endColorstr='#634b30',GradientType=0); background-color:#7d5d3b; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; border:1px solid #54381e; display:inline-block; color:#ffffff; padding:4px 24px; text-decoration:none; text-shadow:0px 1px 0px #4d3534; cursor: pointer; }
+.mapButton:hover { background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #634b30), color-stop(1, #7d5d3b)); background:-moz-linear-gradient(top, #634b30 5%, #7d5d3b 100%); background:-webkit-linear-gradient(top, #634b30 5%, #7d5d3b 100%); background:-o-linear-gradient(top, #634b30 5%, #7d5d3b 100%); background:-ms-linear-gradient(top, #634b30 5%, #7d5d3b 100%); background:linear-gradient(to bottom, #634b30 5%, #7d5d3b 100%); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#634b30', endColorstr='#7d5d3b',GradientType=0); background-color:#634b30; }
+.mapButton:active { position:relative; top:1px; }
+
+.mapButtonV2 {
+	font-size: .9em;
+	text-align: center;
+}
+.switchMapButton { 
+	width: 9em;
+	height: 2em;
+}
+.littleButton {
+	width: 2.5em;
+	height: 2em;
+}
+
+#moveListes {
+	cursor: move;
+}
+
+div#blockMap {
+	display: inline-block;
+}
+div#blockList {
+	font-size: 12px;
+	position: fixed;
+	left: 853px;
+	top: 0px;
+	white-space:nowrap;
+}
+div#boutons {
+	font-size: 1.1em;
+	margin: .4em .4em .4em .4em;
+	text-align: left;
+}
+div#listes {
+	background-color: #FCFFE5;
+	padding: .4em .4em .4em .4em;
+}
+div#aventureSelector {
+	padding: 0em .4em .4em .8em;
+	vertical-align: text-bottom;
+	text-align: left;
+}
+
+
+.tab {
+	font-size:.8em;
+}
+div.liste1 {
+	display: inline-block;
+	vertical-align: bottom;
+	padding-right: .4em;
+}
+div.liste2 {
+	display: inline-block;
+	vertical-align:bottom;
+}
+
+
+
+div#slider-range {
+	margin: 0.4em 2.5em 1em 1.5em; 
+}
+div.slide-handle {
+	font-size: 1.4em;
+	margin-top: -.3em;
+	text-align: center;
+	line-height: 1.1em;
+	width: 2em!important;
+	
+	font-weight: bold;
+}
+.ui-tabs .ui-tabs-panel {
+	padding: .8em .2em .2em .2em;
+}
+#aventure-button{
+	width:20em;
+	height:2.2em;
+	margin: 0px 0px;
+}
+

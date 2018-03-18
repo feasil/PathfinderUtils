@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Pointesable</title>
+	<link rel="stylesheet" type="text/css" href="./scripts/Bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./scripts/tippy/tippy.css">
+	<link rel="stylesheet" type="text/css" href="./scripts/tippy/themes/light.css">
+	<link rel="stylesheet" type="text/css" href="./scripts/jquery-ui/jquery-ui.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+
+<div id="blockMap">
+<img id="mapPathfinder" class="map" src="" usemap="#world">
+<map id="map1" name="world"></map>
+<map id="map2" name="world"></map>
+</div>
+
+<div id="blockList">
+<div id="boutons" class="noSelect">
+<span id="moveListes" class="mapButton mapButtonV2 littleButton">&#8644;</span>&nbsp;<span id="hideShowListes" class="mapButton mapButtonV2 littleButton">&#9651;</span>&nbsp;<span id="buttonChangeMap" class="mapButton mapButtonV2 switchMapButton">toggle colors</span>&nbsp;
+|| <span id="addDraw" class="mapButton mapButtonV2 littleButton">&#128291;</span>&nbsp;<span id="addArrow" class="mapButton mapButtonV2 littleButton">&#8594;</span>
+</div>
+
+<div id="listes">
+<div id="aventureSelector" class="noSelect">Quelle aventure ?&nbsp;&nbsp;&nbsp;<select name="aventure" id="aventure" data-iconpos="noicon"></select></div>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabRencontre" class="noSelect tab">Rencontres</a></li>
+		<li><a href="#tabDeBase" class="noSelect tab">Environnement</a></li>
+	</ul>
+<div id="tabRencontre">
+<div id="slider-range"><div id="slide-handle-min" class="ui-slider-handle slide-handle noSelect"></div><div id="slide-handle-max" class="ui-slider-handle slide-handle noSelect"></div></div>
+<div id="listeRencontre-1" class="liste1"></div>
+<div id="listeRencontre-2" class="liste2"></div>
+</div>
+<div id="tabDeBase">
+<div id="listeDeBase-1" class="liste1"></div>
+<div id="listeDeBase-2" class="liste2"></div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div id="categories" hidden></div>
+
+<script type="text/javascript" src="./scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="./scripts/maphilight/jquery.maphilight.min.js"></script>
+<script src="./scripts/tippy/tippy.all.min.js"></script>
+<script src="./scripts/Bootstrap/bootstrap.min.js"></script>
+<script src="./scripts/bootbox/bootbox.min.js"></script>
+<script src="./scripts/jquery-ui/jquery-ui.min.js"></script>
+<script src="./scripts/jquery-csv/jquery.csv.min.js"></script>
+<script src="./functions.js"></script>
+<script type="text/javascript">
+//Initialisation de la page
+
+
+//Idees : 
+
+
+
+
+
+
+$(function() {
+	
+	//activation des couleurs de fond par défaut
+	$('#mapPathfinder').attr('data-areabisactive', true);
+	//---------------
+	
+	
+	
+});
+
+var addArrow = false;
+var arrowStart = null;
+$('#addArrow').click(function(e) {
+	addArrow = !addArrow;
+	if ( addArrow )
+		$(this).html('&#129414;');
+	else
+		$(this).html('&#8594;');
+	
+	e.preventDefault();
+});
+
+var addDraw = false;
+$('#addDraw').click(function(e) {
+	addDraw = !addDraw;
+	if ( addDraw )
+		$(this).html('&#129414;');
+	else
+		$(this).html('&#128291;');
+	
+	
+	e.preventDefault();
+});
+
+$('#blockMap').click(function(e) {
+console.log("X : " + e.pageX + " - Y : " + e.pageY);
+	var el = $('#aventure option:checked');
+	var aventure = el.data('aventure');
+	var titre = el.data('titre');
+	var prefixrencontre = el.data('prefixrencontre');
+	var prefixdebase = el.data('prefixdebase');
+	var map = el.data('map');
+	var numeroMax = Math.trunc($('#slider-range').slider("option", "max") + 1);
+
+	if ( addDraw )
+	{
+		
+		addDraw = false;
+		$('#addDraw').html('&#128291;');
+		
+		//'star', 'duck', 'fight', 'meet', 'skull'
+		console.log('"' + aventure + '","' + numeroMax.toString().replace('.', '-') + '","REFFFFFFF","rc-' + aventure.toString().replace('.', '-') + '-' + numeroMax.toString().replace('.', '-') + '","at:star","' + e.pageX + ',' + e.pageY + '","CATEGORIEEEEEEEEEEEE","TITREEEEEEEEE","MESSAGE"')
+		//-----------
+		
+		//var coordStar = giveMeADraw(e.pageX, e.pageY, "duck");
+		var coordDraw = workOnDraw(e.pageX, e.pageY);
+		
+		var data = {areaid:"toto", shape:"poly", coords:coordDraw, categorie:"special"};
+		
+		/*var map1 = '';
+		var map2 = '';
+		//"areaid","shape","coords","categorie","numero","titre","description"
+		//console.log(data[row].categorie + '   ' + data[row].numero);
+		map1 += '<area id="' + data.areaid + '" ';
+		map1 += 'class="area" shape="' + data.shape + '" ';
+		map1 += 'coords="' + data.coords + '" ';
+		map1 += 'data-categorie="' + data.categorie + '" ';
+		
+		map1 += 'title="' + '<b>coincoin' + '</b>" ';
+		map1 += '/>\n';
+		
+		
+		map2 += '<area id="' + data.areaid + 'bis" ';
+		map2 += 'class="areabis" shape="' + data.shape + '" ';
+		map2 += 'coords="' + data.coords + '" ';
+		map2 += 'data-categorie="' + data.categorie + '" ';
+		map2 += '/>\n';*/
+		
+		
+		var data = {areaid:"toto", shape:"poly", coords:coordDraw, categorie:"special"};
+		var area = newArea(data, light=false);
+		
+		$('#map1').append(area[0]);
+		$('#map2').append(area[1]);
+		//$('#map1').append(map1);
+		//$('#map2').append(map2);
+		
+		initMap();
+		
+		//4,231,19,247,37,237,35,231,77,197,92,203,114,207,115,189,92,180,126,150,158,180,136,186,133,206,158,201,171,194,212,229,211,236,227,247,245,234,232,215,225,214,191,175,201,158,205,134,186,134,180,157,149,127,241,36,243,10,217,11,124,104,35,11,6,8,9,36,101,127,71,157,62,136,43,133,48,159,56,173,22,216,17,214
+	}
+	
+	
+	
+	if ( addArrow && arrowStart === null )
+		arrowStart = e;
+	else if ( addArrow && arrowStart !== null )
+	{
+		$('#addArrow').html('&#8594;');
+		addArrow = false;
+		var start = arrowStart;
+		arrowStart = null;
+		
+		console.log('"' + aventure + '","' + numeroMax.toString().replace('.', '-') + '","REFFFFFFF","rc-' + aventure.toString().replace('.', '-') + '-' + numeroMax.toString().replace('.', '-') + '","fromto:arrow","' + start.pageX + ',' + start.pageY + ', ' + e.pageX + ',' + e.pageY + '","CATEGORIEEEEEEEEEEEE","TITREEEEEEEEE","MESSAGE"')
+		
+		var data = {areaid:"toto", shape:"fromto:star", coords:'' + start.pageX + ',' + start.pageY + ', ' + e.pageX + ',' + e.pageY, categorie:"special"};
+		var area = newArea(data, light=false);
+		
+		$('#map1').append(area[0]);
+		$('#map2').append(area[1]);
+		
+		initMap();
+		//giveMeADrawFromTo( start.pageX, start.pageY, e.pageX, e.pageY, 'star');
+	}
+});
+
+
+function workOnDraw(centerX, centerY)
+{
+	//var test = [4,231,19,247,37,237,35,231,77,197,92,203,114,207,115,189,92,180,126,150,158,180,136,186,133,206,158,201,171,194,212,229,211,236,227,247,245,234,232,215,225,214,191,175,201,158,205,134,186,134,180,157,149,127,241,36,243,10,217,11,124,104,35,11,6,8,9,36,101,127,71,157,62,136,43,133,48,159,56,173,22,216,17,214];
+	//var test = [245,201,218,228,168,180,157,189,142,177,150,164,129,140,105,162,114,177,99,189,88,181,39,229,12,201,59,152,50,139,66,127,76,134,98,112,40,52,36,21,67,22,127,84,188,24,218,21,215,53,158,113,180,134,193,126,204,137,198,153];
+	//var test = [-centerX, -centerY, 0, 0];
+	//origine x: 227 - Y : 437
+	//destination X : 410 - Y : 421
+	//var origX = 227, origY = 437;
+	var arrow = false;
+	
+	var test = [0, -5, 1, -2, 3, -3, 2, -1, 5, 0, 2, 1, 3, 3, 1, 2, 0, 5, -1, 2, -3, 3, -2, 1, -5, 0, -2, -1, -3, -3, -1, -2];
+	
+	//var test  = [-5,1, -5,-1, -3,-1, -3,-2, 0,0, -3,2, -3,1];
+	//var tete  = [];
+	
+	var coords = '';
+	var coordsZero = '';
+	var hauteur = 4;
+	var largeur = hauteur;
+	
+	
+	var difX = -0;
+	var difY = -0;
+	
+	//var angle = -getAngle(centerPoint, destPoint);
+	
+	var i = 0, pt, ptX, ptY, tmpPt;
+	while ( i < test.length-1 )
+	{
+		//tmpPt = rotate({x:0, y:0}, {x:test[i]+0, y:test[i+1]}, 90);
+		tmpPt ={x:test[i], y:test[i+1]};
+		
+		
+		ptX = centerX + (tmpPt.x+difX)*largeur;
+		ptY = centerY + (tmpPt.y+difY)*hauteur;
+		pt = {x:ptX, y:ptY};
+		
+		coords += (i>0?', ':'') + Math.round(pt.x) + ', ' + Math.round(pt.y);
+		coordsZero += (i>0?", ":"") + Math.round(tmpPt.x + difX) + ',' + Math.round(tmpPt.y + difY);
+		
+		
+		/*coords += (i>0?", ":"") + Math.round(((test[i])*largeur + (i%2==0?centerX + difX*largeur:centerY + difY*largeur))); //or : coords += (i>0?", ":"") + Math.round((i%2==0?centerPoint.x + (test[i]+difX)*largeur:centerPoint.y + (test[i]+difY)*hauteur));
+		coordsZero += (i>0?", ":"") + Math.round(((test[i]) + (i%2==0?difX:difY)));*/
+		
+		i += 2;
+	}
+	
+	console.log(coordsZero);
+	return coords;
+	
+}
+
+
+
+//------ fin de l'initialisation --------
+</script>
+
+</body>
+</html>

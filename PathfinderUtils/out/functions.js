@@ -1,4 +1,5 @@
 //Variables globales
+var dataAventure = '';
 var dataDeBase = '';
 var dataRencontre = '';
 //------------------
@@ -8,8 +9,11 @@ $(window).resize(function(e) {
 	//hideListes();
 	$('div#blockList').css({'font-size': getPxIgnoreZoom(11) + 'px'});
 	$('.mapButtonV2').css({'padding': getPxIgnoreZoom(2) + 'px ' + getPxIgnoreZoom(4) + 'px','-moz-box-shadow': 'inset 0px ' + getPxIgnoreZoom(1) + 'px 0px 0px #a6827e', '-webkit-box-shadow': 'inset 0px ' + getPxIgnoreZoom(1) + 'px 0px 0px #a6827e', 'box-shadow': 'inset 0px ' + getPxIgnoreZoom(1) + 'px 0px 0px #a6827e', '-moz-border-radius': getPxIgnoreZoom(3) + 'px', '-webkit-border-radius': getPxIgnoreZoom(3) + 'px', 'border-radius': getPxIgnoreZoom(3) + 'px', 'border': getPxIgnoreZoom(1) + 'px solid #54381e', 'text-shadow': '0px ' + getPxIgnoreZoom(1) + 'px 0px #4d3534'});
+	
+	if ( $('span#aventure-button').length > 0 )
+		$('#aventure').selectmenu('close');
 });
-//On force le resize pour initialiser
+//On force le resize pour initialiser (notamment les boutons)
 $(window).resize();
 //----------------------------------
 
@@ -77,10 +81,14 @@ $(function() {
 //Jquery ui
 $( function() {
 	$( "#aventure" ).selectmenu({
+		icons: { button: "ui-icon-blank" }, 
 		change: function( event, ui ) {
 			aventureChanged();
 			
 			$("#tabs").tabs("option", "active", 0);
+			//$("#tabs").tabs("refresh");
+			//$('#tabs a[href="#tabDeBase"]').trigger('click');
+			//$('#tabs a[href="#tabRencontre"]').trigger('click');
 			//goToRencontre();
 		}
 	});
@@ -122,94 +130,130 @@ $( function() {
 } );
 //--------------------
 
-//tabs
-$( function() {
-	
-} );
-//----------------
 
 // Chargement des csv et initialisation de la combobox des aventures
 $( function() {
-	//var cheminCSV = 'http://127.0.0.1/PathfinderUtils';
-	
-	//De base
-	$.get('./csv/map1.csv', function(content) {
-		dataDeBase = $.csv.toObjects(content, {separator:',', delimiter:'"', onParseValue: $.csv.hooks.castToScalar});
-		dataDeBase.sort(function(a,b) {
-			if ( a.categorie > b.categorie ) return 1;
-			if ( b.categorie > a.categorie ) return -1;
-			if ( a.numero > b.numero) return 1;
-			if ( b.numero > a.numero ) return -1;
+	//Aventures
+	$.get('./csv/aventures.csv', function(content) {
+		dataAventure = $.csv.toObjects(content, {separator:',', delimiter:'"', onParseValue: $.csv.hooks.castToScalar});
+		dataAventure.sort(function(a,b) {
+			//if ( a.categorie > b.categorie ) return 1;
+			//if ( b.categorie > a.categorie ) return -1;
+			if ( a.aventure > b.aventure) return -1;
+			if ( b.aventure > a.aventure ) return 1;
 			return 0;
 		}); 
 		
-		
-		$.each(dataDeBase, function(key, zone) {
-			//Ajout de la span de référence pour la couleur
-			if ( $('#categories>span.categ' + zone.categorie).length === 0 )
-				$('#categories').append('<span class="categ' + zone.categorie + '" hidden></span>');
+		var selectedValue = null;
+		$('#aventure').empty(); // remove old options
+		$.each(dataAventure, function(key, val) {
+			$('#aventure').append($("<option></option>")
+							.attr("value", val.aventure)
+							.text(val.aventure + ' - ' + val.titre)
+							.data('aventure', val.aventure)
+							.data('titre', val.titre)
+							.data('prefixrencontre', val.prefixrencontre)
+							.data('prefixdebase', val.prefixdebase)
+							.data('map', val.map)
+							);
+			if ( selectedValue === null || selectedValue < val.aventure )
+				selectedValue = val.aventure;
 		});
 		
-		goToMapDeBase();
+		$('#aventure').val(selectedValue);
+		$("#aventure").selectmenu("refresh");
+
+		aventureChanged();
 		
-	}, 'text');
-	
-	//Pour les rencontres
-	$.get('./csv/map2.csv', function(content) {
-		dataRencontre = $.csv.toObjects(content, {separator:',', delimiter:'"', onParseValue: $.csv.hooks.castToScalar});
-		dataRencontre.sort(function(a,b) {
-			if ( a.aventure > b.aventure ) return 1;
-			if ( b.aventure > a.aventure ) return -1;
-			if ( a.numero > b.numero) return 1;
-			if ( b.numero > a.numero ) return -1
-			if ( a.categorie > b.categorie ) return 1;
-			if ( b.categorie > a.categorie ) return -1;
-			return 0;
-		}); 
-		
-		$.each(dataRencontre, function(key, zone) {
-			//Ajout de la span de référence pour la couleur
-			if ( $('#categories>span.categ' + zone.categorie).length === 0 )
-				$('#categories').append('<span class="categ' + zone.categorie + '" hidden></span>');
-		});
-		
-		endInitCsvRencontre();
 		
 	}, 'text');
 	
 	
 } );
-function endInitCsvRencontre() {
-	var tabValues = [];
-	$('#aventure').empty(); // remove old options
-	$.each(dataRencontre, function(key,value) {
-		if ( !tabValues.includes(value.aventure) )
-			tabValues.push(value.aventure);
-	});
-	tabValues.sort(function(a,b) {
-		if ( a > b ) return -1;
-		if ( b > a ) return 1;
-		return 0;
-	});
-	$.each(tabValues, function(key,value) {
-		$('#aventure').append($("<option></option>").attr("value", value).text(value));
-	});
-	
-	$('#aventure').val(tabValues[0]);
-	$("#aventure").selectmenu("refresh");
-	
-	aventureChanged();
-	
-}
 function aventureChanged() {
-	var aventureValue = parseFloat($('#aventure').val());
-	var maxNumero = 0;
-	$.each(dataRencontre, function(key,value) {
-		if ( value.aventure === aventureValue && maxNumero < value.numero )
-			maxNumero = value.numero;
-	});
-	$('#slider-range').slider("option", "max", maxNumero);
-	$('#slider-range').slider("option", "values", [1, maxNumero]);
+	var el = $('#aventure option:checked');
+	var aventure = el.data('aventure');
+	var titre = el.data('titre');
+	var prefixrencontre = el.data('prefixrencontre');
+	var prefixdebase = el.data('prefixdebase');
+	var map = el.data('map');
+	
+	$('#mapPathfinder').attr('src', './map/' + map)
+	
+	dataDeBase = null;
+	//De base
+	if ( prefixdebase !== null ) 
+	{
+		$.get('./csv/' + prefixdebase + 'zonesDeBase.csv', function(content) {
+			dataDeBase = $.csv.toObjects(content, {separator:',', delimiter:'"', onParseValue: $.csv.hooks.castToScalar});
+			dataDeBase.sort(function(a,b) {
+				if ( a.categorie > b.categorie ) return 1;
+				if ( b.categorie > a.categorie ) return -1;
+				if ( a.numero > b.numero) return 1;
+				if ( b.numero > a.numero ) return -1;
+				return 0;
+			}); 
+			
+			$.each(dataDeBase, function(key, zone) {
+				//Ajout de la span de référence pour la couleur
+				if ( $('#categories>span.categ' + zone.categorie).length === 0 )
+					$('#categories').append('<span class="categ' + zone.categorie + '" hidden></span>');
+			});
+			
+			//goToMapDeBase();
+			
+		}, 'text')
+		.always(function() {
+			aventureChangedEnd(aventure, titre, prefixrencontre, map);
+		});
+	}
+	else 
+		aventureChangedEnd(aventure, titre, prefixrencontre, map);
+}
+function aventureChangedEnd(aventure, titre, prefixrencontre, map) {
+	dataRencontre = null;
+	//Pour les rencontres
+	if ( prefixrencontre !== null ) 
+	{
+		$.get('./csv/' + prefixrencontre + 'zonesRencontre.csv', function(content) {
+			dataRencontre = $.csv.toObjects(content, {separator:',', delimiter:'"', onParseValue: $.csv.hooks.castToScalar});
+			dataRencontre.sort(function(a,b) {
+				if ( a.aventure > b.aventure ) return 1;
+				if ( b.aventure > a.aventure ) return -1;
+				if ( a.numero > b.numero) return 1;
+				if ( b.numero > a.numero ) return -1
+				if ( a.categorie > b.categorie ) return 1;
+				if ( b.categorie > a.categorie ) return -1;
+				return 0;
+			}); 
+			
+			$.each(dataRencontre, function(key, zone) {
+				//Ajout de la span de référence pour la couleur
+				if ( $('#categories>span.categ' + zone.categorie).length === 0 )
+					$('#categories').append('<span class="categ' + zone.categorie + '" hidden></span>');
+				
+				//On init l'areaid
+				if ( zone.aventure !== null )
+					zone.areaid = 'rc_' + zone.aventure.toString().replace('.', '-') + '_' + zone.numero.toString().replace('.', '-')
+			});
+			
+			//aventureChanged();
+			var maxNumero = 0;
+			$.each(dataRencontre, function(key,value) {
+				if ( value.aventure === aventure && maxNumero < value.numero )
+					maxNumero = value.numero;
+			});
+			$('#slider-range').slider("option", "max", maxNumero);
+			$('#slider-range').slider("option", "values", [1, maxNumero]);
+			
+		}, 'text');
+	}
+	else{
+		//goToRencontre();
+		$('#slider-range').slider("option", "max", 10);
+		$('#slider-range').slider("option", "values", [1, 10]);
+	}
+	
 }
 //-----------------
 
@@ -241,6 +285,9 @@ function initMapFromData(listeToLoad, data, filtres={}, keepRatio=false)
 	var uneLigne = ( keepRatio && $('#' + listeToLoad + '-2>div').length === 0 );
 	var deuxLignes = ( keepRatio && $('#' + listeToLoad + '-2>div').length > 0 );
 	
+	var tabMapsDeBase = [];
+	var tabMaps = [];
+	var tabListes = [];
 	
 	$('#map1').empty();
 	$('#map2').empty();
@@ -250,21 +297,7 @@ function initMapFromData(listeToLoad, data, filtres={}, keepRatio=false)
 	var total = 0;
 	$.each(data, function(key, zone) 
 	{
-		if ( (filtres.aventure === undefined || filtres.aventure === zone.aventure )
-				&&
-			(filtres.numero === undefined || filtres.numero[0] <= Math.trunc(zone.numero) && Math.trunc(zone.numero) <= filtres.numero[1])
-			)
-		{
-			total++;
-			if ( zone.arearef !== undefined && zone.arearef !== null )
-				total++;
-		}
-	});
-	
-	var row = 0;
-	$.each(data, function(key, zone) 
-	{
-		
+		var nouvRef = null;
 		if ( (filtres.aventure === undefined || filtres.aventure === zone.aventure )
 				&&
 			(filtres.numero === undefined || filtres.numero[0] <= Math.trunc(zone.numero) && Math.trunc(zone.numero) <= filtres.numero[1])
@@ -282,37 +315,48 @@ function initMapFromData(listeToLoad, data, filtres={}, keepRatio=false)
 					}
 				});
 				if ( zoneRef !== null )
-				{
-					nouv = newArea(zoneRef, listeToLoad);
-				
-					$('#map1').append(nouv[0]);
-					$('#map2').append(nouv[1]);
-					if ( uneLigne || (total <= 20 && !deuxLignes) || row < total/2 )
-						$('#' + listeToLoad + '-1').append(nouv[2]);
-					else
-						$('#' + listeToLoad + '-2').append(nouv[2]);
-					row++;
-				}
+					nouvRef = newArea(zoneRef, true);
 			}
 			
+			nouv = newArea(zone);
 			
-			nouv = newArea(zone, listeToLoad);
+			tabMaps.push([nouv[0], nouv[1]]);
+			tabListes.push(nouv[2]);
 			
-			$('#map1').append(nouv[0]);
-			$('#map2').append(nouv[1]);
-			if ( uneLigne || (total <= 20 && !deuxLignes) || row < total/2 )
-				$('#' + listeToLoad + '-1').append(nouv[2]);
-			else
-				$('#' + listeToLoad + '-2').append(nouv[2]);
-			row++;
+			total++;
 			
-			
+			if ( nouvRef !== null )
+			{
+				tabMapsDeBase.push([nouvRef[0], nouvRef[1]]);
+				tabListes.push(nouvRef[2]);
+				total++;
+			}
 			
 			
 		}
 		
 	});
 	
+	//tabMapsDeBase, tabMaps, tabListes
+	$.each(tabMapsDeBase, function(key, map) 
+	{	$('#map2').append(map[1]);	});
+	$.each(tabMaps, function(key, map) 
+	{
+		$('#map2').append(map[1]);
+		$('#map1').append(map[0]);
+	});
+	$.each(tabMapsDeBase, function(key, map) 
+	{	$('#map1').append(map[0]);	});
+	var row = 0;
+	$.each(tabListes, function(key, lien) 
+	{
+		if ( uneLigne || (total <= 20 && !deuxLignes) || row < total/2 )
+			$('#' + listeToLoad + '-1').append(lien);
+		else
+			$('#' + listeToLoad + '-2').append(lien);
+		row++;
+		
+	});
 	/*liste = '<div><span class="hilightMult noSelect categspecial" ';
 	liste += 'data-categorie="special">&#127775;</span>&nbsp;';
 	liste += '<span class="hilightlink" ';
@@ -324,7 +368,7 @@ function initMapFromData(listeToLoad, data, filtres={}, keepRatio=false)
 }
 
 
-function newArea(zone, listeToLoad)
+function newArea(zone, light=false)
 {
 	var coords;
 	if ( zone.shape === 'poly' )
@@ -362,9 +406,9 @@ function newArea(zone, listeToLoad)
 	map2 += '/>';
 	
 	
-	var liste = '<div><span class="hilightMult noSelect categ' + zone.categorie + '" ';
+	var liste = '<div><span class="' + (light?'light ':'') + 'hilightMult noSelect categ' + zone.categorie + '" ';
 	liste += 'data-categorie="' + zone.categorie + '">' + zone.categorie.substr(0, 1).toUpperCase() + '</span>&nbsp;';
-	liste += '<span class="hilightlink" data-areaid="' + zone.areaid + '" ';
+	liste += '<span class="' + (light?'light ':'') + 'hilightlink" data-areaid="' + zone.areaid + '" ';
 	liste += 'data-categorie="' + zone.categorie + '" href="#">';
 	if ( zone.aventure === undefined )
 		liste += zone.titre + ' (' + zone.numero + ')</span></div>';
@@ -461,6 +505,9 @@ function initAreas() {
 			var varNumero = $(this).data('numero');
 			var varTitre = $(this).data('titre');
 			var varMessage = $(this).data('message');
+			if ( varTitre === null ) varTitre = "";
+			if ( varMessage === null ) varMessage = "";
+			
 			bootbox.alert({message: '<center>' + varNumero + ' - <b>' + varTitre + '</b></center><hr/>' + varMessage, backdrop: true, size: 'large'})
 		}
 	}).mouseover(function(e) {//si on sélectionne une area ça surligne le lien
@@ -579,8 +626,10 @@ function giveMeADrawAt(centerX, centerY, dessin, rotation=0, horiz=false, vert=f
 function giveMeADrawFromTo(origineX, origineY, destinationX, destinationY, dessin)
 {//dessin : 
 	var arrow1 = [0,1, 0,-1]; var arrow2 = [-3,-1, -3,-2, 0,0, -3,2, -3,1];
+	var star2 = [-2,-1, -3,-3, -1,-2, 0,-5, 1,-2, 3,-3, 2,-1, 5,0, 2,1, 3,3, 1,2, 0,5, -1,2, -3,3, -2,1];
 //						nom		 a etirer    fixe    hauteur   largeurfixe
-	var tabDessins = {	"arrow": [arrow1,	arrow2,		3, 		3]
+	var tabDessins = {	"arrow": [arrow1,	arrow2,		3, 		3],
+						"star": [arrow1,	star2,		3, 		2],
 					 };
 	
 	var coords = '';
