@@ -1,0 +1,44 @@
+{
+   "aventures": [{
+        "aventure": 0.1,
+        "titre": "Annexe 1 : arrière pays",
+		"prefixrencontre": "pointesable_",
+		"prefixdebase": null,
+        "map": "pointesable_arrierepays.jpg"
+    }, 
+	{
+        "aventure": 0.2,
+        "titre": "Annexe 2 : 3D",
+		"prefixrencontre": null,
+		"prefixdebase": null,
+        "map": "pointesable_3d.jpg"
+    }, 
+	{
+        "aventure": 1,
+        "titre": "Initiation",
+		"prefixrencontre": "pointesable_",
+		"prefixdebase": null,
+        "map": "pointesable_arrierepays.jpg"
+    }, 
+	{
+        "aventure": 2,
+        "titre": "Bienvenue à Pointesable",
+		"prefixrencontre": null,
+		"prefixdebase": "pointesable_",
+        "map": "Pointesable.jpg"
+    }, 
+	{
+        "aventure": 3,
+        "titre": "Balade en foret",
+		"prefixrencontre": null,
+		"prefixdebase": null,
+        "map": "Arthfell_Forest.png"
+    }, 
+	{
+        "aventure": 4.1,
+        "titre": "Retour à Pointesable",
+		"prefixrencontre": "pointesable_",
+		"prefixdebase": "pointesable_",
+        "map": "Pointesable.jpg"
+    }]
+}

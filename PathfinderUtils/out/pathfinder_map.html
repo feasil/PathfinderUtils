@@ -13,70 +13,66 @@
 <body>
 
 <div id="blockMap">
-<img id="mapPathfinder" class="map" src="" usemap="#world">
-<map id="map1" name="world"></map>
-<map id="map2" name="world"></map>
+	<img id="mapPathfinder" class="map" src="" usemap="#world">
+	<map id="map1" name="world"></map>
+	<map id="map2" name="world"></map>
 </div>
 
 <div id="blockList">
-<div id="boutons" class="noSelect">
-<span id="moveListes" class="mapButton mapButtonV2 littleButton">&#8644;</span>&nbsp;<span id="hideShowListes" class="mapButton mapButtonV2 littleButton">&#9651;</span>&nbsp;<span id="buttonChangeMap" class="mapButton mapButtonV2 switchMapButton">toggle colors</span>&nbsp;
-|| <span id="addDraw" class="mapButton mapButtonV2 littleButton">&#128291;</span>&nbsp;<span id="addArrow" class="mapButton mapButtonV2 littleButton">&#8594;</span>
-</div>
+	<div id="boutons" class="noSelect">
+		<span id="moveListes" class="mapButton mapButtonV2 littleButton">&#8644;</span>&nbsp;<span id="hideShowListes" class="mapButton mapButtonV2 littleButton">&#9651;</span>&nbsp;<span id="buttonChangeMap" class="mapButton mapButtonV2 switchMapButton">toggle colors</span>
+		|| <span id="addDraw" class="mapButton mapButtonV2 littleButton">&#128291;</span>&nbsp;<span id="addArrow" class="mapButton mapButtonV2 littleButton">&#8594;</span>
+	</div>
 
-<div id="listes">
-<div id="aventureSelector" class="noSelect">Quelle aventure ?&nbsp;&nbsp;&nbsp;<select name="aventure" id="aventure" data-iconpos="noicon"></select></div>
-<div id="tabs">
-	<ul>
-		<li><a href="#tabRencontre" class="noSelect tab">Rencontres</a></li>
-		<li><a href="#tabDeBase" class="noSelect tab">Environnement</a></li>
-	</ul>
-<div id="tabRencontre">
-<div id="slider-range"><div id="slide-handle-min" class="ui-slider-handle slide-handle noSelect"></div><div id="slide-handle-max" class="ui-slider-handle slide-handle noSelect"></div></div>
-<div id="listeRencontre-1" class="liste1"></div>
-<div id="listeRencontre-2" class="liste2"></div>
+	<div id="listes">
+		<div id="aventureSelector" class="noSelect">Quelle aventure ?&nbsp;&nbsp;&nbsp;<select name="aventure" id="aventure" data-iconpos="noicon"></select></div>
+		<div id="tabs">
+			<ul>
+				<li><a href="#tabRencontre" class="noSelect tab">Rencontres</a></li>
+				<li><a href="#tabDeBase" class="noSelect tab">Environnement</a></li>
+			</ul>
+		<div id="tabRencontre">
+			<div id="slider-range"><div id="slide-handle-min" class="ui-slider-handle slide-handle noSelect"></div><div id="slide-handle-max" class="ui-slider-handle slide-handle noSelect"></div></div>
+			<div id="listeRencontre-1" class="liste1"></div>
+			<div id="listeRencontre-2" class="liste2"></div>
+		</div>
+		<div id="tabDeBase">
+			<div id="listeDeBase-1" class="liste1"></div>
+			<div id="listeDeBase-2" class="liste2"></div>
+		</div>
+		</div>
+	</div>
 </div>
-<div id="tabDeBase">
-<div id="listeDeBase-1" class="liste1"></div>
-<div id="listeDeBase-2" class="liste2"></div>
-</div>
-
-</div>
-</div>
-
-</div>
-
 <div id="categories" hidden></div>
 
-<script type="text/javascript" src="./scripts/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="./scripts/maphilight/jquery.maphilight.min.js"></script>
-<script src="./scripts/tippy/tippy.all.min.js"></script>
-<script src="./scripts/Bootstrap/bootstrap.min.js"></script>
-<script src="./scripts/bootbox/bootbox.min.js"></script>
-<script src="./scripts/jquery-ui/jquery-ui.min.js"></script>
-<script src="./scripts/jquery-csv/jquery.csv.min.js"></script>
-<script src="./functions.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" src="./scripts/jquery-3.3.1.min.js"></script><!-- JQuery -->
+<script type="text/javascript" src="./scripts/maphilight/jquery.maphilight.min.js"></script><!-- pour surligner les areas -->
+<script type="text/javascript" src="./scripts/tippy/tippy.all.min.js"></script><!-- pour surcharger le title des areas -->
+<script type="text/javascript" src="./scripts/Bootstrap/bootstrap.min.js"></script><!-- requis pour Bootbox -->
+<script type="text/javascript" src="./scripts/bootbox/bootbox.min.js"></script><!-- pour les popups de contenu sur les zones -->
+<script type="text/javascript" src="./scripts/jquery-ui/jquery-ui.min.js"></script><!-- pour surcharger les inputs avec du css -->
+
+<script type="text/javascript" src="./functions_transv.js"></script><!-- perso :: fonctions autonomes -->
+<script type="text/javascript" src="./functions.js"></script><!-- perso :: fonctions autonomes -->
+<script type="text/javascript" type="text/javascript">
 //Initialisation de la page
-
-
-//Idees : 
-
-
-
-
-
-
 $(function() {
-	
 	//activation des couleurs de fond par défaut
 	$('#mapPathfinder').attr('data-areabisactive', true);
 	//---------------
-	
-	
-	
 });
+//------ fin de l'initialisation --------
 
+
+
+
+
+
+
+
+//------------------------------------------
+// -- A partir d'ici c'est pour des tests --
+//------------------------------------------
 var addArrow = false;
 var arrowStart = null;
 $('#addArrow').click(function(e) {
@@ -237,8 +233,6 @@ function workOnDraw(centerX, centerY)
 }
 
 
-
-//------ fin de l'initialisation --------
 </script>
 
 </body>

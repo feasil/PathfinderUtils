@@ -1,0 +1,242 @@
+{
+	"rencontres": [{
+		"aventure": 0.1,
+		"numero": 1,
+		"arearef": "",
+		"shape": "at:star",
+		"coords": "414,181",
+		"categorie": "taverne",
+		"titre": "Pointesable",
+		"description": "La ville"
+	  },
+	  {
+		"aventure": 0.1,
+		"numero": 2,
+		"arearef": "",
+		"shape": "at:fight",
+		"coords": "350,267",
+		"categorie": "bataille",
+		"titre": "Orcs",
+		"description": "orcs everywhere"
+	  },
+	  {
+		"aventure": 0.1,
+		"numero": 3,
+		"arearef": "",
+		"shape": "fromto:star",
+		"coords": "349,281, 620,444",
+		"categorie": "divers",
+		"titre": "Dans les champs",
+		"description": ""
+	  },
+	  {
+		"aventure": 0.1,
+		"numero": 4,
+		"arearef": "",
+		"shape": "at:meet",
+		"coords": "686,446",
+		"categorie": "industrie",
+		"titre": "Ca cultive",
+		"description": "MESSAGE"
+	  },
+	  {
+		"aventure": 1,
+		"numero": 1,
+		"arearef": "",
+		"shape": "at:star",
+		"coords": "414,181",
+		"categorie": "taverne",
+		"titre": "Pointesable",
+		"description": "La ville"
+	  },
+	  {
+		"aventure": 1,
+		"numero": 2,
+		"arearef": "",
+		"shape": "at:duck",
+		"coords": "768,222",
+		"categorie": "special",
+		"titre": "Dragon !",
+		"description": "ROAR"
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 1,
+		"arearef": "path-37",
+		"shape": "fromto:arrow",
+		"coords": "552,653, 462,657",
+		"categorie": "taverne",
+		"titre": "Dur réveil",
+		"description": "Réveil à l'auberge, les idées ne sont pas claires. <br>Nos héros décident d'aller à l'hôtel de ville."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 2,
+		"arearef": "path-35",
+		"shape": "at:fight",
+		"coords": "451,656",
+		"categorie": "bataille",
+		"titre": "Pluie de gobelins",
+		"description": "En route vers la mairie, en arrivant au marché, des gobelins sortent de nulle part et sement la pagaille.<br>==> FIGHT !"
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 3,
+		"arearef": "",
+		"shape": "at:skull",
+		"coords": "438,629",
+		"categorie": "dark",
+		"titre": "Krane est mort",
+		"description": "Krane est retrouvé mort sur la place [une dague qui ne semble pas gobeline dans le dos], reconnu par Van Kaer.<br>Les autres commencent à se souvenir qu'il ne leur était pas inconnu.<br><br>Ulmo crache sur le corps."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 3.1,
+		"arearef": "path-15",
+		"shape": "fromto:arrow",
+		"coords": "425,630, 584,428",
+		"categorie": "commerce",
+		"titre": "Usui l'impotent",
+		"description": "Usui se rend compte pendant le combat qu'il n'a pas prié et décide de partir en hâte chez le forgeron en laissant ses compagnons en plan. <br>Il y fera une macabre découverte... La femme du forgeron est morte, visiblement tuée par des gobelins. Le veuf est dévasté."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 3.2,
+		"arearef": "",
+		"shape": "fromto:arrow",
+		"coords": "431,624, 494,542",
+		"categorie": "bataille",
+		"titre": "les courageux sans soigneur",
+		"description": "Les autres continuent leur chemin et tombent sur un groupe de gobelins entrainés par uun piètre chanteur."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 4,
+		"arearef": "",
+		"shape": "at:fight",
+		"coords": "490,531",
+		"categorie": "bataille",
+		"titre": "A bas le chanteur",
+		"description": "Les aventuriers se débarrassent sans peine de la petite troupe."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 5,
+		"arearef": "",
+		"shape": "fromto:arrow",
+		"coords": "499,514, 453,469",
+		"categorie": "divers",
+		"titre": "on continue",
+		"description": "Les rues commencent à devenir plus calme, les exploits des héros associé au travail des gardes a payé."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 6,
+		"arearef": "path-33",
+		"shape": "at:meet",
+		"coords": "454,458",
+		"categorie": "divers",
+		"titre": "Sus aux chiens",
+		"description": "Un noble de passage [Aldern] se fait attaquer par les derniers gobelins présents en ville qui viennent de tuer son chien.<br>Ce moment signe le retour d'Usui et les PJ aident le noble.<br>Aldern propose aux PJ de le retrouver à la Myxine un soir, il saura leur être reconnaissant."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 7.1,
+		"arearef": "path-10",
+		"shape": "fromto:arrow",
+		"coords": "431,447, 337,403",
+		"categorie": "administration",
+		"titre": "Allo police",
+		"description": "passage à la garnison (fermée) puis à l'hotel de ville (maire et prévôt)."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 7.2,
+		"arearef": "path-11",
+		"shape": "fromto:arrow",
+		"coords": "310,393, 365,397",
+		"categorie": "administration",
+		"titre": "Mairie",
+		"description": ""
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 8.1,
+		"arearef": "",
+		"shape": "fromto:arrow",
+		"coords": "336,384, 568,116",
+		"categorie": "CATEGORIEEEEEEEEEEEE",
+		"titre": "hodor",
+		"description": "go voir une porte"
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 8.2,
+		"arearef": "",
+		"shape": "at:meet",
+		"coords": "587,100",
+		"categorie": "divers",
+		"titre": "garde à vous",
+		"description": "un garde affirme que les gobelins ne sont pas arrivés par là. <br>Les traces sont trop difficiles à suivre pour voir d'où ils ont pu arriver."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 9,
+		"arearef": "path-1",
+		"shape": "fromto:arrow",
+		"coords": "580,117, 568,276",
+		"categorie": "spirituel",
+		"titre": "passage à l'église",
+		"description": "le prêtre les soigne et leur dit qu'ils ont de la magie résiduelle.<br>Ils ont peut être été visé par des sorts."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 10.2,
+		"arearef": "",
+		"shape": "at:meet",
+		"coords": "499,401",
+		"categorie": "special",
+		"titre": "Un serrurier mécontent",
+		"description": "Sur le chemin vers chez l'Alchimiste, les PJ tombent sur le serrurier. <br>Il jette des serrures de porte aux pieds de Talaël en l'accusant d'être un escroc et l'informe qu'une grande partie des serrures qu'il a installé [à bas prix] ont été dévérouillées facilement pendant l'attaque des gobelins."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 10.2,
+		"arearef": "path-17",
+		"shape": "fromto:arrow",
+		"coords": "555,280, 484,457",
+		"categorie": "commerce",
+		"titre": "questions et achats",
+		"description": "les pj demandent si Nisk Tander peut savoir ce qui leur est arrivé.<br>Il dit que ça peut être lié à la carotte bleue d'armorique mais il n'en a pas.<br>Achat de potions et de baguettes de fumée."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 11,
+		"arearef": "path-44",
+		"shape": "fromto:arrow",
+		"coords": "485,478, 584,782",
+		"categorie": "bataille",
+		"titre": "Magogo",
+		"description": "Le magicien de la ville, Vorvashali Voon donne à Ulmo des informations sur l'état des PJ."
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 12.1,
+		"arearef": "",
+		"shape": "fromto:arrow",
+		"coords": "580,790, 552,775",
+		"categorie": "taverne",
+		"titre": "chez Talaël",
+		"description": "Certains vont chez Talaël, rue des Moustaches.<br>Talaël, Blarips, Usui?"
+	  },
+	  {
+		"aventure": 4.1,
+		"numero": 12.2,
+		"arearef": "path-37",
+		"shape": "fromto:arrow",
+		"coords": "581,781, 539,686",
+		"categorie": "taverne",
+		"titre": "A la bière",
+		"description": "Les autres retournent à l'auberge discuter avec Ameiko.<br>Ulmo, Van Kaer, Usui?"
+	  }]
+}
