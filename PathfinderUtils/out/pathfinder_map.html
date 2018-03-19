@@ -30,6 +30,7 @@
 			<ul>
 				<li><a href="#tabRencontre" class="noSelect tab">Rencontres</a></li>
 				<li><a href="#tabDeBase" class="noSelect tab">Environnement</a></li>
+				<li><a href="#tabTest" class="noSelect tab">Edition</a></li>
 			</ul>
 		<div id="tabRencontre">
 			<div id="slider-range"><div id="slide-handle-min" class="ui-slider-handle slide-handle noSelect"></div><div id="slide-handle-max" class="ui-slider-handle slide-handle noSelect"></div></div>
@@ -39,6 +40,40 @@
 		<div id="tabDeBase">
 			<div id="listeDeBase-1" class="liste1"></div>
 			<div id="listeDeBase-2" class="liste2"></div>
+		</div>
+		<div id="tabTest">
+			<div id="accordion" class="form-group ">
+				<h3>Aventure</h3>
+				<div>
+					<input class="form-control" id="av-aventure" name="av-aventure" placeholder="Aventure"  type="number" min="0" step=".1" />
+					<input class="form-control" id="av-titre" name="av-titre" placeholder="Titre"  type="text" />
+					<input class="form-control" id="av-prefixrencontre" name="av-prefixrencontre" placeholder="Prefixe json Rencontres"  type="text" />
+					<input class="form-control" id="av-prefixzone" name="av-prefixzone" placeholder="Prefixe json Environnement"  type="text" />
+					<input class="form-control" id="av-map" name="av-map" placeholder="Carte"  type="text" />
+					<button class="btn btn-primary" name="submit" type="submit">Submit</button><input id="aventuresForm" name="aventuresForm" type="hidden" />
+				</div>
+				<h3>Rencontre</h3>
+				<div>
+					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-aventure" name="re-aventure"></select>
+					<input class="form-control" id="numeroInput" name="numeroInput" placeholder="Titre"  type="text" />
+					<input class="form-control" id="prefixrencontreInput" name="prefixrencontreInput" placeholder="Prefixe json Rencontres"  type="text" />
+					<input class="form-control" id="prefixzoneInput" name="prefixzoneInput" placeholder="Prefixe json Environnement"  type="text" />
+					<input class="form-control" id="mapInput" name="mapInput" placeholder="Carte"  type="text" />
+					<button class="btn btn-primary" name="submit" type="submit">Submit</button><input id="aventureInput" name="aventureInput" type="hidden" />
+				<!--"aventure": 0.1,
+				"numero": 1,
+				"arearef": "",
+				"shape": "at:star",
+				"coords": "414,181",
+				"categorie": "taverne",
+				"titre": "Pointesable",
+				"description": "La ville"-->
+				</div>
+				<h3>Zone</h3>
+				<div>
+
+				</div>
+			</div>
 		</div>
 		</div>
 	</div>
@@ -62,7 +97,6 @@ $(function() {
 	//---------------
 });
 //------ fin de l'initialisation --------
-
 
 
 
@@ -103,7 +137,7 @@ console.log("X : " + e.pageX + " - Y : " + e.pageY);
 	var aventure = el.data('aventure');
 	var titre = el.data('titre');
 	var prefixrencontre = el.data('prefixrencontre');
-	var prefixdebase = el.data('prefixdebase');
+	var prefixzone = el.data('prefixzone');
 	var map = el.data('map');
 	var numeroMax = Math.trunc($('#slider-range').slider("option", "max") + 1);
 

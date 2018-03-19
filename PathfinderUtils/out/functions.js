@@ -96,6 +96,8 @@ $( function() {
 				goToMapDeBase();
 			else if ( ui.newPanel.attr('id') === 'tabRencontre' )
 				goToRencontre();
+			else
+				$('#accordion').accordion('refresh');
 		}
 	});
 	
@@ -123,6 +125,10 @@ $( function() {
 		}
 	});
 	
+	$('#accordion').accordion({
+		collapsible: true, 
+		active: false
+	});
 } );
 //--------------------
 
@@ -147,7 +153,7 @@ $( function() {
 							.data('aventure', val.aventure)
 							.data('titre', val.titre)
 							.data('prefixrencontre', val.prefixrencontre)
-							.data('prefixdebase', val.prefixdebase)
+							.data('prefixzone', val.prefixzone)
 							.data('map', val.map)
 							);
 			if ( selectedValue === null || selectedValue < val.aventure )
@@ -157,6 +163,32 @@ $( function() {
 		$("#aventure").selectmenu("refresh");
 		aventureChanged();
 		
+		//Initialisation des inputs d'édition
+		$('#av-aventure').val(''); $('#av-titre').val(''); $('#av-prefixrencontre').val(''); $('#av-prefixzone').val(''); $('#av-map').val('');
+		
+		var av = 0, availablePrefixRencontre = [], availablePrefixZone = [], availableMap = [];
+		$.each(dataAventure, function(key, val) {
+			//Merci javascript pour ta précision dans les additions (4.1 + .1 = 4.199999999999999), le Math.round est là pour contourner ça...
+			if ( av === 0 ) $('#av-aventure').val(Math.round((val.aventure + 0.1) * 1e12) / 1e12);
+			$('#re-aventure').append('<option value="' + val.aventure + '">' + val.aventure + ' - ' + val.titre + '</option>');
+			
+			if ( val.prefixrencontre !== null && !availablePrefixRencontre.includes(val.prefixrencontre) )
+				availablePrefixRencontre.push(val.prefixrencontre);
+			if ( val.prefixzone !== null && !availablePrefixZone.includes(val.prefixzone) )
+				availablePrefixZone.push(val.prefixzone);
+			if ( val.map !== null && !availableMap.includes(val.map) )
+				availableMap.push(val.map);
+			av++;
+		});
+		availablePrefixRencontre.sort(); availablePrefixZone.sort(); availableMap.sort();
+		$('#av-prefixrencontre').autocomplete({source: availablePrefixRencontre, minLength: 0})
+								.focus(function(){$(this).autocomplete("search", $(this).val());});
+		$('#av-prefixzone').autocomplete({source: availablePrefixZone, minLength: 0})
+							.focus(function(){$(this).autocomplete("search", $(this).val());});
+		$('#av-map').autocomplete({source: availableMap, minLength: 0})
+							.focus(function(){$(this).autocomplete("search", $(this).val());});
+		//-----------------------------------
+		
 	}, 'text');
 	
 } );
@@ -165,16 +197,16 @@ function aventureChanged() {
 	var aventure = el.data('aventure');
 	var titre = el.data('titre');
 	var prefixrencontre = el.data('prefixrencontre');
-	var prefixdebase = el.data('prefixdebase');
+	var prefixzone = el.data('prefixzone');
 	var map = el.data('map');
 	
 	$('#mapPathfinder').attr('src', './map/' + map)
 	
 	dataDeBase = null;
 	//De base
-	if ( prefixdebase !== null ) 
+	if ( prefixzone !== null ) 
 	{
-		$.getJSON('./json/' + prefixdebase + 'zones.json', function(content) {
+		$.getJSON('./json/' + prefixzone + 'zones.json', function(content) {
 			dataDeBase = content.zones;
 			dataDeBase.sort(function(a,b) {
 				if ( a.categorie > b.categorie ) return 1;
