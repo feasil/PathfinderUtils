@@ -43,35 +43,85 @@
 		</div>
 		<div id="tabTest">
 			<div id="accordion" class="form-group ">
-				<h3>Aventure</h3>
+				<h3 class="noSelect">Aventure</h3>
 				<div>
-					<input class="form-control" id="av-aventure" name="av-aventure" placeholder="Aventure"  type="number" min="0" step=".1" />
-					<input class="form-control" id="av-titre" name="av-titre" placeholder="Titre"  type="text" />
-					<input class="form-control" id="av-prefixrencontre" name="av-prefixrencontre" placeholder="Prefixe json Rencontres"  type="text" />
-					<input class="form-control" id="av-prefixzone" name="av-prefixzone" placeholder="Prefixe json Environnement"  type="text" />
-					<input class="form-control" id="av-map" name="av-map" placeholder="Carte"  type="text" />
-					<button class="btn btn-primary" name="submit" type="submit">Submit</button><input id="aventuresForm" name="aventuresForm" type="hidden" />
+					<input class="form-control" id="av-aventure" name="av-aventure" placeholder="Numéro *" type="number" min="0" step=".1" />
+					<input class="form-control" id="av-titre" name="av-titre" placeholder="Titre *" type="text" />
+					<input class="form-control" id="av-prefixrencontre" name="av-prefixrencontre" placeholder="Prefixe json Rencontres" type="text" />
+					<input class="form-control" id="av-prefixzone" name="av-prefixzone" placeholder="Prefixe json Environnement" type="text" />
+					<input class="form-control" id="av-map" name="av-map" placeholder="Carte *" type="text" />
+					<button class="btn btn-primary" name="av-button" type="submit">Nouvelle aventure</button>
 				</div>
-				<h3>Rencontre</h3>
-				<div>
-					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-aventure" name="re-aventure"></select>
-					<input class="form-control" id="numeroInput" name="numeroInput" placeholder="Titre"  type="text" />
-					<input class="form-control" id="prefixrencontreInput" name="prefixrencontreInput" placeholder="Prefixe json Rencontres"  type="text" />
-					<input class="form-control" id="prefixzoneInput" name="prefixzoneInput" placeholder="Prefixe json Environnement"  type="text" />
-					<input class="form-control" id="mapInput" name="mapInput" placeholder="Carte"  type="text" />
-					<button class="btn btn-primary" name="submit" type="submit">Submit</button><input id="aventureInput" name="aventureInput" type="hidden" />
-				<!--"aventure": 0.1,
-				"numero": 1,
-				"arearef": "",
-				"shape": "at:star",
-				"coords": "414,181",
-				"categorie": "taverne",
-				"titre": "Pointesable",
-				"description": "La ville"-->
+				<h3 class="noSelect">Zone d'environnement</h3>
+				<div><span id='zo-warning' style="color:#FF0000; font-weight: bold; display: none;">/!\\ pas de prefix zone pour cette aventure</span>
+					<input class="form-control" id="zo-areaid" name="zo-areaid" placeholder="id de zone *" disabled />
+					<input class="form-control" id="zo-numero" name="zo-numero" placeholder="Numéro de zone *"  type="number" min="0" step="1" />
+					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="zo-shape" name="zo-shape" style="width:50%;"><option hidden value=null>Forme *</option>
+						<optgroup label="Simple">
+							<option value="at:duck">Canard</option>
+							<option value="at:fight">Combat</option>
+							<option value="at:skull">Cr&acirc;ne</option>
+							<option value="at:star">Etoile</option>
+							<option value="at:meet">Rencontre</option>
+						</optgroup>
+						<optgroup label="Ligne">
+							<option value="fromto:arrow">Fl&egrave;che</option>
+							<option value="fromto:star">Etoile</option>
+						</optgroup>
+						<optgroup label="Personnalis&eacute;">
+							<option value="poly">Polygone</option>
+						</optgroup>
+					</select><button class="btn btn-primary" id="zo-drawcoords" name="zo-drawcoords" type="submit" disabled>Dessiner la forme</button><input id="zo-coords" name="zo-coords" type="hidden" /><br/>
+					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="zo-categorie" name="zo-categorie"><option hidden value=null>Cat&eacute;gorie</option>
+						<option>Aucune (d&eacute;conseill&eacute;)</option>
+						<option value="divers" class="categdivers">Bleu clair (Divers)</option>
+						<option value="industrie" class="categindustrie">Bleu fonc&eacute; (Industrie)</option>
+						<option value="spirituel" class="categspirituel">Jaune (Spirituel)</option>
+						<option value="bataille" class="categbataille">Orange (Bataille)</option>
+						<option value="commerce" class="categcommerce">Rose (Commerce)</option>
+						<option value="taverne" class="categtaverne">Rouge (Taverne)</option>
+						<option value="administration" class="categadministration">Vert (Administration)</option>
+						<option value="special" class="categspecial">Violet (Sp&eacute;cial)</option>
+					</select>
+					<input class="form-control" id="zo-titre" name="zo-titre" placeholder="Titre *" type="text" />
+					<textarea class="form-control" id="zo-description" name="zo-description" rows="2"  placeholder="Description" ></textarea><input id="zo-prefixzone" name="zo-prefixzone" type="hidden" />
+					<button class="btn btn-primary" name="zo-button" type="submit">Nouvelle zone d'environnement</button>
 				</div>
-				<h3>Zone</h3>
-				<div>
-
+				<h3 class="noSelect">Rencontre</h3>
+				<div><span id='re-warning' style="color:#FF0000; font-weight: bold; display: none;">/!\\ pas de prefix rencontre pour cette aventure</span>
+					<input class="form-control" id="re-aventureshown" name="re-aventureshown" placeholder="Aventure *" disabled /><input id="re-aventure" name="re-aventure" type="hidden" />
+					<input class="form-control" id="re-numero" name="re-numero" placeholder="Numéro de rencontre *"  type="number" min="0" step=".1" />
+					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-arearef" name="re-arearef"><option hidden value=null>Zone environnement associ&eacute;e</option></select><br/>
+					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-shape" name="re-shape" style="width:50%;"><option hidden value=null>Forme *</option>
+						<optgroup label="Simple">
+							<option value="at:duck">Canard</option>
+							<option value="at:fight">Combat</option>
+							<option value="at:skull">Cr&acirc;ne</option>
+							<option value="at:star">Etoile</option>
+							<option value="at:meet">Rencontre</option>
+						</optgroup>
+						<optgroup label="Ligne">
+							<option value="fromto:arrow">Fl&egrave;che</option>
+							<option value="fromto:star">Etoile</option>
+						</optgroup>
+						<optgroup label="Personnalis&eacute;">
+							<option value="poly">Polygone</option>
+						</optgroup>
+					</select><button class="btn btn-primary" id="re-drawcoords" name="re-drawcoords" type="submit" disabled>Dessiner la forme</button><input id="re-coords" name="re-coords" type="hidden" /><br/>
+					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-categorie" name="re-categorie"><option hidden value=null>Cat&eacute;gorie</option>
+						<option>Aucune (d&eacute;conseill&eacute;)</option>
+						<option value="divers" class="categdivers">Bleu clair (Divers)</option>
+						<option value="industrie" class="categindustrie">Bleu fonc&eacute; (Industrie)</option>
+						<option value="spirituel" class="categspirituel">Jaune (Spirituel)</option>
+						<option value="bataille" class="categbataille">Orange (Bataille)</option>
+						<option value="commerce" class="categcommerce">Rose (Commerce)</option>
+						<option value="taverne" class="categtaverne">Rouge (Taverne)</option>
+						<option value="administration" class="categadministration">Vert (Administration)</option>
+						<option value="special" class="categspecial">Violet (Sp&eacute;cial)</option>
+					</select>
+					<input class="form-control" id="re-titre" name="re-titre" placeholder="Titre *" type="text" />
+					<textarea class="form-control" id="re-description" name="re-description" rows="2"  placeholder="Description" ></textarea><input id="re-prefixrencontre" name="re-prefixrencontre" type="hidden" />
+					<button class="btn btn-primary" name="re-button" type="submit">Nouvelle rencontre</button>
 				</div>
 			</div>
 		</div>
@@ -97,9 +147,6 @@ $(function() {
 	//---------------
 });
 //------ fin de l'initialisation --------
-
-
-
 
 
 
