@@ -1,3 +1,9 @@
+//Variables globales
+var editionAventure = null;
+var editionDeBase = null;
+var editionRencontre = null;
+//------------------
+
 //Fonctions pour l'édition
 $( function() {
 	//Ajout de l'onglet Edition
@@ -53,9 +59,70 @@ $( function() {
 			</div>
 		</div>
 	</div>`);
+	
+	
+	$( "#tabs" ).on("tabsactivate", function(event, ui){
+		if ( ui.newPanel.attr('id') === 'tabEdition' )
+		{
+			$('#accordionEdition').accordion('refresh');
+			
+			//Aventure
+			if ( dataAventure !== null )
+				editionAventure = dataAventure.slice(0);
+			else
+				editionAventure = [];
+			//TODO
+			
+			//Zone d'environnement
+			if ( dataDeBase !== null )
+				editionDeBase = dataDeBase.slice(0);
+			else
+				editionDeBase = [];
+			//TODO
+			
+			//Rencontre
+			if ( dataRencontre !== null )
+				editionRencontre = dataRencontre.slice(0);
+			else
+				editionRencontre = [];
+			updateEditionRencontrePreview();
+			//------------------
+		}
+	});
+	$('#accordionEdition').accordion({
+		collapsible: true, 
+		active: 2 //TODO a retirer apres tests false ou index
+	});
+	
+	
 });
 
-
+function updateEditionRencontrePreview() {
+	$('#re-preview').empty();
+	$.each(editionRencontre, function(key,value) {
+		var json = JSON.stringify(value, function remplaçant(key, value) { if ( key === "areaid") return undefined; else return value; }, '\t');
+		$('#re-preview').append('<li title="'
+							+ json.replace(/"/g, '&quot;') + '"><a href="#" id="delete_re-' + value.numero + '">supprimer</a> ' 
+							+ value.numero + ' - ' + value.titre 
+							+ '</li>');
+	});
+	$('a[id^=delete_re]').click(function(e){
+		var num = parseFloat($(this).attr('id').substring(10, $(this).attr('id').length));
+		console.log(num);
+		var aSupprimer = null;
+		$.each(editionRencontre, function(key,value) {
+			if ( value.numero === num )
+			{
+				aSupprimer = value;
+				return;
+			}
+		});
+		if ( aSupprimer !== null )
+			editionRencontre.splice(editionRencontre.indexOf(aSupprimer), 1);
+		updateEditionRencontrePreview();
+		e.preventDefault();
+	});
+}
 
 
 
@@ -98,6 +165,12 @@ function initEditionZone() {
 	var titre = el.data('titre');
 	var prefixzone = el.data('prefixzone');
 	
+	//Rencontre
+	if ( editionDeBase === null && dataDeBase !== null )
+		editionDeBase = dataDeBase.slice(0);
+	else
+		editionDeBase = [];
+	
 	$('#zo-shape').val($('#zo-shape option:first').val()); $('#zo-drawcoords').attr('disabled', true); $('#zo-coords').val(null); 
 	$('#zo-categorie').val($('#zo-categorie option:first').val()); $('#zo-titre').val(null); $('#zo-description').val(null); 
 	
@@ -112,10 +185,10 @@ function initEditionZone() {
 		$('#zo-prefixzone').val(prefixzone);
 	}
 	
-	if ( dataDeBase !== null) 
+	if ( editionDeBase !== null) 
 	{
 		var maxNumero = 0, maxareaid = 0;
-		$.each(dataDeBase, function(key, val) {
+		$.each(editionDeBase, function(key, val) {
 			if ( val.numero > maxNumero )
 				maxNumero = val.numero;
 			var id = parseInt(val.areaid.substring(5,val.areaid.length))
@@ -137,6 +210,12 @@ function initEditionRencontre() {
 	var titre = el.data('titre');
 	var prefixrencontre = el.data('prefixrencontre');
 	
+	//Rencontre
+	if ( editionRencontre === null && dataRencontre !== null )
+		editionRencontre = dataRencontre.slice(0);
+	else
+		editionRencontre = [];
+	
 	$('#re-shape').val($('#re-shape option:first').val()); $('#re-drawcoords').attr('disabled', true); $('#re-coords').val(null); 
 	$('#re-categorie').val($('#re-categorie option:first').val()); $('#re-titre').val(null); $('#re-description').val(null); 
 	
@@ -154,10 +233,10 @@ function initEditionRencontre() {
 		$('#re-prefixrencontre').val(prefixrencontre);
 	}
 	
-	if ( dataRencontre !== null) 
+	if ( editionRencontre !== null) 
 	{
 		var max = 0;
-		$.each(dataRencontre, function(key, val) {
+		$.each(editionRencontre, function(key, val) {
 			if ( val.numero > max )
 				max = val.numero;
 		});

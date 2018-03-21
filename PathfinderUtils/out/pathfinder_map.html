@@ -85,19 +85,13 @@ $(function() { //A déplacer dans functions_edition.js
 		}
 		
 		//dataDeBase = null;
-		var allAventures;
-		if ( dataAventure === null )
-			allAventures = [];
-		else
-			allAventures = dataAventure.slice(0);
-		allAventures.push(nouvelleAventure);
-		allAventures = {"aventures": allAventures};
+		if ( editionAventure === null )
+			editionAventure = [];
+		editionAventure.push(nouvelleAventure);
+		var jsonAventures = {"aventures": editionAventure};
 		
-		downloadFile(JSON.stringify(allAventures) , 'aventures.json');
-		/*if ( nouvelleAventure.prefixrencontre !== null )
-			downloadFile(JSON.stringify(allAventures) , 'aventures.json', 'text/plain');
-		if ( nouvelleAventure.prefixrencontre !== null )
-			downloadFile(JSON.stringify(allAventures) , 'aventures.json', 'text/plain');*/
+		downloadFile(JSON.stringify(jsonAventures, function remplaçant(key, value) { if ( key === "areaid") return undefined; else return value; }, '\t') , 'aventures.json');
+		
 		return false;
 	});
 	
@@ -129,16 +123,16 @@ $(function() { //A déplacer dans functions_edition.js
 			}
 			return false;
 		}
-	  
-		var allRencontres;
-		if ( dataRencontre === null )
-			allRencontres = [];
-		else
-			allRencontres = dataRencontre.slice(0);
-		allRencontres.push(nouvelleRencontre);
-		allRencontres = {"rencontres": allRencontres};
 		
-		downloadFile(JSON.stringify(allRencontres) , fileName);
+		
+		if ( editionRencontre === null )
+			editionRencontre = [];
+		editionRencontre.push(nouvelleRencontre);
+		
+		
+		updateEditionRencontrePreview();
+		//var jsonRencontres = {"rencontres": editionRencontre};
+		//downloadFile(JSON.stringify(jsonRencontres, function remplaçant(key, value) { if ( key === "areaid") return undefined; else return value; }, '\t') , fileName);
 		
 		//TODO
 		return false;

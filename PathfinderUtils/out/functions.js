@@ -96,14 +96,6 @@ $( function() {
 				goToMapDeBase();
 			else if ( ui.newPanel.attr('id') === 'tabRencontre' )
 				goToRencontre();
-			else if ( $('#accordionEdition').length )
-			{
-				$('#accordionEdition').accordion('refresh');
-				$('#re-preview').empty();
-				$.each(dataRencontre, function(key,value) {
-					$('#re-preview').append('<li id="">ss</li>');
-				});
-			}
 		}
 		, active:2 //TODO a retirer apres tests
 	});
@@ -131,12 +123,6 @@ $( function() {
 		}
 	});
 	
-	if ( $('#accordionEdition').length ) {
-		$('#accordionEdition').accordion({
-			collapsible: true, 
-			active: 2 //TODO a retirer apres tests false ou index
-		});
-	}
 } );
 //--------------------
 
