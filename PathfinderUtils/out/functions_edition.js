@@ -18,7 +18,6 @@ $( function() {
 			<h3 class="noSelect">Zone d'environnement</h3>
 			<div><span id='zo-warning' style="color:#FF0000; font-weight: bold; display: none;">/!\\ pas de prefix zone pour cette aventure</span>
 				<form action="/" method="post"  id="zo-form">
-					<input class="form-control" id="zo-areaid" name="zo-areaid" placeholder="id de zone *" disabled />
 					<input class="form-control" id="zo-numero" name="zo-numero" placeholder="Numéro de zone *"  type="number" min="0" step="1" />
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="zo-shape" name="zo-shape" style="width:50%;"><option hidden disabled value="">Forme *</option>
 						<optgroup label="Simple"><option value="at:duck">Canard</option><option value="at:fight">Combat</option><option value="at:skull">Cr&acirc;ne</option><option value="at:star">Etoile</option><option value="at:meet">Rencontre</option></optgroup>
@@ -36,7 +35,6 @@ $( function() {
 			<h3 class="noSelect">Rencontre</h3>
 			<div><span id='re-warning' style="color:#FF0000; font-weight: bold; display: none;">/!\\ pas de prefix rencontre pour cette aventure</span>
 				<form action="/" method="post"  id="re-form">
-					<input class="form-control" id="re-aventureshown" name="re-aventureshown" placeholder="Aventure *" disabled /><input id="re-aventure" name="re-aventure" type="hidden" />
 					<input class="form-control" id="re-numero" name="re-numero" placeholder="Numéro de rencontre *"  type="number" min="0" step=".1" />
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-arearef" name="re-arearef"><option hidden disabled value="">Zone environnement associ&eacute;e</option></select><br/>
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-shape" name="re-shape" style="width:50%;"><option hidden disabled value="">Forme *</option>
@@ -50,6 +48,7 @@ $( function() {
 					<input class="form-control" id="re-titre" name="re-titre" placeholder="Titre *" type="text" />
 					<textarea class="form-control" id="re-description" name="re-description" rows="1.5"  placeholder="Description" ></textarea><input id="re-prefixrencontre" name="re-prefixrencontre" type="hidden" />
 					<button class="btn btn-primary" id="re-button" name="re-button" type="submit" form="re-form">Nouvelle rencontre</button>
+					<ul id="re-preview"></ul>
 				<form>
 			</div>
 		</div>
@@ -135,11 +134,9 @@ function initEditionZone() {
 
 function initEditionRencontre() {
 	var el = $('#aventure option:checked');
-	var aventure = el.data('aventure');
 	var titre = el.data('titre');
 	var prefixrencontre = el.data('prefixrencontre');
 	
-	$('#re-aventureshown').val(aventure + ' - ' + titre); $('#re-aventure').val(aventure);
 	$('#re-shape').val($('#re-shape option:first').val()); $('#re-drawcoords').attr('disabled', true); $('#re-coords').val(null); 
 	$('#re-categorie').val($('#re-categorie option:first').val()); $('#re-titre').val(null); $('#re-description').val(null); 
 	
@@ -161,7 +158,7 @@ function initEditionRencontre() {
 	{
 		var max = 0;
 		$.each(dataRencontre, function(key, val) {
-			if ( val.aventure === aventure && val.numero > max )
+			if ( val.numero > max )
 				max = val.numero;
 		});
 		$('#re-numero').val(Math.trunc(max) + 1);
@@ -170,13 +167,13 @@ function initEditionRencontre() {
 	if ( dataDeBase !== null )
 	{
 		var zones = [];
-		$.each(dataDeBase, function(key, val) { zones.push([val.numero, val.titre, val.areaid]); });
+		$.each(dataDeBase, function(key, val) { zones.push([val.numero, val.titre]); });
 		zones.sort(function(a,b) { 
 				if ( a[0] > b[0] ) return 1;
 				if ( b[0] > a[0] ) return -1;
 				return 0;
 			});
-	 	$.each(zones, function(key, val) { $('#re-arearef').append('<option value="' + val[2] + '">' + val[0] + ' - ' + val[1] + '</option>'); });
+	 	$.each(zones, function(key, val) { $('#re-arearef').append('<option value="' + val[0] + '">' + val[0] + ' - ' + val[1] + '</option>'); });
 	}
 }
 //-------------------------

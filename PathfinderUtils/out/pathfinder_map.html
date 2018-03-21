@@ -43,7 +43,7 @@
 		</div>
 	</div>
 </div>
-<div id="categories" hidden></div>
+<div id="categories" hidden="hidden"></div>
 
 <script type="text/javascript" src="./scripts/jquery-3.3.1.min.js"></script><!-- JQuery -->
 <script type="text/javascript" src="./scripts/maphilight/jquery.maphilight.min.js"></script><!-- pour surligner les areas -->
@@ -103,7 +103,6 @@ $(function() { //A déplacer dans functions_edition.js
 	
 	$('#re-form').submit(function(){
 		var nouvelleRencontre = {
-			"aventure": parseFloat($('#re-aventure').val()),
 			"numero": parseFloat($('#re-numero').val()),
 			"arearef": ($('#re-arearef').val()===""?null:$('#re-arearef').val()),
 			"shape": ($('#re-shape').val()===""?null:$('#re-shape').val()),
@@ -115,14 +114,12 @@ $(function() { //A déplacer dans functions_edition.js
 		var fileName = ($('#re-prefixrencontre').val()===""?null:$('#re-prefixrencontre').val() + '_rencontres.json');
 		
 		if ( fileName === null 
-			|| nouvelleRencontre.aventure === null 
 			|| nouvelleRencontre.numero === null 
 			|| nouvelleRencontre.shape === null 
 			|| nouvelleRencontre.coords === null 
 			|| nouvelleRencontre.categorie === null 
 			|| nouvelleRencontre.titre === null )
 		{
-			$('#re-aventureshown').attr('required', true);
 			$('#re-numero').attr('required', true);
 			$('#re-shape').attr('required', true);
 			$('#re-categorie').attr('required', true);

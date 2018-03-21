@@ -1,0 +1,20 @@
+{
+	"rencontres": [{
+		"numero": 1,
+		"arearef": null,
+		"shape": "at:star",
+		"coords": "414,181",
+		"categorie": "taverne",
+		"titre": "Pointesable",
+		"description": "La ville"
+	  },
+	  {
+		"numero": 2,
+		"arearef": null,
+		"shape": "at:duck",
+		"coords": "768,222",
+		"categorie": "special",
+		"titre": "Dragon !",
+		"description": "ROAR"
+	  }]
+}

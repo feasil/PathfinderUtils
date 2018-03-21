@@ -2,12 +2,10 @@
 
 /**
 Gestion des filtres de zone
-filtres : aventure =, numero [min, max]
+filtres : numero [min, max]
 */
 function isZoneValide(zone, filtres) {
 	return ( 
-			(filtres.aventure === undefined || filtres.aventure === zone.aventure )
-				&&
 			(filtres.numero === undefined || filtres.numero[0] <= Math.trunc(zone.numero) && Math.trunc(zone.numero) <= filtres.numero[1])
 			);
 }
@@ -56,7 +54,7 @@ function newArea(zone, light=false)
 	liste += 'data-categorie="' + zone.categorie + '">' + zone.categorie.substr(0, 1).toUpperCase() + '</span>&nbsp;';
 	liste += '<span class="' + (light?'light ':'') + 'hilightlink" data-areaid="' + zone.areaid + '" ';
 	liste += 'data-categorie="' + zone.categorie + '" href="#">';
-	if ( zone.aventure === undefined )
+	if ( light )
 		liste += zone.titre + ' (' + zone.numero + ')</span></div>';
 	else
 		liste += zone.numero + ' - ' + zone.titre + '</span></div>';

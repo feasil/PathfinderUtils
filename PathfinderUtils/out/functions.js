@@ -97,7 +97,13 @@ $( function() {
 			else if ( ui.newPanel.attr('id') === 'tabRencontre' )
 				goToRencontre();
 			else if ( $('#accordionEdition').length )
+			{
 				$('#accordionEdition').accordion('refresh');
+				$('#re-preview').empty();
+				$.each(dataRencontre, function(key,value) {
+					$('#re-preview').append('<li id="">ss</li>');
+				});
+			}
 		}
 		, active:2 //TODO a retirer apres tests
 	});
@@ -203,6 +209,9 @@ function aventureChanged() {
 				//Ajout de la span de référence pour la couleur
 				if ( $('#categories>span.categ' + zone.categorie).length === 0 )
 					$('#categories').append('<span class="categ' + zone.categorie + '" hidden></span>');
+				
+				//On init l'areaid
+				zone.areaid = 'path_' + zone.numero.toString().replace('.', '-');
 			});
 			
 		}, 'text')
@@ -225,8 +234,6 @@ function aventureChangedEnd(aventure, titre, prefixrencontre, map) {
 		$.getJSON('./json/' + prefixrencontre + '_rencontres.json', function(content) {
 			dataRencontre = content.rencontres;
 			dataRencontre.sort(function(a,b) {
-				if ( a.aventure > b.aventure ) return 1;
-				if ( b.aventure > a.aventure ) return -1;
 				if ( a.numero > b.numero) return 1;
 				if ( b.numero > a.numero ) return -1
 				if ( a.categorie > b.categorie ) return 1;
@@ -240,12 +247,11 @@ function aventureChangedEnd(aventure, titre, prefixrencontre, map) {
 					$('#categories').append('<span class="categ' + zone.categorie + '" hidden></span>');
 				
 				//On init l'areaid
-				if ( zone.aventure !== null )
-					zone.areaid = 'rc_' + zone.aventure.toString().replace('.', '-') + '_' + zone.numero.toString().replace('.', '-')
+				zone.areaid = 'rc_' + zone.numero.toString().replace('.', '-');
 			});
 			
 			$.each(dataRencontre, function(key,value) {
-				if ( value.aventure === aventure && maxNumero < value.numero )
+				if ( maxNumero < value.numero )
 					maxNumero = value.numero;
 			});
 			
@@ -279,14 +285,13 @@ function goToMapDeBase() {
 Prépare la map et la liste pour afficher les rencontres
 */
 function goToRencontre(forceValues=null, keepRatio=false) {
-	var aventureValue = parseFloat($('#aventure').val());
 	var numeroValues;
 	if ( forceValues === null )
 		numeroValues = $('#slider-range').slider("option", "values");
 	else
 		numeroValues = forceValues;
 	
-	loadDataIntoMap('listeRencontre', dataRencontre, {aventure:aventureValue, numero:numeroValues}, keepRatio);
+	loadDataIntoMap('listeRencontre', dataRencontre, {numero:numeroValues}, keepRatio);
 }
 
 
@@ -311,7 +316,7 @@ function loadDataIntoMap(listeToLoad, data, filtres={}, keepRatio=false)
 		if ( isZoneValide(zone, filtres) ) { //Controle du filtre 
 			if ( zone.arearef !== undefined && zone.arearef !== null ) {
 				$.each(dataDeBase, function(key, ref) {
-					if ( ref.areaid === zone.arearef ) {
+					if ( ref.areaid === 'path_' + zone.arearef ) {
 						nouvRef = newArea(ref, true);
 						return; 
 					}
