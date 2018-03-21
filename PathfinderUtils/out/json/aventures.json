@@ -2,7 +2,7 @@
    "aventures": [{
         "aventure": 0.1,
         "titre": "Annexe 1 : arrière pays",
-		"prefixrencontre": "pointesable_",
+		"prefixrencontre": "pointesable",
 		"prefixzone": null,
         "map": "pointesable_arrierepays.jpg"
     }, 
@@ -16,7 +16,7 @@
 	{
         "aventure": 1,
         "titre": "Initiation",
-		"prefixrencontre": "pointesable_",
+		"prefixrencontre": "pointesable",
 		"prefixzone": null,
         "map": "pointesable_arrierepays.jpg"
     }, 
@@ -24,7 +24,7 @@
         "aventure": 2,
         "titre": "Bienvenue à Pointesable",
 		"prefixrencontre": null,
-		"prefixzone": "pointesable_",
+		"prefixzone": "pointesable",
         "map": "Pointesable.jpg"
     }, 
 	{
@@ -37,8 +37,8 @@
 	{
         "aventure": 4.1,
         "titre": "Retour à Pointesable",
-		"prefixrencontre": "pointesable_",
-		"prefixzone": "pointesable_",
+		"prefixrencontre": "pointesable",
+		"prefixzone": "pointesable",
         "map": "Pointesable.jpg"
     }]
 }

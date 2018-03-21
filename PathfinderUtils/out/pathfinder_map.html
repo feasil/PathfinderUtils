@@ -30,7 +30,6 @@
 			<ul>
 				<li><a href="#tabRencontre" class="noSelect tab">Rencontres</a></li>
 				<li><a href="#tabDeBase" class="noSelect tab">Environnement</a></li>
-				<li><a href="#tabTest" class="noSelect tab">Edition</a></li>
 			</ul>
 		<div id="tabRencontre">
 			<div id="slider-range"><div id="slide-handle-min" class="ui-slider-handle slide-handle noSelect"></div><div id="slide-handle-max" class="ui-slider-handle slide-handle noSelect"></div></div>
@@ -40,90 +39,6 @@
 		<div id="tabDeBase">
 			<div id="listeDeBase-1" class="liste1"></div>
 			<div id="listeDeBase-2" class="liste2"></div>
-		</div>
-		<div id="tabTest">
-			<div id="accordion" class="form-group ">
-				<h3 class="noSelect">Aventure</h3>
-				<div>
-					<input class="form-control" id="av-aventure" name="av-aventure" placeholder="Numéro *" type="number" min="0" step=".1" />
-					<input class="form-control" id="av-titre" name="av-titre" placeholder="Titre *" type="text" />
-					<input class="form-control" id="av-prefixrencontre" name="av-prefixrencontre" placeholder="Prefixe json Rencontres" type="text" />
-					<input class="form-control" id="av-prefixzone" name="av-prefixzone" placeholder="Prefixe json Environnement" type="text" />
-					<input class="form-control" id="av-map" name="av-map" placeholder="Carte *" type="text" />
-					<button class="btn btn-primary" name="av-button" type="submit">Nouvelle aventure</button>
-				</div>
-				<h3 class="noSelect">Zone d'environnement</h3>
-				<div><span id='zo-warning' style="color:#FF0000; font-weight: bold; display: none;">/!\\ pas de prefix zone pour cette aventure</span>
-					<input class="form-control" id="zo-areaid" name="zo-areaid" placeholder="id de zone *" disabled />
-					<input class="form-control" id="zo-numero" name="zo-numero" placeholder="Numéro de zone *"  type="number" min="0" step="1" />
-					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="zo-shape" name="zo-shape" style="width:50%;"><option hidden value=null>Forme *</option>
-						<optgroup label="Simple">
-							<option value="at:duck">Canard</option>
-							<option value="at:fight">Combat</option>
-							<option value="at:skull">Cr&acirc;ne</option>
-							<option value="at:star">Etoile</option>
-							<option value="at:meet">Rencontre</option>
-						</optgroup>
-						<optgroup label="Ligne">
-							<option value="fromto:arrow">Fl&egrave;che</option>
-							<option value="fromto:star">Etoile</option>
-						</optgroup>
-						<optgroup label="Personnalis&eacute;">
-							<option value="poly">Polygone</option>
-						</optgroup>
-					</select><button class="btn btn-primary" id="zo-drawcoords" name="zo-drawcoords" type="submit" disabled>Dessiner la forme</button><input id="zo-coords" name="zo-coords" type="hidden" /><br/>
-					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="zo-categorie" name="zo-categorie"><option hidden value=null>Cat&eacute;gorie</option>
-						<option>Aucune (d&eacute;conseill&eacute;)</option>
-						<option value="divers" class="categdivers">Bleu clair (Divers)</option>
-						<option value="industrie" class="categindustrie">Bleu fonc&eacute; (Industrie)</option>
-						<option value="spirituel" class="categspirituel">Jaune (Spirituel)</option>
-						<option value="bataille" class="categbataille">Orange (Bataille)</option>
-						<option value="commerce" class="categcommerce">Rose (Commerce)</option>
-						<option value="taverne" class="categtaverne">Rouge (Taverne)</option>
-						<option value="administration" class="categadministration">Vert (Administration)</option>
-						<option value="special" class="categspecial">Violet (Sp&eacute;cial)</option>
-					</select>
-					<input class="form-control" id="zo-titre" name="zo-titre" placeholder="Titre *" type="text" />
-					<textarea class="form-control" id="zo-description" name="zo-description" rows="2"  placeholder="Description" ></textarea><input id="zo-prefixzone" name="zo-prefixzone" type="hidden" />
-					<button class="btn btn-primary" name="zo-button" type="submit">Nouvelle zone d'environnement</button>
-				</div>
-				<h3 class="noSelect">Rencontre</h3>
-				<div><span id='re-warning' style="color:#FF0000; font-weight: bold; display: none;">/!\\ pas de prefix rencontre pour cette aventure</span>
-					<input class="form-control" id="re-aventureshown" name="re-aventureshown" placeholder="Aventure *" disabled /><input id="re-aventure" name="re-aventure" type="hidden" />
-					<input class="form-control" id="re-numero" name="re-numero" placeholder="Numéro de rencontre *"  type="number" min="0" step=".1" />
-					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-arearef" name="re-arearef"><option hidden value=null>Zone environnement associ&eacute;e</option></select><br/>
-					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-shape" name="re-shape" style="width:50%;"><option hidden value=null>Forme *</option>
-						<optgroup label="Simple">
-							<option value="at:duck">Canard</option>
-							<option value="at:fight">Combat</option>
-							<option value="at:skull">Cr&acirc;ne</option>
-							<option value="at:star">Etoile</option>
-							<option value="at:meet">Rencontre</option>
-						</optgroup>
-						<optgroup label="Ligne">
-							<option value="fromto:arrow">Fl&egrave;che</option>
-							<option value="fromto:star">Etoile</option>
-						</optgroup>
-						<optgroup label="Personnalis&eacute;">
-							<option value="poly">Polygone</option>
-						</optgroup>
-					</select><button class="btn btn-primary" id="re-drawcoords" name="re-drawcoords" type="submit" disabled>Dessiner la forme</button><input id="re-coords" name="re-coords" type="hidden" /><br/>
-					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-categorie" name="re-categorie"><option hidden value=null>Cat&eacute;gorie</option>
-						<option>Aucune (d&eacute;conseill&eacute;)</option>
-						<option value="divers" class="categdivers">Bleu clair (Divers)</option>
-						<option value="industrie" class="categindustrie">Bleu fonc&eacute; (Industrie)</option>
-						<option value="spirituel" class="categspirituel">Jaune (Spirituel)</option>
-						<option value="bataille" class="categbataille">Orange (Bataille)</option>
-						<option value="commerce" class="categcommerce">Rose (Commerce)</option>
-						<option value="taverne" class="categtaverne">Rouge (Taverne)</option>
-						<option value="administration" class="categadministration">Vert (Administration)</option>
-						<option value="special" class="categspecial">Violet (Sp&eacute;cial)</option>
-					</select>
-					<input class="form-control" id="re-titre" name="re-titre" placeholder="Titre *" type="text" />
-					<textarea class="form-control" id="re-description" name="re-description" rows="2"  placeholder="Description" ></textarea><input id="re-prefixrencontre" name="re-prefixrencontre" type="hidden" />
-					<button class="btn btn-primary" name="re-button" type="submit">Nouvelle rencontre</button>
-				</div>
-			</div>
 		</div>
 		</div>
 	</div>
@@ -137,6 +52,7 @@
 <script type="text/javascript" src="./scripts/bootbox/bootbox.min.js"></script><!-- pour les popups de contenu sur les zones -->
 <script type="text/javascript" src="./scripts/jquery-ui/jquery-ui.min.js"></script><!-- pour surcharger les inputs avec du css -->
 
+<script type="text/javascript" src="./functions_edition.js"></script><!-- perso :: fonctions pour l'édition -- a retirer en Prod -->
 <script type="text/javascript" src="./functions_transv.js"></script><!-- perso :: fonctions autonomes -->
 <script type="text/javascript" src="./functions.js"></script><!-- perso :: fonctions autonomes -->
 <script type="text/javascript" type="text/javascript">
@@ -147,6 +63,165 @@ $(function() {
 	//---------------
 });
 //------ fin de l'initialisation --------
+
+$(function() { //A déplacer dans functions_edition.js
+	$('#av-form').submit(function(){
+		var nouvelleAventure = {
+			"aventure": parseFloat($('#av-aventure').val()),
+			"titre": ($('#av-titre').val()===""?null:$('#av-titre').val()),
+			"prefixrencontre": ($('#av-prefixrencontre').val()===""?null:$('#av-prefixrencontre').val()),
+			"prefixzone": ($('#av-prefixzone').val()===""?null:$('#av-prefixzone').val()),
+			"map": ($('#av-map').val()===""?null:$('#av-map').val())
+		};
+		
+		if ( nouvelleAventure.aventure === null 
+			|| nouvelleAventure.titre === null 
+			|| nouvelleAventure.map === null )
+		{
+			$('#av-aventure').attr('required', true);
+			$('#av-titre').attr('required', true);
+			$('#av-map').attr('required', true);
+			return false;
+		}
+		
+		//dataDeBase = null;
+		var allAventures;
+		if ( dataAventure === null )
+			allAventures = [];
+		else
+			allAventures = dataAventure.slice(0);
+		allAventures.push(nouvelleAventure);
+		allAventures = {"aventures": allAventures};
+		
+		downloadFile(JSON.stringify(allAventures) , 'aventures.json');
+		/*if ( nouvelleAventure.prefixrencontre !== null )
+			downloadFile(JSON.stringify(allAventures) , 'aventures.json', 'text/plain');
+		if ( nouvelleAventure.prefixrencontre !== null )
+			downloadFile(JSON.stringify(allAventures) , 'aventures.json', 'text/plain');*/
+		return false;
+	});
+	
+	$('#re-form').submit(function(){
+		var nouvelleRencontre = {
+			"aventure": parseFloat($('#re-aventure').val()),
+			"numero": parseFloat($('#re-numero').val()),
+			"arearef": ($('#re-arearef').val()===""?null:$('#re-arearef').val()),
+			"shape": ($('#re-shape').val()===""?null:$('#re-shape').val()),
+			"coords": ($('#re-coords').val()===""?null:$('#re-coords').val()),
+			"categorie": ($('#re-categorie').val()===""?null:$('#re-categorie').val()),
+			"titre": ($('#re-titre').val()===""?null:$('#re-titre').val()),
+			"description": ($('#re-description').val()===""?null:$('#re-description').val())
+		};
+		var fileName = ($('#re-prefixrencontre').val()===""?null:$('#re-prefixrencontre').val() + '_rencontres.json');
+		
+		if ( fileName === null 
+			|| nouvelleRencontre.aventure === null 
+			|| nouvelleRencontre.numero === null 
+			|| nouvelleRencontre.shape === null 
+			|| nouvelleRencontre.coords === null 
+			|| nouvelleRencontre.categorie === null 
+			|| nouvelleRencontre.titre === null )
+		{
+			$('#re-aventureshown').attr('required', true);
+			$('#re-numero').attr('required', true);
+			$('#re-shape').attr('required', true);
+			$('#re-categorie').attr('required', true);
+			$('#re-titre').attr('required', true);
+			if ( nouvelleRencontre.coords === null ) {
+				$('#re-drawcoords').css('color', '#FF2222;');
+			}
+			return false;
+		}
+	  
+		var allRencontres;
+		if ( dataRencontre === null )
+			allRencontres = [];
+		else
+			allRencontres = dataRencontre.slice(0);
+		allRencontres.push(nouvelleRencontre);
+		allRencontres = {"rencontres": allRencontres};
+		
+		downloadFile(JSON.stringify(allRencontres) , fileName);
+		
+		//TODO
+		return false;
+	});
+	
+	var drawForme = false;
+	$('#re-shape').change(function() {
+		var shape = ($('#re-shape').val()===""?null:$('#re-shape').val());
+		$('#re-drawcoords').attr('disabled', (shape === null));
+		
+		console.log('change');
+		drawForme = false;
+		$('#re-coords').val('');
+		$('#re-drawcoords').text('Dessiner la forme *');
+		
+		$('#re-drawcoords').click();
+		
+	});
+	$('#re-drawcoords').click(function() {
+		$('#re-drawcoords').css('color', '#FFFFFF;');
+		var shape = ($('#re-shape').val()===""?null:$('#re-shape').val());
+		if ( shape !== null )
+		{
+			if ( !drawForme )
+			{
+				$('#re-coords').val('');
+				$('#re-drawcoords').text('Forme en cours [0]');
+				drawForme = true;
+			}
+			else
+			{
+				var nbCoords = $('#re-coords').val().split(",").length / 2;
+				$('#re-drawcoords').text('Forme OK [' + nbCoords + ']');
+				$('#re-drawcoords').css('color', '#22FF22;');
+				drawForme = false;
+			}
+		}
+	});
+	$('#blockMap').click(function(e) {
+		if ( drawForme )
+		{
+			var shape = ($('#re-shape').val()===""?null:$('#re-shape').val());
+			var coords = ($('#re-coords').val()===""?null:$('#re-coords').val());
+			coords = (coords===null?'':coords + ', ') + e.pageX + ',' + e.pageY;
+			
+			$('#re-coords').val(coords);
+			var nbCoords = coords.split(",").length / 2;
+			if ( shape === 'poly' ) {
+				$('#re-drawcoords').text('Forme en cours [' + nbCoords + ']');
+			}
+			else if ( shape.startsWith('at:') ) {
+				$('#re-drawcoords').text('Forme OK [' + nbCoords + ']');
+				$('#re-drawcoords').css('color', '#22FF22;');
+				drawForme = false;
+			}
+			else if ( shape.startsWith('fromto:') ) {
+				if ( nbCoords === 2 )
+				{
+					$('#re-drawcoords').text('Forme OK [' + nbCoords + ']');
+					$('#re-drawcoords').css('color', '#22FF22;');
+					drawForme = false;
+				}
+				else
+					$('#re-drawcoords').text('Forme en cours [' + nbCoords + ']');
+			}
+		}
+	});
+	
+	
+	
+});
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2,7 +2,7 @@
 	"rencontres": [{
 		"aventure": 0.1,
 		"numero": 1,
-		"arearef": "",
+		"arearef": null,
 		"shape": "at:star",
 		"coords": "414,181",
 		"categorie": "taverne",
@@ -12,7 +12,7 @@
 	  {
 		"aventure": 0.1,
 		"numero": 2,
-		"arearef": "",
+		"arearef": null,
 		"shape": "at:fight",
 		"coords": "350,267",
 		"categorie": "bataille",
@@ -22,7 +22,7 @@
 	  {
 		"aventure": 0.1,
 		"numero": 3,
-		"arearef": "",
+		"arearef": null,
 		"shape": "fromto:star",
 		"coords": "349,281, 620,444",
 		"categorie": "divers",
@@ -32,7 +32,7 @@
 	  {
 		"aventure": 0.1,
 		"numero": 4,
-		"arearef": "",
+		"arearef": null,
 		"shape": "at:meet",
 		"coords": "686,446",
 		"categorie": "industrie",
@@ -42,7 +42,7 @@
 	  {
 		"aventure": 1,
 		"numero": 1,
-		"arearef": "",
+		"arearef": null,
 		"shape": "at:star",
 		"coords": "414,181",
 		"categorie": "taverne",
@@ -52,7 +52,7 @@
 	  {
 		"aventure": 1,
 		"numero": 2,
-		"arearef": "",
+		"arearef": null,
 		"shape": "at:duck",
 		"coords": "768,222",
 		"categorie": "special",
@@ -82,7 +82,7 @@
 	  {
 		"aventure": 4.1,
 		"numero": 3,
-		"arearef": "",
+		"arearef": null,
 		"shape": "at:skull",
 		"coords": "438,629",
 		"categorie": "dark",
@@ -102,7 +102,7 @@
 	  {
 		"aventure": 4.1,
 		"numero": 3.2,
-		"arearef": "",
+		"arearef": null,
 		"shape": "fromto:arrow",
 		"coords": "431,624, 494,542",
 		"categorie": "bataille",
@@ -112,7 +112,7 @@
 	  {
 		"aventure": 4.1,
 		"numero": 4,
-		"arearef": "",
+		"arearef": null,
 		"shape": "at:fight",
 		"coords": "490,531",
 		"categorie": "bataille",
@@ -122,7 +122,7 @@
 	  {
 		"aventure": 4.1,
 		"numero": 5,
-		"arearef": "",
+		"arearef": null,
 		"shape": "fromto:arrow",
 		"coords": "499,514, 453,469",
 		"categorie": "divers",
@@ -162,7 +162,7 @@
 	  {
 		"aventure": 4.1,
 		"numero": 8.1,
-		"arearef": "",
+		"arearef": null,
 		"shape": "fromto:arrow",
 		"coords": "336,384, 568,116",
 		"categorie": "CATEGORIEEEEEEEEEEEE",
@@ -172,7 +172,7 @@
 	  {
 		"aventure": 4.1,
 		"numero": 8.2,
-		"arearef": "",
+		"arearef": null,
 		"shape": "at:meet",
 		"coords": "587,100",
 		"categorie": "divers",
@@ -192,7 +192,7 @@
 	  {
 		"aventure": 4.1,
 		"numero": 10.2,
-		"arearef": "",
+		"arearef": null,
 		"shape": "at:meet",
 		"coords": "499,401",
 		"categorie": "special",
@@ -222,7 +222,7 @@
 	  {
 		"aventure": 4.1,
 		"numero": 12.1,
-		"arearef": "",
+		"arearef": null,
 		"shape": "fromto:arrow",
 		"coords": "580,790, 552,775",
 		"categorie": "taverne",

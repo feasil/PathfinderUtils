@@ -52,7 +52,6 @@ function newArea(zone, light=false)
 	map2 += 'data-categorie="' + zone.categorie + '" ';
 	map2 += '/>';
 	
-	
 	var liste = '<div><span class="' + (light?'light ':'') + 'hilightMult noSelect categ' + zone.categorie + '" ';
 	liste += 'data-categorie="' + zone.categorie + '">' + zone.categorie.substr(0, 1).toUpperCase() + '</span>&nbsp;';
 	liste += '<span class="' + (light?'light ':'') + 'hilightlink" data-areaid="' + zone.areaid + '" ';
@@ -214,4 +213,16 @@ function hexc(colorval) {
 }
 function getPxIgnoreZoom(targetPx) {
 	return targetPx/window.devicePixelRatio;
+}
+
+
+function downloadFile(text, filename)
+{
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
 }
