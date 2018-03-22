@@ -13,6 +13,11 @@ function trierZone(a,b) {
 	if ( b.numero > a.numero ) return -1;
 	return 0;
 }
+function trierZoneParNumero(a,b) {
+	if ( a.numero > b.numero) return 1;
+	if ( b.numero > a.numero ) return -1;
+	return 0;
+}
 function trierRencontre(a,b) {
 	if ( a.numero > b.numero) return 1;
 	if ( b.numero > a.numero ) return -1

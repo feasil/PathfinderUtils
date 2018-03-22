@@ -19,7 +19,8 @@ $( function() {
 					<input class="form-control" id="av-prefixrencontre" name="av-prefixrencontre" placeholder="Prefixe json Rencontres" type="text" />
 					<input class="form-control" id="av-prefixzone" name="av-prefixzone" placeholder="Prefixe json Environnement" type="text" />
 					<input class="form-control" id="av-map" name="av-map" placeholder="Carte *" type="text" />
-					<button class="btn btn-primary" id="av-button" name="av-button" type="submit" form="av-form">Nouvelle aventure</button>
+					<button class="btn btn-primary" id="av-buttonadd" name="av-buttonadd" type="submit" form="av-form">Ajouter/Modifier</button>&nbsp;<button class="btn btn-primary" id="av-buttongenerer" name="av-buttongenerer" type="button" form="av-form">G&eacute;n&eacute;rer</button>
+					<ul id="av-preview"></ul>
 				</form>
 			</div>
 			<h3 class="noSelect" id="zo-title">Zone d'environnement</h3>
@@ -36,7 +37,8 @@ $( function() {
 					</select>
 					<input class="form-control" id="zo-titre" name="zo-titre" placeholder="Titre *" type="text" />
 					<textarea class="form-control" id="zo-description" name="zo-description" rows="2"  placeholder="Description" ></textarea><input id="zo-prefixzone" name="zo-prefixzone" type="hidden" />
-					<button class="btn btn-primary" id="zo-button" name="zo-button" type="submit" form="zo-form">Nouvelle zone d'environnement</button>
+					<button class="btn btn-primary" id="zo-buttonadd" name="zo-buttonadd" type="submit" form="zo-form">Ajouter/Modifier</button>&nbsp;<button class="btn btn-primary" id="zo-buttongenerer" name="zo-buttongenerer" type="button" form="zo-form">G&eacute;n&eacute;rer</button>
+					<ul id="zo-preview"></ul>
 				</form>
 			</div>
 			<h3 class="noSelect" id="re-title">Rencontre</h3>
@@ -81,12 +83,12 @@ $( function() {
 	$('#accordionEdition').accordion({
 		beforeActivate: function(event, ui) {
 			if ( ui.newHeader.attr('id') === 'av-title' ) {
-				//initChampsAventure();
-				//TODO : updateEditionAventurePreview
+				initChampsAventure();
+				updateEditionAventurePreview();
 			}
 			else if ( ui.newHeader.attr('id') === 'zo-title' ) {
-				//initChampsZone();
-				//TODO : updateEditionZonePreview
+				initChampsZone();
+				updateEditionZonePreview();
 			}
 			else if ( ui.newHeader.attr('id') === 're-title' ) {
 				initChampsRencontre();
@@ -95,21 +97,35 @@ $( function() {
 			drawForme = false;
 		},
 		collapsible: true, 
-		active: 2 //TODO a retirer apres tests false ou index
+		active: false //false ou index
 	});
 	
+	//------AVENTURES-------
+	$('#av-form').submit(function(){ submitEditionAventure(); }); //Ajout/modif aventure
+	$('#av-buttongenerer').click(function(e){ genererEditionAventure(); e.preventDefault(); });//Bouton de génération des aventures
+	//----------------------
+	
+	//------ZONES------
+	$('#zo-form').submit(function(){ submitEditionZone(); }); //Ajout/modif zone
+	$('#zo-buttongenerer').click(function(e){ genererEditionZone(); e.preventDefault(); });//Bouton de génération des zones
+	$('#zo-shape').change(function() { //Sélection de forme des zones
+		var shape = ($('#zo-shape').val()===""?null:$('#zo-shape').val());
+		$('#zo-drawcoords').attr('disabled', (shape === null));
+		
+		drawForme = false;
+		$('#zo-coords').val('');
+		
+		$('#zo-drawcoords').click();
+	});
+	$('#zo-drawcoords').click(function() {
+		utilDrawing($(this));
+	});
+	//-----------------------
+	
 	//------RENCONTRES------
-	//Ajout/modif rencontre
-	$('#re-form').submit(function(){
-		submitEditionRencontre();
-	});
-	//Bouton de génération des rencontres
-	$('#re-buttongenerer').click(function(e){
-		genererEditionRencontre();
-		e.preventDefault();
-	});
-	//Sélection de forme des rencontres
-	$('#re-shape').change(function() {
+	$('#re-form').submit(function(){ submitEditionRencontre(); }); //Ajout/modif rencontre
+	$('#re-buttongenerer').click(function(e){ genererEditionRencontre(); e.preventDefault(); });//Bouton de génération des rencontres
+	$('#re-shape').change(function() { //Sélection de forme des rencontres
 		var shape = ($('#re-shape').val()===""?null:$('#re-shape').val());
 		$('#re-drawcoords').attr('disabled', (shape === null));
 		
@@ -174,33 +190,146 @@ $( function() {
 /**
 Initialise les champs pour l'édition d'aventure
 */
-function initEditionAventure() {//Cette fonction n'est appelée qu'une fois au chargement de la page
-	//Initialisation des inputs d'édition : Aventure
+function initEditionAventure() {
+	if ( dataAventure !== null )
+		editionAventure = dataAventure.slice(0);
+	else
+		editionAventure = [];
+	
+	editionAventure.sort(trierAventure);
+	
+	initChampsAventure();
+}
+function initChampsAventure() {
 	$('#av-aventure').val(null); $('#av-titre').val(null); $('#av-prefixrencontre').val(null); $('#av-prefixzone').val(null); $('#av-map').val(null);
-	if ( dataAventure !== null ) 
-	{
-		var av = 0, availablePrefixRencontre = [], availablePrefixZone = [], availableMap = [];
-		$.each(dataAventure, function(key, val) {
-			//Merci javascript pour ta précision dans les additions (4.1 + .1 = 4.199999999999999), le Math.round est là pour contourner ça...
-			if ( av === 0 ) $('#av-aventure').val(Math.round((val.aventure + 0.1) * 1e12) / 1e12);
-			
-			if ( val.prefixrencontre !== null && !availablePrefixRencontre.includes(val.prefixrencontre) )
-				availablePrefixRencontre.push(val.prefixrencontre);
-			if ( val.prefixzone !== null && !availablePrefixZone.includes(val.prefixzone) )
-				availablePrefixZone.push(val.prefixzone);
-			if ( val.map !== null && !availableMap.includes(val.map) )
-				availableMap.push(val.map);
-			av++;
+	
+	$('#av-aventure').attr('required', false);
+	$('#av-titre').attr('required', false);
+	$('#av-map').attr('required', false);
+	
+	var av = 0, availablePrefixRencontre = [], availablePrefixZone = [], availableMap = [];
+	$.each(editionAventure, function(key, val) {
+		//Merci javascript pour ta précision dans les additions (4.1 + .1 = 4.199999999999999), le Math.round est là pour contourner ça...
+		if ( av === 0 ) $('#av-aventure').val(Math.round((val.aventure + 0.1) * 1e12) / 1e12);
+		
+		if ( val.prefixrencontre !== null && !availablePrefixRencontre.includes(val.prefixrencontre) )
+			availablePrefixRencontre.push(val.prefixrencontre);
+		if ( val.prefixzone !== null && !availablePrefixZone.includes(val.prefixzone) )
+			availablePrefixZone.push(val.prefixzone);
+		if ( val.map !== null && !availableMap.includes(val.map) )
+			availableMap.push(val.map);
+		av++;
+	});
+	availablePrefixRencontre.sort(); availablePrefixZone.sort(); availableMap.sort();
+	$('#av-prefixrencontre').autocomplete({source: availablePrefixRencontre, minLength: 0})
+							.focus(function(){$(this).autocomplete("search", $(this).val());});
+	$('#av-prefixzone').autocomplete({source: availablePrefixZone, minLength: 0})
+						.focus(function(){$(this).autocomplete("search", $(this).val());});
+	$('#av-map').autocomplete({source: availableMap, minLength: 0})
+						.focus(function(){$(this).autocomplete("search", $(this).val());});
+}
+/**
+Mise à jour de la liste des éléments d'aventure pour le preview de l'édition
+*/
+function updateEditionAventurePreview() {
+	$('#av-preview').empty();
+	$.each(editionAventure, function(key,value) {
+		var json = JSON.stringify(value, null, '\t');
+		$('#av-preview').append('<li title="'
+							+ json.replace(/"/g, '&quot;') + '"><a href="#" name="delete_av" data-av-aventure="' + value.aventure + '" style="color:#FF0000;">sup.</a> ' 
+							+ '<a href="#" name="modify_av" data-av-aventure="' + value.aventure + '" style="color:#FF6600;">mod.</a> ' 
+							+ value.aventure + ' - ' + value.titre 
+							+ '</li>');
+	});
+	loadDataIntoMap(null, []);
+	
+	//Pour supprimer une aventure de la liste
+	$('a[name=delete_av]').click(function(e){
+		var num = parseFloat($(this).data('av-aventure'));
+		var indexASupprimer = null;
+		$.each(editionAventure, function(key,value) {
+			if ( value.aventure === num ) {
+				indexASupprimer = key;
+				return;
+			}
 		});
-		availablePrefixRencontre.sort(); availablePrefixZone.sort(); availableMap.sort();
-		$('#av-prefixrencontre').autocomplete({source: availablePrefixRencontre, minLength: 0})
-								.focus(function(){$(this).autocomplete("search", $(this).val());});
-		$('#av-prefixzone').autocomplete({source: availablePrefixZone, minLength: 0})
-							.focus(function(){$(this).autocomplete("search", $(this).val());});
-		$('#av-map').autocomplete({source: availableMap, minLength: 0})
-							.focus(function(){$(this).autocomplete("search", $(this).val());});
+		if ( indexASupprimer !== null )
+			editionAventure.splice(indexASupprimer, 1);
+		updateEditionAventurePreview();
+		e.preventDefault();
+	});
+	//Pour modifier une aventure de la liste
+	$('a[name=modify_av]').click(function(e){
+		var num = parseFloat($(this).data('av-aventure'));
+		$.each(editionAventure, function(key,value) {
+			if ( value.aventure === num ) {
+				$('#av-aventure').val(value.aventure);
+				$('#av-titre').val(value.titre);
+				$('#av-prefixrencontre').val(value.prefixrencontre);
+				$('#av-prefixzone').val(value.prefixzone);
+				$('#av-map').val(value.map);
+				return;
+			}
+		});
+		e.preventDefault();
+	});
+}
+
+
+/**
+Ajout / Modification d'aventure dans la liste
+*/
+function submitEditionAventure() {
+	//Pour ajouter ou modifier une aventure à la liste
+	var nouvelleAventure = {
+		"aventure": parseFloat($('#av-aventure').val()),
+		"titre": ($('#av-titre').val()===""?null:$('#av-titre').val()),
+		"prefixrencontre": ($('#av-prefixrencontre').val()===""?null:$('#av-prefixrencontre').val()),
+		"prefixzone": ($('#av-prefixzone').val()===""?null:$('#av-prefixzone').val()),
+		"map": ($('#av-map').val()===""?null:$('#av-map').val()),
+	};
+	
+	if ( nouvelleAventure.aventure === null 
+			|| nouvelleAventure.titre === null 
+			|| nouvelleAventure.map === null )
+	{
+		$('#av-aventure').attr('required', true);
+		$('#av-titre').attr('required', true);
+		$('#av-map').attr('required', true);
+		return false;
 	}
-	//-----------------------------------
+	
+	if ( editionAventure === null )
+		editionAventure = [nouvelleAventure];
+	else {//Pour modifier : on remplace l'existant par le nouveau
+		var indexAModifier = null;
+		$.each(editionAventure, function(key,value) {
+			if ( value.aventure === nouvelleAventure.aventure ) {
+				indexAModifier = key;
+				return;
+			}
+		});
+		if ( indexAModifier !== null )
+			editionAventure.splice(indexAModifier, 1, nouvelleAventure);
+		else
+		{
+			editionAventure.push(nouvelleAventure);
+			editionAventure.sort(trierAventure);
+		}
+	}
+	
+	updateEditionAventurePreview();
+	
+	//Réinitialise les champs
+	initChampsAventure();
+	//-----------------------
+	
+	return false;
+}
+function genererEditionAventure() {
+	var fileName = 'aventures.json';
+	var jsonAventures = {"rencontres": editionAventure};
+	downloadFile(JSON.stringify(jsonAventures, null, '\t') , fileName);
 }
 //----------- FIN DES AVENTURES ---------
 
@@ -209,21 +338,33 @@ function initEditionAventure() {//Cette fonction n'est appelée qu'une fois au c
 Initialise les champs pour l'édition de zone
 */
 function initEditionZone() {
-	var el = $('#aventure option:checked');
-	var aventure = el.data('aventure');
-	var titre = el.data('titre');
-	var prefixzone = el.data('prefixzone');
-	
+	//Zone
 	if ( dataDeBase !== null )
 		editionDeBase = dataDeBase.slice(0);
 	else
 		editionDeBase = [];
 	
+	editionDeBase.sort(trierZoneParNumero);
+	
+	initChampsZone();
+}
+function initChampsZone() {
+	var el = $('#aventure option:checked');
+	var prefixzone = el.data('prefixzone');
+	
 	$('#zo-shape').val($('#zo-shape option:first').val()); $('#zo-drawcoords').attr('disabled', true); $('#zo-coords').val(null); 
 	$('#zo-categorie').val($('#zo-categorie option:first').val()); $('#zo-titre').val(null); $('#zo-description').val(null); 
 	
-	if ( prefixzone === null )
-	{
+	$('#zo-arearef>option').not(':first').remove();
+	$('#zo-arearef').val($('#zo-arearef option:first').val()); 
+	
+	$('#zo-numero').attr('required', false);
+	$('#zo-categorie').attr('required', false);
+	$('#zo-titre').attr('required', false);
+	$('#zo-drawcoords').text('Dessiner la forme *');
+	$('#zo-drawcoords').css('color', '#FFFFFF;');
+	
+	if ( prefixzone === null ) {
 		$('#zo-warning').show();
 		$('#zo-prefixzone').val(null);
 	}
@@ -233,16 +374,128 @@ function initEditionZone() {
 		$('#zo-prefixzone').val(prefixzone);
 	}
 	
-	var maxNumero = 0, maxareaid = 0;
+	var max = 0;
 	$.each(editionDeBase, function(key, val) {
-		if ( val.numero > maxNumero )
-			maxNumero = val.numero;
-		var id = parseInt(val.areaid.substring(5,val.areaid.length))
-		if ( id > maxareaid )
-			maxareaid = id;
+		if ( val.numero > max )
+			max = val.numero;
 	});
-	$('#zo-numero').val(Math.trunc(maxNumero) + 1);
-	$('#zo-areaid').val('path-' + (maxareaid + 1));
+	$('#zo-numero').val(Math.trunc(max) + 1);
+}
+/**
+Mise à jour de la liste des éléments de rencontre pour le preview de l'édition
+*/
+function updateEditionZonePreview() {
+	$('#zo-preview').empty();
+	$.each(editionDeBase, function(key,value) {
+		var json = JSON.stringify(value, function remplaçant(key, value) { if ( key === "areaid") return undefined; else return value; }, '\t');
+		$('#zo-preview').append('<li title="'
+							+ json.replace(/"/g, '&quot;') + '"><a href="#" name="delete_zo" data-zo-numero="' + value.numero + '" style="color:#FF0000;">sup.</a> ' 
+							+ '<a href="#" name="modify_zo" data-zo-numero="' + value.numero + '" style="color:#FF6600;">mod.</a> ' 
+							+ value.numero + ' - ' + value.titre 
+							+ '</li>');
+	});
+	loadDataIntoMap(null, editionDeBase);
+	
+	//Pour supprimer une rencontre de la liste
+	$('a[name=delete_zo]').click(function(e){
+		var num = parseFloat($(this).data('zo-numero'));
+		var indexASupprimer = null;
+		$.each(editionDeBase, function(key,value) {
+			if ( value.numero === num ) {
+				indexASupprimer = key;
+				return;
+			}
+		});
+		if ( indexASupprimer !== null )
+			editionDeBase.splice(indexASupprimer, 1);
+		updateEditionRencontrePreview();
+		e.preventDefault();
+	});
+	//Pour modifier une rencontre de la liste
+	$('a[name=modify_zo]').click(function(e){
+		var num = parseFloat($(this).data('zo-numero'));
+		$.each(editionDeBase, function(key,value) {
+			if ( value.numero === num ) {
+				$('#zo-numero').val(value.numero);
+				$('#zo-shape').val(value.shape);
+				$('#zo-coords').val(value.coords);
+				$('#zo-categorie').val(value.categorie);
+				$('#zo-titre').val(value.titre);
+				$('#zo-description').val(value.description);
+				var nbCoords = $('#zo-coords').val().split(",").length / 2;
+				$('#zo-drawcoords').text('Forme OK [' + nbCoords + ']');
+				$('#zo-drawcoords').css('color', '#22FF22;');
+				return;
+			}
+		});
+		e.preventDefault();
+	});
+}
+
+/**
+Ajout / Modification de zone dans la liste
+*/
+function submitEditionZone() {
+	//Pour ajouter ou modifier une zone à la liste
+	var nouvelleZone = {
+		"numero": parseFloat($('#zo-numero').val()),
+		"shape": ($('#zo-shape').val()===""?null:$('#zo-shape').val()),
+		"coords": ($('#zo-coords').val()===""?null:$('#zo-coords').val()),
+		"categorie": ($('#zo-categorie').val()===""?null:$('#zo-categorie').val()),
+		"titre": ($('#zo-titre').val()===""?null:$('#zo-titre').val()),
+		"description": ($('#zo-description').val()===""?null:$('#zo-description').val())
+	};
+	var prefixzone = ($('#zo-prefixzone').val()===""?null:$('#zo-prefixzone').val());
+	
+	if ( prefixzone === null 
+		|| nouvelleZone.numero === null 
+		|| nouvelleZone.shape === null 
+		|| nouvelleZone.coords === null 
+		|| nouvelleZone.categorie === null 
+		|| nouvelleZone.titre === null )
+	{
+		$('#zo-numero').attr('required', true);
+		$('#zo-shape').attr('required', true);
+		$('#zo-categorie').attr('required', true);
+		$('#zo-titre').attr('required', true);
+		if ( nouvelleZone.coords === null )
+			$('#zo-drawcoords').css('color', '#FF2222;');
+		return false;
+	}
+	
+	if ( editionDeBase === null )
+		editionDeBase = [nouvelleZone];
+	else {//Pour modifier : on remplace l'existant par le nouveau
+		var indexAModifier = null;
+		$.each(editionDeBase, function(key,value) {
+			if ( value.numero === nouvelleZone.numero ) {
+				indexAModifier = key;
+				return;
+			}
+		});
+		if ( indexAModifier !== null )
+			editionDeBase.splice(indexAModifier, 1, nouvelleZone);
+		else
+		{
+			editionDeBase.push(nouvelleZone);
+			editionDeBase.sort(trierZoneParNumero);
+		}
+	}
+	
+	updateEditionZonePreview();
+	
+	//Réinitialise les champs
+	initChampsZone();
+	//-----------------------
+	
+	return false;
+}
+function genererEditionZone() {
+	var fileName = ($('#zo-prefixzone').val()===""?null:$('#zo-prefixzone').val() + '_zones.json');
+	if ( fileName === null )
+		return false;
+	var jsonZones = {"zones": editionDeBase};
+	downloadFile(JSON.stringify(jsonZones, function(key, value) { if ( key === "areaid") return undefined; else return value; }, '\t') , fileName);
 }
 //----------- FIN DES ZONES ---------
 
@@ -257,6 +510,8 @@ function initEditionRencontre() {
 		editionRencontre = dataRencontre.slice(0);
 	else
 		editionRencontre = [];
+	
+	editionRencontre.sort(trierRencontre);
 	
 	if ( dataDeBase !== null )
 	{
@@ -282,6 +537,9 @@ function initChampsRencontre() {
 	$('#re-arearef>option').not(':first').remove();
 	$('#re-arearef').val($('#re-arearef option:first').val()); 
 	
+	$('#re-numero').attr('required', false);
+	$('#re-categorie').attr('required', false);
+	$('#re-titre').attr('required', false);
 	$('#re-drawcoords').text('Dessiner la forme *');
 	$('#re-drawcoords').css('color', '#FFFFFF;');
 	
@@ -368,9 +626,9 @@ function submitEditionRencontre() {
 		"titre": ($('#re-titre').val()===""?null:$('#re-titre').val()),
 		"description": ($('#re-description').val()===""?null:$('#re-description').val())
 	};
-	var fileName = ($('#re-prefixrencontre').val()===""?null:$('#re-prefixrencontre').val() + '_rencontres.json');
+	var prefixrencontre = ($('#re-prefixrencontre').val()===""?null:$('#re-prefixrencontre').val());
 	
-	if ( fileName === null 
+	if ( prefixrencontre === null 
 		|| nouvelleRencontre.numero === null 
 		|| nouvelleRencontre.shape === null 
 		|| nouvelleRencontre.coords === null 

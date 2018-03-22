@@ -97,8 +97,8 @@ $( function() {
 				goToMapDeBase();
 			else if ( ui.newPanel.attr('id') === 'tabRencontre' )
 				goToRencontre();
-		}
-		, active:2 //TODO a retirer apres tests
+		},
+		active:0
 	});
 	
 	$('#slider-range').slider({

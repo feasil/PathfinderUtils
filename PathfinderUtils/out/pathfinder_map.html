@@ -21,7 +21,7 @@
 <div id="blockList">
 	<div id="boutons" class="noSelect">
 		<span id="moveListes" class="mapButton mapButtonV2 littleButton">&#8644;</span>&nbsp;<span id="hideShowListes" class="mapButton mapButtonV2 littleButton">&#9651;</span>&nbsp;<span id="buttonChangeMap" class="mapButton mapButtonV2 switchMapButton">toggle colors</span>
-		|| <span id="addDraw" class="mapButton mapButtonV2 littleButton">&#128291;</span>&nbsp;<span id="addArrow" class="mapButton mapButtonV2 littleButton">&#8594;</span>
+	<!--	|| <span id="addDraw" class="mapButton mapButtonV2 littleButton">&#128291;</span>&nbsp;<span id="addArrow" class="mapButton mapButtonV2 littleButton">&#8594;</span>-->
 	</div>
 
 	<div id="listes">
@@ -63,45 +63,6 @@ $(function() {
 	//---------------
 });
 //------ fin de l'initialisation --------
-
-$(function() { //A déplacer dans functions_edition.js
-	$('#av-form').submit(function(){
-		//Pour ajouter ou modifier une aventure à la liste
-		var nouvelleAventure = {
-			"aventure": parseFloat($('#av-aventure').val()),
-			"titre": ($('#av-titre').val()===""?null:$('#av-titre').val()),
-			"prefixrencontre": ($('#av-prefixrencontre').val()===""?null:$('#av-prefixrencontre').val()),
-			"prefixzone": ($('#av-prefixzone').val()===""?null:$('#av-prefixzone').val()),
-			"map": ($('#av-map').val()===""?null:$('#av-map').val())
-		};
-		
-		if ( nouvelleAventure.aventure === null 
-			|| nouvelleAventure.titre === null 
-			|| nouvelleAventure.map === null )
-		{
-			$('#av-aventure').attr('required', true);
-			$('#av-titre').attr('required', true);
-			$('#av-map').attr('required', true);
-			return false;
-		}
-		
-		if ( editionAventure === null )
-			editionAventure = [];
-		editionAventure.push(nouvelleAventure);
-		var jsonAventures = {"aventures": editionAventure};
-		
-		downloadFile(JSON.stringify(jsonAventures, function(key, value) { if ( key === "areaid") return undefined; else return value; }, '\t') , 'aventures.json');
-		
-		return false;
-	});
-	
-	
-});
-
-
-
-
-
 
 
 
