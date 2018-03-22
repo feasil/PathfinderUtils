@@ -66,6 +66,7 @@ $(function() {
 
 $(function() { //A déplacer dans functions_edition.js
 	$('#av-form').submit(function(){
+		//Pour ajouter ou modifier une aventure à la liste
 		var nouvelleAventure = {
 			"aventure": parseFloat($('#av-aventure').val()),
 			"titre": ($('#av-titre').val()===""?null:$('#av-titre').val()),
@@ -84,123 +85,15 @@ $(function() { //A déplacer dans functions_edition.js
 			return false;
 		}
 		
-		//dataDeBase = null;
 		if ( editionAventure === null )
 			editionAventure = [];
 		editionAventure.push(nouvelleAventure);
 		var jsonAventures = {"aventures": editionAventure};
 		
-		downloadFile(JSON.stringify(jsonAventures, function remplaçant(key, value) { if ( key === "areaid") return undefined; else return value; }, '\t') , 'aventures.json');
+		downloadFile(JSON.stringify(jsonAventures, function(key, value) { if ( key === "areaid") return undefined; else return value; }, '\t') , 'aventures.json');
 		
 		return false;
 	});
-	
-	$('#re-form').submit(function(){
-		var nouvelleRencontre = {
-			"numero": parseFloat($('#re-numero').val()),
-			"arearef": ($('#re-arearef').val()===""?null:$('#re-arearef').val()),
-			"shape": ($('#re-shape').val()===""?null:$('#re-shape').val()),
-			"coords": ($('#re-coords').val()===""?null:$('#re-coords').val()),
-			"categorie": ($('#re-categorie').val()===""?null:$('#re-categorie').val()),
-			"titre": ($('#re-titre').val()===""?null:$('#re-titre').val()),
-			"description": ($('#re-description').val()===""?null:$('#re-description').val())
-		};
-		var fileName = ($('#re-prefixrencontre').val()===""?null:$('#re-prefixrencontre').val() + '_rencontres.json');
-		
-		if ( fileName === null 
-			|| nouvelleRencontre.numero === null 
-			|| nouvelleRencontre.shape === null 
-			|| nouvelleRencontre.coords === null 
-			|| nouvelleRencontre.categorie === null 
-			|| nouvelleRencontre.titre === null )
-		{
-			$('#re-numero').attr('required', true);
-			$('#re-shape').attr('required', true);
-			$('#re-categorie').attr('required', true);
-			$('#re-titre').attr('required', true);
-			if ( nouvelleRencontre.coords === null ) {
-				$('#re-drawcoords').css('color', '#FF2222;');
-			}
-			return false;
-		}
-		
-		
-		if ( editionRencontre === null )
-			editionRencontre = [];
-		editionRencontre.push(nouvelleRencontre);
-		
-		
-		updateEditionRencontrePreview();
-		//var jsonRencontres = {"rencontres": editionRencontre};
-		//downloadFile(JSON.stringify(jsonRencontres, function remplaçant(key, value) { if ( key === "areaid") return undefined; else return value; }, '\t') , fileName);
-		
-		//TODO
-		return false;
-	});
-	
-	var drawForme = false;
-	$('#re-shape').change(function() {
-		var shape = ($('#re-shape').val()===""?null:$('#re-shape').val());
-		$('#re-drawcoords').attr('disabled', (shape === null));
-		
-		console.log('change');
-		drawForme = false;
-		$('#re-coords').val('');
-		$('#re-drawcoords').text('Dessiner la forme *');
-		
-		$('#re-drawcoords').click();
-		
-	});
-	$('#re-drawcoords').click(function() {
-		$('#re-drawcoords').css('color', '#FFFFFF;');
-		var shape = ($('#re-shape').val()===""?null:$('#re-shape').val());
-		if ( shape !== null )
-		{
-			if ( !drawForme )
-			{
-				$('#re-coords').val('');
-				$('#re-drawcoords').text('Forme en cours [0]');
-				drawForme = true;
-			}
-			else
-			{
-				var nbCoords = $('#re-coords').val().split(",").length / 2;
-				$('#re-drawcoords').text('Forme OK [' + nbCoords + ']');
-				$('#re-drawcoords').css('color', '#22FF22;');
-				drawForme = false;
-			}
-		}
-	});
-	$('#blockMap').click(function(e) {
-		if ( drawForme )
-		{
-			var shape = ($('#re-shape').val()===""?null:$('#re-shape').val());
-			var coords = ($('#re-coords').val()===""?null:$('#re-coords').val());
-			coords = (coords===null?'':coords + ', ') + e.pageX + ',' + e.pageY;
-			
-			$('#re-coords').val(coords);
-			var nbCoords = coords.split(",").length / 2;
-			if ( shape === 'poly' ) {
-				$('#re-drawcoords').text('Forme en cours [' + nbCoords + ']');
-			}
-			else if ( shape.startsWith('at:') ) {
-				$('#re-drawcoords').text('Forme OK [' + nbCoords + ']');
-				$('#re-drawcoords').css('color', '#22FF22;');
-				drawForme = false;
-			}
-			else if ( shape.startsWith('fromto:') ) {
-				if ( nbCoords === 2 )
-				{
-					$('#re-drawcoords').text('Forme OK [' + nbCoords + ']');
-					$('#re-drawcoords').css('color', '#22FF22;');
-					drawForme = false;
-				}
-				else
-					$('#re-drawcoords').text('Forme en cours [' + nbCoords + ']');
-			}
-		}
-	});
-	
 	
 	
 });

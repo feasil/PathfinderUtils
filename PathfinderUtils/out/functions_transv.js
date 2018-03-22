@@ -1,5 +1,28 @@
 //Fonctions transverses
 
+//Fonctions de tri
+function trierAventure(a,b) {
+	if ( a.aventure > b.aventure) return -1;
+	if ( b.aventure > a.aventure ) return 1;
+	return 0;
+}
+function trierZone(a,b) {
+	if ( a.categorie > b.categorie ) return 1;
+	if ( b.categorie > a.categorie ) return -1;
+	if ( a.numero > b.numero) return 1;
+	if ( b.numero > a.numero ) return -1;
+	return 0;
+}
+function trierRencontre(a,b) {
+	if ( a.numero > b.numero) return 1;
+	if ( b.numero > a.numero ) return -1
+	if ( a.categorie > b.categorie ) return 1;
+	if ( b.categorie > a.categorie ) return -1;
+	return 0;
+}
+//----------------
+
+
 /**
 Gestion des filtres de zone
 filtres : numero [min, max]

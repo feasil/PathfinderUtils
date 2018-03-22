@@ -2,6 +2,7 @@
 var editionAventure = null;
 var editionDeBase = null;
 var editionRencontre = null;
+var drawForme = false;
 //------------------
 
 //Fonctions pour l'édition
@@ -10,7 +11,7 @@ $( function() {
 	$('#tabs>ul').append('<li><a href="#tabEdition" class="noSelect tab">Edition</a></li>');
 	$('#tabs').append(`<div id="tabEdition">
 		<div id="accordionEdition" class="form-group ">
-			<h3 class="noSelect">Aventure</h3>
+			<h3 class="noSelect" id='av-title'>Aventure</h3>
 			<div>
 				<form action="/" method="post" id="av-form">
 					<input class="form-control" id="av-aventure" name="av-aventure" placeholder="Numéro *" type="number" min="0" step=".1" />
@@ -21,115 +22,158 @@ $( function() {
 					<button class="btn btn-primary" id="av-button" name="av-button" type="submit" form="av-form">Nouvelle aventure</button>
 				</form>
 			</div>
-			<h3 class="noSelect">Zone d'environnement</h3>
-			<div><span id='zo-warning' style="color:#FF0000; font-weight: bold; display: none;">/!\\ pas de prefix zone pour cette aventure</span>
+			<h3 class="noSelect" id="zo-title">Zone d'environnement</h3>
+			<div><span id="zo-warning" style="color:#FF0000; font-weight: bold; display: none;">/!\\ pas de prefix zone pour cette aventure</span>
 				<form action="/" method="post"  id="zo-form">
 					<input class="form-control" id="zo-numero" name="zo-numero" placeholder="Numéro de zone *"  type="number" min="0" step="1" />
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="zo-shape" name="zo-shape" style="width:50%;"><option hidden disabled value="">Forme *</option>
 						<optgroup label="Simple"><option value="at:duck">Canard</option><option value="at:fight">Combat</option><option value="at:skull">Cr&acirc;ne</option><option value="at:star">Etoile</option><option value="at:meet">Rencontre</option></optgroup>
 						<optgroup label="Ligne"><option value="fromto:arrow">Fl&egrave;che</option><option value="fromto:star">Etoile</option></optgroup>
 						<optgroup label="Personnalis&eacute;"><option value="poly">Polygone</option></optgroup>
-					</select><button class="btn btn-primary" id="zo-drawcoords" name="zo-drawcoords" type="button" disabled>Dessiner la forme *</button><input id="zo-coords" name="zo-coords" type="hidden" /><br/>
+					</select><button class="btn btn-primary" id="zo-drawcoords" name="zo-drawcoords" data-from="#zo-shape" data-for="#zo-coords" type="button" disabled>Dessiner la forme *</button><input id="zo-coords" name="zo-coords" type="hidden" /><br/>
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="zo-categorie" name="zo-categorie"><option hidden disabled value="">Cat&eacute;gorie *</option>
-						<option value="none" class="categnone">Blanc</option><option value="divers" class="categdivers">Bleu clair (Divers)</option><option value="industrie" class="categindustrie">Bleu fonc&eacute; (Industrie)</option><option value="spirituel" class="categspirituel">Jaune (Spirituel)</option><option value="bataille" class="categbataille">Orange (Bataille)</option><option value="commerce" class="categcommerce">Rose (Commerce)</option><option value="taverne" class="categtaverne">Rouge (Taverne)</option><option value="administration" class="categadministration">Vert (Administration)</option><option value="special" class="categspecial">Violet (Sp&eacute;cial)</option>
+						<option value="none" class="categnone">Blanc</option><option value="divers" class="categdivers">Bleu clair (Divers)</option><option value="industrie" class="categindustrie">Bleu fonc&eacute; (Industrie)</option><option value="spirituel" class="categspirituel">Jaune (Spirituel)</option><option value="bataille" class="categbataille">Orange (Bataille)</option><option value="commerce" class="categcommerce">Rose (Commerce)</option><option value="taverne" class="categtaverne">Rouge (Taverne)</option><option value="administration" class="categadministration">Vert (Administration)</option><option value="special" class="categspecial">Violet (Sp&eacute;cial)</option><option value="dark" class="categdark">Gris (Dark)</option>
 					</select>
 					<input class="form-control" id="zo-titre" name="zo-titre" placeholder="Titre *" type="text" />
 					<textarea class="form-control" id="zo-description" name="zo-description" rows="2"  placeholder="Description" ></textarea><input id="zo-prefixzone" name="zo-prefixzone" type="hidden" />
 					<button class="btn btn-primary" id="zo-button" name="zo-button" type="submit" form="zo-form">Nouvelle zone d'environnement</button>
 				</form>
 			</div>
-			<h3 class="noSelect">Rencontre</h3>
-			<div><span id='re-warning' style="color:#FF0000; font-weight: bold; display: none;">/!\\ pas de prefix rencontre pour cette aventure</span>
+			<h3 class="noSelect" id="re-title">Rencontre</h3>
+			<div><span id="re-warning" style="color:#FF0000; font-weight: bold; display: none;">/!\\ pas de prefix rencontre pour cette aventure</span>
 				<form action="/" method="post"  id="re-form">
+					Si numéro existant : modifie l'élément
 					<input class="form-control" id="re-numero" name="re-numero" placeholder="Numéro de rencontre *"  type="number" min="0" step=".1" />
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-arearef" name="re-arearef"><option hidden disabled value="">Zone environnement associ&eacute;e</option></select><br/>
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-shape" name="re-shape" style="width:50%;"><option hidden disabled value="">Forme *</option>
 						<optgroup label="Simple"><option value="at:duck">Canard</option><option value="at:fight">Combat</option><option value="at:skull">Cr&acirc;ne</option><option value="at:star">Etoile</option><option value="at:meet">Rencontre</option></optgroup>
 						<optgroup label="Ligne"><option value="fromto:arrow">Fl&egrave;che</option><option value="fromto:star">Etoile</option></optgroup>
 						<optgroup label="Personnalis&eacute;"><option value="poly">Polygone</option></optgroup>
-					</select><button class="btn btn-primary" id="re-drawcoords" name="re-drawcoords" type="button" disabled>Dessiner la forme *</button><input id="re-coords" name="re-coords" type="hidden" /><br/>
+					</select><button class="btn btn-primary" id="re-drawcoords" name="re-drawcoords" data-from="#re-shape" data-for="#re-coords" type="button" disabled>Dessiner la forme *</button><input id="re-coords" name="re-coords" type="hidden" /><br/>
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-categorie" name="re-categorie"><option hidden disabled value="">Cat&eacute;gorie *</option>
-						<option value="none" class="categnone">Blanc</option><option value="divers" class="categdivers">Bleu clair (Divers)</option><option value="industrie" class="categindustrie">Bleu fonc&eacute; (Industrie)</option><option value="spirituel" class="categspirituel">Jaune (Spirituel)</option><option value="bataille" class="categbataille">Orange (Bataille)</option><option value="commerce" class="categcommerce">Rose (Commerce)</option><option value="taverne" class="categtaverne">Rouge (Taverne)</option><option value="administration" class="categadministration">Vert (Administration)</option><option value="special" class="categspecial">Violet (Sp&eacute;cial)</option>
+						<option value="none" class="categnone">Blanc</option><option value="divers" class="categdivers">Bleu clair (Divers)</option><option value="industrie" class="categindustrie">Bleu fonc&eacute; (Industrie)</option><option value="spirituel" class="categspirituel">Jaune (Spirituel)</option><option value="bataille" class="categbataille">Orange (Bataille)</option><option value="commerce" class="categcommerce">Rose (Commerce)</option><option value="taverne" class="categtaverne">Rouge (Taverne)</option><option value="administration" class="categadministration">Vert (Administration)</option><option value="special" class="categspecial">Violet (Sp&eacute;cial)</option><option value="dark" class="categdark">Gris (Dark)</option>
 					</select>
 					<input class="form-control" id="re-titre" name="re-titre" placeholder="Titre *" type="text" />
-					<textarea class="form-control" id="re-description" name="re-description" rows="1.5"  placeholder="Description" ></textarea><input id="re-prefixrencontre" name="re-prefixrencontre" type="hidden" />
-					<button class="btn btn-primary" id="re-button" name="re-button" type="submit" form="re-form">Nouvelle rencontre</button>
+					<textarea class="form-control" id="re-description" name="re-description" rows="2"  placeholder="Description" ></textarea><input id="re-prefixrencontre" name="re-prefixrencontre" type="hidden" />
+					<button class="btn btn-primary" id="re-buttonadd" name="re-buttonadd" type="submit" form="re-form">Ajouter/Modifier</button>&nbsp;<button class="btn btn-primary" id="re-buttongenerer" name="re-buttongenerer" type="button" form="re-form">G&eacute;n&eacute;rer</button>
 					<ul id="re-preview"></ul>
 				<form>
 			</div>
 		</div>
 	</div>`);
 	
-	
-	$( "#tabs" ).on("tabsactivate", function(event, ui){
-		if ( ui.newPanel.attr('id') === 'tabEdition' )
-		{
+	//Ajout des actions pour l'édition sur le changement d'onglet
+	$( "#tabs" ).on("tabsactivate", function(event, ui) {
+		$('#accordionEdition').accordion('option', 'active', false);
+		drawForme = false;
+		if ( ui.newPanel.attr('id') === 'tabEdition' ) {
 			$('#accordionEdition').accordion('refresh');
 			
-			//Aventure
-			if ( dataAventure !== null )
-				editionAventure = dataAventure.slice(0);
-			else
-				editionAventure = [];
-			//TODO
-			
-			//Zone d'environnement
-			if ( dataDeBase !== null )
-				editionDeBase = dataDeBase.slice(0);
-			else
-				editionDeBase = [];
-			//TODO
-			
-			//Rencontre
-			if ( dataRencontre !== null )
-				editionRencontre = dataRencontre.slice(0);
-			else
-				editionRencontre = [];
-			updateEditionRencontrePreview();
-			//------------------
+			initEditionAventure();
+			initEditionZone();
+			initEditionRencontre();
+		}
+		else { 
+			editionAventure = []; editionDeBase = []; editionRencontre = []; 
+			$('#av-preview').empty(); $('#zo-preview').empty(); $('#re-preview').empty();
 		}
 	});
 	$('#accordionEdition').accordion({
+		beforeActivate: function(event, ui) {
+			if ( ui.newHeader.attr('id') === 'av-title' ) {
+				//initChampsAventure();
+				//TODO : updateEditionAventurePreview
+			}
+			else if ( ui.newHeader.attr('id') === 'zo-title' ) {
+				//initChampsZone();
+				//TODO : updateEditionZonePreview
+			}
+			else if ( ui.newHeader.attr('id') === 're-title' ) {
+				initChampsRencontre();
+				updateEditionRencontrePreview();
+			}
+			drawForme = false;
+		},
 		collapsible: true, 
 		active: 2 //TODO a retirer apres tests false ou index
 	});
 	
-	
-});
-
-function updateEditionRencontrePreview() {
-	$('#re-preview').empty();
-	$.each(editionRencontre, function(key,value) {
-		var json = JSON.stringify(value, function remplaçant(key, value) { if ( key === "areaid") return undefined; else return value; }, '\t');
-		$('#re-preview').append('<li title="'
-							+ json.replace(/"/g, '&quot;') + '"><a href="#" id="delete_re-' + value.numero + '">supprimer</a> ' 
-							+ value.numero + ' - ' + value.titre 
-							+ '</li>');
+	//------RENCONTRES------
+	//Ajout/modif rencontre
+	$('#re-form').submit(function(){
+		submitEditionRencontre();
 	});
-	$('a[id^=delete_re]').click(function(e){
-		var num = parseFloat($(this).attr('id').substring(10, $(this).attr('id').length));
-		console.log(num);
-		var aSupprimer = null;
-		$.each(editionRencontre, function(key,value) {
-			if ( value.numero === num )
-			{
-				aSupprimer = value;
-				return;
-			}
-		});
-		if ( aSupprimer !== null )
-			editionRencontre.splice(editionRencontre.indexOf(aSupprimer), 1);
-		updateEditionRencontrePreview();
+	//Bouton de génération des rencontres
+	$('#re-buttongenerer').click(function(e){
+		genererEditionRencontre();
 		e.preventDefault();
 	});
-}
+	//Sélection de forme des rencontres
+	$('#re-shape').change(function() {
+		var shape = ($('#re-shape').val()===""?null:$('#re-shape').val());
+		$('#re-drawcoords').attr('disabled', (shape === null));
+		
+		drawForme = false;
+		$('#re-coords').val('');
+		
+		$('#re-drawcoords').click();
+	});
+	$('#re-drawcoords').click(function() {
+		utilDrawing($(this));
+	});
+	//-----------------------
+	
+	
+	
+	$('#blockMap').click(function(e) {
+		if ( drawForme )//pour les dessins de zone et de rencontre
+		{
+			var prefix = null;
+			if ( $('#accordionEdition>.ui-state-active').attr('id') === 'zo-title' )
+				prefix = 'zo-';
+			else if ( $('#accordionEdition>.ui-state-active').attr('id') === 're-title' )
+				prefix = 're-';
+			
+			if ( prefix !== null )
+			{
+				var shape = ($('#' + prefix + 'shape').val()===""?null:$('#' + prefix + 'shape').val());
+				var coords = ($('#' + prefix + 'coords').val()===""?null:$('#' + prefix + 'coords').val());
+				coords = (coords===null?'':coords + ', ') + e.pageX + ',' + e.pageY;
+				
+				$('#' + prefix + 'coords').val(coords);
+				var nbCoords = coords.split(",").length / 2;
+				if ( shape === 'poly' ) {
+					$('#' + prefix + 'drawcoords').text('Forme en cours [' + nbCoords + ']');
+				}
+				else if ( shape.startsWith('at:') ) {
+					$('#' + prefix + 'drawcoords').text('Forme OK [' + nbCoords + ']');
+					$('#' + prefix + 'drawcoords').css('color', '#22FF22;');
+					drawForme = false;
+				}
+				else if ( shape.startsWith('fromto:') ) {
+					if ( nbCoords === 2 )
+					{
+						$('#' + prefix + 'drawcoords').text('Forme OK [' + nbCoords + ']');
+						$('#' + prefix + 'drawcoords').css('color', '#22FF22;');
+						drawForme = false;
+					}
+					else
+						$('#' + prefix + 'drawcoords').text('Forme en cours [' + nbCoords + ']');
+				}
+			}
+		}
+	});
+});
+//---------- FIN GENERAL --------------
 
 
 
 
 
-
-//Pour les inputs d'edition
+//----------- AVENTURES ---------
+/**
+Initialise les champs pour l'édition d'aventure
+*/
 function initEditionAventure() {//Cette fonction n'est appelée qu'une fois au chargement de la page
 	//Initialisation des inputs d'édition : Aventure
 	$('#av-aventure').val(null); $('#av-titre').val(null); $('#av-prefixrencontre').val(null); $('#av-prefixzone').val(null); $('#av-map').val(null);
@@ -158,15 +202,19 @@ function initEditionAventure() {//Cette fonction n'est appelée qu'une fois au c
 	}
 	//-----------------------------------
 }
+//----------- FIN DES AVENTURES ---------
 
+//----------- ZONES ---------
+/**
+Initialise les champs pour l'édition de zone
+*/
 function initEditionZone() {
 	var el = $('#aventure option:checked');
 	var aventure = el.data('aventure');
 	var titre = el.data('titre');
 	var prefixzone = el.data('prefixzone');
 	
-	//Rencontre
-	if ( editionDeBase === null && dataDeBase !== null )
+	if ( dataDeBase !== null )
 		editionDeBase = dataDeBase.slice(0);
 	else
 		editionDeBase = [];
@@ -185,64 +233,31 @@ function initEditionZone() {
 		$('#zo-prefixzone').val(prefixzone);
 	}
 	
-	if ( editionDeBase !== null) 
-	{
-		var maxNumero = 0, maxareaid = 0;
-		$.each(editionDeBase, function(key, val) {
-			if ( val.numero > maxNumero )
-				maxNumero = val.numero;
-			var id = parseInt(val.areaid.substring(5,val.areaid.length))
-			if ( id > maxareaid )
-				maxareaid = id;
-		});
-		$('#zo-numero').val(Math.trunc(maxNumero) + 1);
-		$('#zo-areaid').val('path-' + (maxareaid + 1));
-	}
-	else 
-	{
-		$('#zo-numero').val(1);
-		$('#zo-areaid').val('path-' + 1);
-	}
+	var maxNumero = 0, maxareaid = 0;
+	$.each(editionDeBase, function(key, val) {
+		if ( val.numero > maxNumero )
+			maxNumero = val.numero;
+		var id = parseInt(val.areaid.substring(5,val.areaid.length))
+		if ( id > maxareaid )
+			maxareaid = id;
+	});
+	$('#zo-numero').val(Math.trunc(maxNumero) + 1);
+	$('#zo-areaid').val('path-' + (maxareaid + 1));
 }
+//----------- FIN DES ZONES ---------
 
+
+//----------- RENCONTRES ---------
+/**
+Initialise les champs pour l'édition de rencontre
+*/
 function initEditionRencontre() {
-	var el = $('#aventure option:checked');
-	var titre = el.data('titre');
-	var prefixrencontre = el.data('prefixrencontre');
-	
 	//Rencontre
-	if ( editionRencontre === null && dataRencontre !== null )
+	if ( dataRencontre !== null )
 		editionRencontre = dataRencontre.slice(0);
 	else
 		editionRencontre = [];
 	
-	$('#re-shape').val($('#re-shape option:first').val()); $('#re-drawcoords').attr('disabled', true); $('#re-coords').val(null); 
-	$('#re-categorie').val($('#re-categorie option:first').val()); $('#re-titre').val(null); $('#re-description').val(null); 
-	
-	$('#re-arearef>option').not(':first').remove();
-	$('#re-arearef').val($('#re-arearef option:first').val()); 
-	
-	if ( prefixrencontre === null )
-	{
-		$('#re-warning').show();
-		$('#re-prefixrencontre').val(null);
-	}
-	else
-	{
-		$('#re-warning').hide();
-		$('#re-prefixrencontre').val(prefixrencontre);
-	}
-	
-	if ( editionRencontre !== null) 
-	{
-		var max = 0;
-		$.each(editionRencontre, function(key, val) {
-			if ( val.numero > max )
-				max = val.numero;
-		});
-		$('#re-numero').val(Math.trunc(max) + 1);
-	}
-	else $('#re-numero').val(1);
 	if ( dataDeBase !== null )
 	{
 		var zones = [];
@@ -254,8 +269,187 @@ function initEditionRencontre() {
 			});
 	 	$.each(zones, function(key, val) { $('#re-arearef').append('<option value="' + val[0] + '">' + val[0] + ' - ' + val[1] + '</option>'); });
 	}
+	
+	initChampsRencontre();
 }
-//-------------------------
+function initChampsRencontre() {
+	var el = $('#aventure option:checked');
+	var prefixrencontre = el.data('prefixrencontre');
+	
+	$('#re-shape').val($('#re-shape option:first').val()); $('#re-drawcoords').attr('disabled', true); $('#re-coords').val(null); 
+	$('#re-categorie').val($('#re-categorie option:first').val()); $('#re-titre').val(null); $('#re-description').val(null); 
+	
+	$('#re-arearef>option').not(':first').remove();
+	$('#re-arearef').val($('#re-arearef option:first').val()); 
+	
+	$('#re-drawcoords').text('Dessiner la forme *');
+	$('#re-drawcoords').css('color', '#FFFFFF;');
+	
+	if ( prefixrencontre === null ) {
+		$('#re-warning').show();
+		$('#re-prefixrencontre').val(null);
+	}
+	else
+	{
+		$('#re-warning').hide();
+		$('#re-prefixrencontre').val(prefixrencontre);
+	}
+	
+	var max = 0;
+	$.each(editionRencontre, function(key, val) {
+		if ( val.numero > max )
+			max = val.numero;
+	});
+	$('#re-numero').val(Math.trunc(max) + 1);
+}
+/**
+Mise à jour de la liste des éléments de rencontre pour le preview de l'édition
+*/
+function updateEditionRencontrePreview() {
+	$('#re-preview').empty();
+	$.each(editionRencontre, function(key,value) {
+		var json = JSON.stringify(value, function remplaçant(key, value) { if ( key === "areaid") return undefined; else return value; }, '\t');
+		$('#re-preview').append('<li title="'
+							+ json.replace(/"/g, '&quot;') + '"><a href="#" name="delete_re" data-re-numero="' + value.numero + '" style="color:#FF0000;">sup.</a> ' 
+							+ '<a href="#" name="modify_re" data-re-numero="' + value.numero + '" style="color:#FF6600;">mod.</a> ' 
+							+ value.numero + ' - ' + value.titre 
+							+ '</li>');
+	});
+	loadDataIntoMap(null, editionRencontre);
+	
+	//Pour supprimer une rencontre de la liste
+	$('a[name=delete_re]').click(function(e){
+		var num = parseFloat($(this).data('re-numero'));
+		var indexASupprimer = null;
+		$.each(editionRencontre, function(key,value) {
+			if ( value.numero === num ) {
+				indexASupprimer = key;
+				return;
+			}
+		});
+		if ( indexASupprimer !== null )
+			editionRencontre.splice(indexASupprimer, 1);
+		updateEditionRencontrePreview();
+		e.preventDefault();
+	});
+	//Pour modifier une rencontre de la liste
+	$('a[name=modify_re]').click(function(e){
+		var num = parseFloat($(this).data('re-numero'));
+		$.each(editionRencontre, function(key,value) {
+			if ( value.numero === num ) {
+				$('#re-numero').val(value.numero);
+				$('#re-arearef').val(value.arearef);
+				$('#re-shape').val(value.shape);
+				$('#re-coords').val(value.coords);
+				$('#re-categorie').val(value.categorie);
+				$('#re-titre').val(value.titre);
+				$('#re-description').val(value.description);
+				var nbCoords = $('#re-coords').val().split(",").length / 2;
+				$('#re-drawcoords').text('Forme OK [' + nbCoords + ']');
+				$('#re-drawcoords').css('color', '#22FF22;');
+				return;
+			}
+		});
+		e.preventDefault();
+	});
+}
 
+/**
+Ajout / Modification de rencontre dans la liste
+*/
+function submitEditionRencontre() {
+	//Pour ajouter ou modifier une rencontre à la liste
+	var nouvelleRencontre = {
+		"numero": parseFloat($('#re-numero').val()),
+		"arearef": ($('#re-arearef').val()===""?null:$('#re-arearef').val()),
+		"shape": ($('#re-shape').val()===""?null:$('#re-shape').val()),
+		"coords": ($('#re-coords').val()===""?null:$('#re-coords').val()),
+		"categorie": ($('#re-categorie').val()===""?null:$('#re-categorie').val()),
+		"titre": ($('#re-titre').val()===""?null:$('#re-titre').val()),
+		"description": ($('#re-description').val()===""?null:$('#re-description').val())
+	};
+	var fileName = ($('#re-prefixrencontre').val()===""?null:$('#re-prefixrencontre').val() + '_rencontres.json');
+	
+	if ( fileName === null 
+		|| nouvelleRencontre.numero === null 
+		|| nouvelleRencontre.shape === null 
+		|| nouvelleRencontre.coords === null 
+		|| nouvelleRencontre.categorie === null 
+		|| nouvelleRencontre.titre === null )
+	{
+		$('#re-numero').attr('required', true);
+		$('#re-shape').attr('required', true);
+		$('#re-categorie').attr('required', true);
+		$('#re-titre').attr('required', true);
+		if ( nouvelleRencontre.coords === null )
+			$('#re-drawcoords').css('color', '#FF2222;');
+		return false;
+	}
+	
+	if ( editionRencontre === null )
+		editionRencontre = [nouvelleRencontre];
+	else {//Pour modifier : on remplace l'existant par le nouveau
+		var indexAModifier = null;
+		$.each(editionRencontre, function(key,value) {
+			if ( value.numero === nouvelleRencontre.numero ) {
+				indexAModifier = key;
+				return;
+			}
+		});
+		if ( indexAModifier !== null )
+			editionRencontre.splice(indexAModifier, 1, nouvelleRencontre);
+		else
+		{
+			editionRencontre.push(nouvelleRencontre);
+			editionRencontre.sort(trierRencontre);
+		}
+	}
+	
+	updateEditionRencontrePreview();
+	
+	//Réinitialise les champs
+	initChampsRencontre();
+	//-----------------------
+	
+	return false;
+}
+function genererEditionRencontre() {
+	var fileName = ($('#re-prefixrencontre').val()===""?null:$('#re-prefixrencontre').val() + '_rencontres.json');
+	if ( fileName === null )
+		return false;
+	var jsonRencontres = {"rencontres": editionRencontre};
+	downloadFile(JSON.stringify(jsonRencontres, function(key, value) { if ( key === "areaid") return undefined; else return value; }, '\t') , fileName);
+}
+//----------FIN RENCONTRES -------------
+
+
+
+//--- TRANSVERSES ----
+function utilDrawing(element) {
+	//data-from : shape / data-for : coords
+	element.css('color', '#FFFFFF;');
+	var shape = ($(element.data('from')).val()===""?null:$(element.data('from')).val());
+	if ( shape !== null )
+	{
+		if ( !drawForme ) {
+			$(element.data('for')).val('');
+			element.text('Forme en cours [0]');
+			drawForme = true;
+		}
+		else if ( shape === 'poly' )
+		{
+			var nbCoords = $(element.data('for')).val().split(",").length / 2;
+			if ( nbCoords >= 3 )
+			{
+				element.text('Forme OK [' + nbCoords + ']');
+				element.css('color', '#22FF22;');
+				drawForme = false;
+			}
+		}
+	}
+}
+
+
+//-------------------------
 
 

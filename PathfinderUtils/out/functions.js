@@ -10,6 +10,7 @@ $(window).resize(function(e) {
 	$('div#blockList').css({'font-size': getPxIgnoreZoom(11) + 'px'});
 	$('.mapButtonV2').css({'padding': getPxIgnoreZoom(2) + 'px ' + getPxIgnoreZoom(4) + 'px','-moz-box-shadow': 'inset 0px ' + getPxIgnoreZoom(1) + 'px 0px 0px #a6827e', '-webkit-box-shadow': 'inset 0px ' + getPxIgnoreZoom(1) + 'px 0px 0px #a6827e', 'box-shadow': 'inset 0px ' + getPxIgnoreZoom(1) + 'px 0px 0px #a6827e', '-moz-border-radius': getPxIgnoreZoom(3) + 'px', '-webkit-border-radius': getPxIgnoreZoom(3) + 'px', 'border-radius': getPxIgnoreZoom(3) + 'px', 'border': getPxIgnoreZoom(1) + 'px solid #54381e', 'text-shadow': '0px ' + getPxIgnoreZoom(1) + 'px 0px #4d3534'});
 	
+	//Ferme la liste des aventures si elle est ouverte
 	if ( $('span#aventure-button').length > 0 )
 		$('#aventure').selectmenu('close');
 });
@@ -80,7 +81,7 @@ $(function() {
 
 //Jquery ui
 $( function() {
-	$( "#aventure" ).selectmenu({
+	$("#aventure").selectmenu({
 		icons: { button: "ui-icon-blank" }, 
 		change: function( event, ui ) {
 			aventureChanged();
@@ -89,7 +90,7 @@ $( function() {
 		}
 	});
 	
-	$( "#tabs" ).tabs({
+	$("#tabs").tabs({
 		//collapsible: true
 		activate: function(event, ui) {
 			if ( ui.newPanel.attr('id') === 'tabDeBase' )
@@ -132,11 +133,7 @@ $( function() {
 	//Aventures
 	$.getJSON('./json/aventures.json', function(content) {
 		dataAventure = content.aventures;
-		dataAventure.sort(function(a,b) {
-			if ( a.aventure > b.aventure) return -1;
-			if ( b.aventure > a.aventure ) return 1;
-			return 0;
-		}); 
+		dataAventure.sort(trierAventure); 
 		
 		var selectedValue = null;
 		$('#aventure').empty(); // remove old options
@@ -155,9 +152,6 @@ $( function() {
 		});
 		$('#aventure').val(selectedValue);
 		$("#aventure").selectmenu("refresh");
-		
-		if ( typeof initEditionAventure !== 'undefined' && $.isFunction(initEditionAventure) )
-			initEditionAventure();
 		
 		aventureChanged();
 		
@@ -183,13 +177,7 @@ function aventureChanged() {
 	{
 		$.getJSON('./json/' + prefixzone + '_zones.json', function(content) {
 			dataDeBase = content.zones;
-			dataDeBase.sort(function(a,b) {
-				if ( a.categorie > b.categorie ) return 1;
-				if ( b.categorie > a.categorie ) return -1;
-				if ( a.numero > b.numero) return 1;
-				if ( b.numero > a.numero ) return -1;
-				return 0;
-			}); 
+			dataDeBase.sort(trierZone); 
 			
 			$.each(dataDeBase, function(key, zone) {
 				//Ajout de la span de référence pour la couleur
@@ -209,9 +197,6 @@ function aventureChanged() {
 		aventureChangedEnd(aventure, titre, prefixrencontre, map);
 }
 function aventureChangedEnd(aventure, titre, prefixrencontre, map) {
-	if ( typeof initEditionZone !== 'undefined' && $.isFunction(initEditionZone) )
-		initEditionZone();
-	
 	dataRencontre = null;
 	//Pour les rencontres
 	if ( prefixrencontre !== null ) 
@@ -219,13 +204,7 @@ function aventureChangedEnd(aventure, titre, prefixrencontre, map) {
 		var maxNumero = 0;
 		$.getJSON('./json/' + prefixrencontre + '_rencontres.json', function(content) {
 			dataRencontre = content.rencontres;
-			dataRencontre.sort(function(a,b) {
-				if ( a.numero > b.numero) return 1;
-				if ( b.numero > a.numero ) return -1
-				if ( a.categorie > b.categorie ) return 1;
-				if ( b.categorie > a.categorie ) return -1;
-				return 0;
-			}); 
+			dataRencontre.sort(trierRencontre); 
 			
 			$.each(dataRencontre, function(key, zone) {
 				//Ajout de la span de référence pour la couleur
@@ -247,15 +226,11 @@ function aventureChangedEnd(aventure, titre, prefixrencontre, map) {
 				maxNumero = 10;
 			$('#slider-range').slider("option", "max", maxNumero);
 			$('#slider-range').slider("option", "values", [1, maxNumero]);
-			if ( typeof initEditionRencontre !== 'undefined' && $.isFunction(initEditionRencontre) )
-				initEditionRencontre();
 		});
 	}
 	else{
 		$('#slider-range').slider("option", "max", 10);
 		$('#slider-range').slider("option", "values", [1, 10]);
-		if ( typeof initEditionRencontre !== 'undefined' && $.isFunction(initEditionRencontre) )
-			initEditionRencontre();
 	}
 }
 //-----------------
@@ -294,7 +269,8 @@ function loadDataIntoMap(listeToLoad, data, filtres={}, keepRatio=false)
 	
 	//On vide les balises
 	$('#map1').empty(); $('#map2').empty();
-	$('#' + listeToLoad + '-1').empty(); $('#' + listeToLoad + '-2').empty();
+	if ( listeToLoad !== null )
+		$('#' + listeToLoad + '-1').empty(); $('#' + listeToLoad + '-2').empty();
 	//-------------------
 	var tabMapsDeBase = [], tabMaps = [], tabListes = [], nouvRef, nouv;
 	$.each(data, function(key, zone) {
@@ -319,15 +295,18 @@ function loadDataIntoMap(listeToLoad, data, filtres={}, keepRatio=false)
 	$.each(tabMaps, function(key, map) { $('#map2').append(map[1]); $('#map1').append(map[0]); });
 	$.each(tabMapsDeBase, function(key, map) { $('#map1').append(map[0]); });
 	
-	var total = tabListes.length;
-	var row = 0;
-	$.each(tabListes, function(key, lien) {
-		if ( uneLigne || (total <= 20 && !deuxLignes) || row < total/2 )
-			$('#' + listeToLoad + '-1').append(lien);
-		else
-			$('#' + listeToLoad + '-2').append(lien);
-		row++;
-	});
+	if ( listeToLoad !== null )
+	{
+		var total = tabListes.length;
+		var row = 0;
+		$.each(tabListes, function(key, lien) {
+			if ( uneLigne || (total <= 20 && !deuxLignes) || row < total/2 )
+				$('#' + listeToLoad + '-1').append(lien);
+			else
+				$('#' + listeToLoad + '-2').append(lien);
+			row++;
+		});
+	}
 	
 	initMap();
 }
