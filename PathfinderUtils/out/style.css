@@ -1,7 +1,7 @@
 html { overflow-y: scroll; }
 body { background-color:#CCCCCC; }
 
-area { cursor: pointer; }
+.area { cursor: pointer; }
 
 .noSelect {
 	-moz-user-select: none; /* Firefox */
@@ -33,6 +33,7 @@ area { cursor: pointer; }
 .categbataille { background-color: #D2691E; border-color: #000000; color: #FFFFFF !important; }
 .categdark { background-color: #868686; border-color: #000000; color: #FFFFFF !important; }
 
+.categlight { background-color: #E5E5E5; border-color: #E5E5E5; color: #E5E5E5 !important; }
 .light { opacity: 0.5; filter: alpha(opacity=50); /* For IE8 and earlier */ }
 
 

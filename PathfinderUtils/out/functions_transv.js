@@ -57,24 +57,34 @@ function newArea(zone, light=false)
 									parseInt(zone.coords.split(',')[3]), 
 									zone.shape.substring(7));
 	
+	var temporaire = (zone.temporaire === true);
+	
 	//"areaid","shape","coords","categorie","numero","titre","description"
-	//console.log(zone.categorie + '   ' + zone.numero);
 	var map1 = '<area id="' + zone.areaid + '" ';
-	map1 += 'class="area" shape="poly" ';
+	if ( ! temporaire )
+		map1 += 'class="area" ';
+	map1 += 'shape="poly" ';
 	map1 += 'coords="' + coords + '" ';
 	map1 += 'data-categorie="' + zone.categorie + '" ';
 	
-	map1 += 'data-numero="' + zone.numero + '" ';
-	map1 += 'data-titre="' + zone.titre + '" ';
-	map1 += 'data-message="' + zone.description + '" ';
-	
-	map1 += 'title="' + zone.numero + ' - <b>' + zone.titre + '</b>" ';
+	if ( ! temporaire )
+	{
+		map1 += 'data-numero="' + zone.numero + '" ';
+		map1 += 'data-titre="' + zone.titre + '" ';
+		map1 += 'data-message="' + zone.description + '" ';
+		
+		map1 += 'title="' + zone.numero + ' - <b>' + zone.titre + '</b>" ';
+	}
+	else
+		map1 += 'data-temporaire="true" ';
 	map1 += '/>';
 	
 	
 	var map2 = '<area id="' + zone.areaid + 'bis" ';
 	map2 += 'class="areabis" shape="poly" ';
 	map2 += 'coords="' + coords + '" ';
+	if ( temporaire )
+		map2 += 'data-temporaire="true" ';
 	map2 += 'data-categorie="' + zone.categorie + '" ';
 	map2 += '/>';
 	

@@ -180,10 +180,6 @@ function aventureChanged() {
 			dataDeBase.sort(trierZone); 
 			
 			$.each(dataDeBase, function(key, zone) {
-				//Ajout de la span de référence pour la couleur
-				if ( $('#categories>span.categ' + zone.categorie).length === 0 )
-					$('#categories').append('<span class="categ' + zone.categorie + '" hidden></span>');
-				
 				//On init l'areaid
 				zone.areaid = 'path_' + zone.numero.toString().replace('.', '-');
 			});
@@ -207,10 +203,6 @@ function aventureChangedEnd(aventure, titre, prefixrencontre, map) {
 			dataRencontre.sort(trierRencontre); 
 			
 			$.each(dataRencontre, function(key, zone) {
-				//Ajout de la span de référence pour la couleur
-				if ( $('#categories>span.categ' + zone.categorie).length === 0 )
-					$('#categories').append('<span class="categ' + zone.categorie + '" hidden></span>');
-				
 				//On init l'areaid
 				zone.areaid = 'rc_' + zone.numero.toString().replace('.', '-');
 			});
@@ -280,6 +272,10 @@ function loadDataIntoMap(listeToLoad, data, filtres={}, keepRatio=false)
 				$.each(dataDeBase, function(key, ref) {
 					if ( ref.areaid === 'path_' + zone.arearef ) {
 						nouvRef = newArea(ref, true);
+						
+						//Ajout de la span de référence pour la couleur
+						if ( $('#categories>span.categ' + ref.categorie).length === 0 )
+							$('#categories').append('<span class="categ' + ref.categorie + '" hidden></span>');
 						return; 
 					}
 				});
@@ -287,6 +283,10 @@ function loadDataIntoMap(listeToLoad, data, filtres={}, keepRatio=false)
 			nouv = newArea(zone);
 			tabMaps.push(nouv[0]); tabListes.push(nouv[1]);
 			if ( nouvRef !== null ) { tabMapsDeBase.push(nouvRef[0]); tabListes.push(nouvRef[1]); }
+			
+			//Ajout de la span de référence pour la couleur
+			if ( $('#categories>span.categ' + zone.categorie).length === 0 )
+				$('#categories').append('<span class="categ' + zone.categorie + '" hidden></span>');
 		}
 	});
 	
@@ -347,12 +347,14 @@ function initMap() {
 		if ( isBis || !areabisactive )
 			couleur = hexc($('.categ' + $(this).data('categorie')).css('backgroundColor'));
 		
-		$(this).data('maphilight', {fillColor:couleur, shadowColor:couleur, strokeColor:couleurStroke, alwaysOn: false, neverOn: false, shadow: false});
+		$(this).data('maphilight', {fillColor:couleur, shadowColor:couleur, strokeColor:couleurStroke, alwaysOn: false, neverOn: false, shadow: false, fillOpacity: 0.8});
 		if ( isBis )
 		{
 			$(this).data('maphilight').alwaysOn=areabisactive;
 			$(this).data('maphilight').neverOn=!areabisactive;
 		}
+		if ( $(this).data('temporaire') === true )
+			$(this).data('maphilight').fillOpacity=0.1;
 	});
 	$('.map').maphilight();
 	//--------------------
@@ -372,7 +374,7 @@ function initMap() {
 	//Initialisation de bootbox et du surlignement :: pour le mouseOver et le click des area sur la map
 	$('.area').unbind('click').unbind('mouseover').unbind('mouseout');
 	$('.area').click(function(e) {
-		if ( $(this).data('message') !== undefined )
+		if ( $(this).data('message') !== undefined && $(this).data('numero') !== null )
 		{
 			var varNumero = $(this).data('numero');
 			var varTitre = $(this).data('titre');

@@ -14,6 +14,7 @@ $( function() {
 			<h3 class="noSelect" id='av-title'>Aventure</h3>
 			<div>
 				<form action="/" method="post" id="av-form">
+					Si num&eacute;ro existant : modifie l'&eacute;l&eacute;ment
 					<input class="form-control" id="av-aventure" name="av-aventure" placeholder="Numéro *" type="number" min="0" step=".1" />
 					<input class="form-control" id="av-titre" name="av-titre" placeholder="Titre *" type="text" />
 					<input class="form-control" id="av-prefixrencontre" name="av-prefixrencontre" placeholder="Prefixe json Rencontres" type="text" />
@@ -25,7 +26,8 @@ $( function() {
 			</div>
 			<h3 class="noSelect" id="zo-title">Zone d'environnement</h3>
 			<div><span id="zo-warning" style="color:#FF0000; font-weight: bold; display: none;">/!\\ pas de prefix zone pour cette aventure</span>
-				<form action="/" method="post"  id="zo-form">
+				<form action="/" method="post" id="zo-form">
+					Si num&eacute;ro existant : modifie l'&eacute;l&eacute;ment
 					<input class="form-control" id="zo-numero" name="zo-numero" placeholder="Numéro de zone *"  type="number" min="0" step="1" />
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="zo-shape" name="zo-shape" style="width:50%;"><option hidden disabled value="">Forme *</option>
 						<optgroup label="Simple"><option value="at:duck">Canard</option><option value="at:fight">Combat</option><option value="at:skull">Cr&acirc;ne</option><option value="at:star">Etoile</option><option value="at:meet">Rencontre</option></optgroup>
@@ -43,8 +45,8 @@ $( function() {
 			</div>
 			<h3 class="noSelect" id="re-title">Rencontre</h3>
 			<div><span id="re-warning" style="color:#FF0000; font-weight: bold; display: none;">/!\\ pas de prefix rencontre pour cette aventure</span>
-				<form action="/" method="post"  id="re-form">
-					Si numéro existant : modifie l'élément
+				<form action="/" method="post" id="re-form">
+					Si num&eacute;ro existant : modifie l'&eacute;l&eacute;ment
 					<input class="form-control" id="re-numero" name="re-numero" placeholder="Numéro de rencontre *"  type="number" min="0" step=".1" />
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-arearef" name="re-arearef"><option hidden disabled value="">Zone environnement associ&eacute;e</option></select><br/>
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-shape" name="re-shape" style="width:50%;"><option hidden disabled value="">Forme *</option>
@@ -101,12 +103,12 @@ $( function() {
 	});
 	
 	//------AVENTURES-------
-	$('#av-form').submit(function(){ submitEditionAventure(); }); //Ajout/modif aventure
+	$('#av-form').submit(function(){ submitEditionAventure(); return false; }); //Ajout/modif aventure
 	$('#av-buttongenerer').click(function(e){ genererEditionAventure(); e.preventDefault(); });//Bouton de génération des aventures
 	//----------------------
 	
 	//------ZONES------
-	$('#zo-form').submit(function(){ submitEditionZone(); }); //Ajout/modif zone
+	$('#zo-form').submit(function(){ submitEditionZone(); return false; }); //Ajout/modif zone
 	$('#zo-buttongenerer').click(function(e){ genererEditionZone(); e.preventDefault(); });//Bouton de génération des zones
 	$('#zo-shape').change(function() { //Sélection de forme des zones
 		var shape = ($('#zo-shape').val()===""?null:$('#zo-shape').val());
@@ -120,10 +122,24 @@ $( function() {
 	$('#zo-drawcoords').click(function() {
 		utilDrawing($(this));
 	});
+	$('#zo-coords').change(function(){
+		var nouvelleZone = {
+			"numero": null,
+			"shape": ($('#zo-shape').val()===""?null:$('#zo-shape').val()),
+			"coords": ($('#zo-coords').val()===""?null:$('#zo-coords').val()),
+			"categorie": "light",
+			"titre": null,
+			"description": null, 
+			"temporaire": true
+		};
+		var tmp = editionDeBase.slice(0);
+		tmp.push(nouvelleZone);
+		loadDataIntoMap(null, tmp);
+	});
 	//-----------------------
 	
 	//------RENCONTRES------
-	$('#re-form').submit(function(){ submitEditionRencontre(); }); //Ajout/modif rencontre
+	$('#re-form').submit(function(){ submitEditionRencontre(); return false; }); //Ajout/modif rencontre
 	$('#re-buttongenerer').click(function(e){ genererEditionRencontre(); e.preventDefault(); });//Bouton de génération des rencontres
 	$('#re-shape').change(function() { //Sélection de forme des rencontres
 		var shape = ($('#re-shape').val()===""?null:$('#re-shape').val());
@@ -136,6 +152,21 @@ $( function() {
 	});
 	$('#re-drawcoords').click(function() {
 		utilDrawing($(this));
+	});
+	$('#re-coords').change(function(){
+		var nouvelleRencontre = {
+			"numero": null,
+			"arearef": null,
+			"shape": ($('#re-shape').val()===""?null:$('#re-shape').val()),
+			"coords": ($('#re-coords').val()===""?null:$('#re-coords').val()),
+			"categorie": "light",
+			"titre": null,
+			"description": null, 
+			"temporaire": true
+		};
+		var tmp = editionRencontre.slice(0);
+		tmp.push(nouvelleRencontre);
+		loadDataIntoMap(null, tmp);
 	});
 	//-----------------------
 	
@@ -156,7 +187,7 @@ $( function() {
 				var coords = ($('#' + prefix + 'coords').val()===""?null:$('#' + prefix + 'coords').val());
 				coords = (coords===null?'':coords + ', ') + e.pageX + ',' + e.pageY;
 				
-				$('#' + prefix + 'coords').val(coords);
+				$('#' + prefix + 'coords').val(coords).trigger('change');
 				var nbCoords = coords.split(",").length / 2;
 				if ( shape === 'poly' ) {
 					$('#' + prefix + 'drawcoords').text('Forme en cours [' + nbCoords + ']');
@@ -355,9 +386,6 @@ function initChampsZone() {
 	$('#zo-shape').val($('#zo-shape option:first').val()); $('#zo-drawcoords').attr('disabled', true); $('#zo-coords').val(null); 
 	$('#zo-categorie').val($('#zo-categorie option:first').val()); $('#zo-titre').val(null); $('#zo-description').val(null); 
 	
-	$('#zo-arearef>option').not(':first').remove();
-	$('#zo-arearef').val($('#zo-arearef option:first').val()); 
-	
 	$('#zo-numero').attr('required', false);
 	$('#zo-categorie').attr('required', false);
 	$('#zo-titre').attr('required', false);
@@ -513,18 +541,6 @@ function initEditionRencontre() {
 	
 	editionRencontre.sort(trierRencontre);
 	
-	if ( dataDeBase !== null )
-	{
-		var zones = [];
-		$.each(dataDeBase, function(key, val) { zones.push([val.numero, val.titre]); });
-		zones.sort(function(a,b) { 
-				if ( a[0] > b[0] ) return 1;
-				if ( b[0] > a[0] ) return -1;
-				return 0;
-			});
-	 	$.each(zones, function(key, val) { $('#re-arearef').append('<option value="' + val[0] + '">' + val[0] + ' - ' + val[1] + '</option>'); });
-	}
-	
 	initChampsRencontre();
 }
 function initChampsRencontre() {
@@ -536,6 +552,18 @@ function initChampsRencontre() {
 	
 	$('#re-arearef>option').not(':first').remove();
 	$('#re-arearef').val($('#re-arearef option:first').val()); 
+	if ( dataDeBase !== null ) {
+		var zones = [];
+		$.each(dataDeBase, function(key, val) { zones.push([val.numero, val.titre]); });
+		zones.sort(function(a,b) { 
+				if ( a[0] > b[0] ) return 1;
+				if ( b[0] > a[0] ) return -1;
+				return 0;
+			});
+		if ( zones.length > 0 )
+			$('#re-arearef').append('<option value="">Aucune</option>');
+	 	$.each(zones, function(key, val) { $('#re-arearef').append('<option value="' + val[0] + '">' + val[0] + ' - ' + val[1] + '</option>'); });
+	}
 	
 	$('#re-numero').attr('required', false);
 	$('#re-categorie').attr('required', false);
