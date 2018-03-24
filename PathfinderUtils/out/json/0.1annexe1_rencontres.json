@@ -1,0 +1,38 @@
+{
+	"rencontres": [{
+		"numero": 1,
+		"arearef": null,
+		"shape": "at:star",
+		"coords": "414,181",
+		"categorie": "taverne",
+		"titre": "Pointesable",
+		"description": "La ville"
+	  },
+	  {
+		"numero": 2,
+		"arearef": null,
+		"shape": "at:fight",
+		"coords": "350,267",
+		"categorie": "bataille",
+		"titre": "Orcs",
+		"description": "orcs everywhere"
+	  },
+	  {
+		"numero": 3,
+		"arearef": null,
+		"shape": "fromto:star",
+		"coords": "349,281, 620,444",
+		"categorie": "divers",
+		"titre": "Dans les champs",
+		"description": ""
+	  },
+	  {
+		"numero": 4,
+		"arearef": null,
+		"shape": "at:meet",
+		"coords": "686,446",
+		"categorie": "industrie",
+		"titre": "Ca cultive",
+		"description": "MESSAGE"
+	  }]
+}

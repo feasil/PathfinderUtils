@@ -1,13 +1,39 @@
 //Fonctions transverses
 
+//Fonctions de tri
+function trierAventure(a,b) {
+	if ( a.aventure > b.aventure) return -1;
+	if ( b.aventure > a.aventure ) return 1;
+	return 0;
+}
+function trierZone(a,b) {
+	if ( a.categorie > b.categorie ) return 1;
+	if ( b.categorie > a.categorie ) return -1;
+	if ( a.numero > b.numero) return 1;
+	if ( b.numero > a.numero ) return -1;
+	return 0;
+}
+function trierZoneParNumero(a,b) {
+	if ( a.numero > b.numero) return 1;
+	if ( b.numero > a.numero ) return -1;
+	return 0;
+}
+function trierRencontre(a,b) {
+	if ( a.numero > b.numero) return 1;
+	if ( b.numero > a.numero ) return -1
+	if ( a.categorie > b.categorie ) return 1;
+	if ( b.categorie > a.categorie ) return -1;
+	return 0;
+}
+//----------------
+
+
 /**
 Gestion des filtres de zone
-filtres : aventure =, numero [min, max]
+filtres : numero [min, max]
 */
 function isZoneValide(zone, filtres) {
 	return ( 
-			(filtres.aventure === undefined || filtres.aventure === zone.aventure )
-				&&
 			(filtres.numero === undefined || filtres.numero[0] <= Math.trunc(zone.numero) && Math.trunc(zone.numero) <= filtres.numero[1])
 			);
 }
@@ -31,33 +57,42 @@ function newArea(zone, light=false)
 									parseInt(zone.coords.split(',')[3]), 
 									zone.shape.substring(7));
 	
+	var temporaire = (zone.temporaire === true);
+	
 	//"areaid","shape","coords","categorie","numero","titre","description"
-	//console.log(zone.categorie + '   ' + zone.numero);
 	var map1 = '<area id="' + zone.areaid + '" ';
-	map1 += 'class="area" shape="poly" ';
+	if ( ! temporaire )
+		map1 += 'class="area" ';
+	map1 += 'shape="poly" ';
 	map1 += 'coords="' + coords + '" ';
 	map1 += 'data-categorie="' + zone.categorie + '" ';
 	
-	map1 += 'data-numero="' + zone.numero + '" ';
-	map1 += 'data-titre="' + zone.titre + '" ';
-	map1 += 'data-message="' + zone.description + '" ';
-	
-	map1 += 'title="' + zone.numero + ' - <b>' + zone.titre + '</b>" ';
+	if ( ! temporaire )
+	{
+		map1 += 'data-numero="' + zone.numero + '" ';
+		map1 += 'data-titre="' + zone.titre + '" ';
+		map1 += 'data-message="' + zone.description + '" ';
+		
+		map1 += 'title="' + zone.numero + ' - <b>' + zone.titre + '</b>" ';
+	}
+	else
+		map1 += 'data-temporaire="true" ';
 	map1 += '/>';
 	
 	
 	var map2 = '<area id="' + zone.areaid + 'bis" ';
 	map2 += 'class="areabis" shape="poly" ';
 	map2 += 'coords="' + coords + '" ';
+	if ( temporaire )
+		map2 += 'data-temporaire="true" ';
 	map2 += 'data-categorie="' + zone.categorie + '" ';
 	map2 += '/>';
-	
 	
 	var liste = '<div><span class="' + (light?'light ':'') + 'hilightMult noSelect categ' + zone.categorie + '" ';
 	liste += 'data-categorie="' + zone.categorie + '">' + zone.categorie.substr(0, 1).toUpperCase() + '</span>&nbsp;';
 	liste += '<span class="' + (light?'light ':'') + 'hilightlink" data-areaid="' + zone.areaid + '" ';
 	liste += 'data-categorie="' + zone.categorie + '" href="#">';
-	if ( zone.aventure === undefined )
+	if ( light )
 		liste += zone.titre + ' (' + zone.numero + ')</span></div>';
 	else
 		liste += zone.numero + ' - ' + zone.titre + '</span></div>';
@@ -214,4 +249,16 @@ function hexc(colorval) {
 }
 function getPxIgnoreZoom(targetPx) {
 	return targetPx/window.devicePixelRatio;
+}
+
+
+function downloadFile(text, filename)
+{
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
 }

@@ -21,7 +21,7 @@
 <div id="blockList">
 	<div id="boutons" class="noSelect">
 		<span id="moveListes" class="mapButton mapButtonV2 littleButton">&#8644;</span>&nbsp;<span id="hideShowListes" class="mapButton mapButtonV2 littleButton">&#9651;</span>&nbsp;<span id="buttonChangeMap" class="mapButton mapButtonV2 switchMapButton">toggle colors</span>
-		|| <span id="addDraw" class="mapButton mapButtonV2 littleButton">&#128291;</span>&nbsp;<span id="addArrow" class="mapButton mapButtonV2 littleButton">&#8594;</span>
+	<!--	|| <span id="addDraw" class="mapButton mapButtonV2 littleButton">&#128291;</span>&nbsp;<span id="addArrow" class="mapButton mapButtonV2 littleButton">&#8594;</span>-->
 	</div>
 
 	<div id="listes">
@@ -43,7 +43,7 @@
 		</div>
 	</div>
 </div>
-<div id="categories" hidden></div>
+<div id="categories" hidden="hidden"></div>
 
 <script type="text/javascript" src="./scripts/jquery-3.3.1.min.js"></script><!-- JQuery -->
 <script type="text/javascript" src="./scripts/maphilight/jquery.maphilight.min.js"></script><!-- pour surligner les areas -->
@@ -52,6 +52,7 @@
 <script type="text/javascript" src="./scripts/bootbox/bootbox.min.js"></script><!-- pour les popups de contenu sur les zones -->
 <script type="text/javascript" src="./scripts/jquery-ui/jquery-ui.min.js"></script><!-- pour surcharger les inputs avec du css -->
 
+<script type="text/javascript" src="./functions_edition.js"></script><!-- perso :: fonctions pour l'édition -- a retirer en Prod -->
 <script type="text/javascript" src="./functions_transv.js"></script><!-- perso :: fonctions autonomes -->
 <script type="text/javascript" src="./functions.js"></script><!-- perso :: fonctions autonomes -->
 <script type="text/javascript" type="text/javascript">
@@ -98,12 +99,12 @@ $('#addDraw').click(function(e) {
 });
 
 $('#blockMap').click(function(e) {
-console.log("X : " + e.pageX + " - Y : " + e.pageY);
+//console.log("X : " + e.pageX + " - Y : " + e.pageY);
 	var el = $('#aventure option:checked');
 	var aventure = el.data('aventure');
 	var titre = el.data('titre');
 	var prefixrencontre = el.data('prefixrencontre');
-	var prefixdebase = el.data('prefixdebase');
+	var prefixzone = el.data('prefixzone');
 	var map = el.data('map');
 	var numeroMax = Math.trunc($('#slider-range').slider("option", "max") + 1);
 
