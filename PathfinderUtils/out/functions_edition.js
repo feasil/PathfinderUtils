@@ -359,7 +359,7 @@ function submitEditionAventure() {
 }
 function genererEditionAventure() {
 	var fileName = 'aventures.json';
-	var jsonAventures = {"rencontres": editionAventure};
+	var jsonAventures = {"aventures": editionAventure};
 	downloadFile(JSON.stringify(jsonAventures, null, '\t') , fileName);
 }
 //----------- FIN DES AVENTURES ---------
