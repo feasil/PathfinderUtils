@@ -6,6 +6,11 @@ function trierAventure(a,b) {
 	if ( b.aventure > a.aventure ) return 1;
 	return 0;
 }
+function trierAventureReverse(a,b) {
+	if ( a.aventure > b.aventure) return 1;
+	if ( b.aventure > a.aventure ) return -1;
+	return 0;
+}
 function trierZone(a,b) {
 	if ( a.categorie > b.categorie ) return 1;
 	if ( b.categorie > a.categorie ) return -1;

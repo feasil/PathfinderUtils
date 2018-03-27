@@ -82,11 +82,11 @@ div#aventureSelector {
 	vertical-align: text-bottom;
 	text-align: left;
 }
-
-
-.tab {
-	font-size:.8em;
+div#aventureSelectorRadio {
+	padding: 0em .4em .4em .8em;
+	text-align: left;
 }
+
 div.liste1 {
 	display: inline-block;
 	vertical-align: bottom;
@@ -111,12 +111,27 @@ div.slide-handle {
 	
 	font-weight: bold;
 }
+.tab {
+	font-size:.8em;
+}
 .ui-tabs .ui-tabs-panel {
 	padding: .8em .2em .2em .2em;
 }
 #aventure-button{
 	width:20em;
 	height:2.2em;
-	margin: 0px 0px;
+	margin: 0em 0em;
+	
+border-bottom-right-radius: .3em; border-top-right-radius: .3em; border-bottom-left-radius: .3em; border-top-left-radius: .3em; 
+border-width: .1em;
 }
-
+.btn-secondary{
+	font-size: .8em!important;
+	width:5em;
+	border: .1em solid transparent;
+	height:2.5em;
+	
+border-top-right-radius: 0.5em; border-bottom-right-radius: 0.5em; border-top-left-radius: 0.5em; border-bottom-left-radius: 0.5em;
+padding: .375em .75em;
+border-width: .1em;
+}
