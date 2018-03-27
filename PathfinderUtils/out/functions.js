@@ -83,7 +83,7 @@ $(function() {
 $( function() {
 	$("#aventure").selectmenu({
 		icons: { button: "ui-icon-blank" }, 
-		change: function( event, ui ) {
+		select: function( event, ui ) {
 			aventureChanged();
 			
 			$("#tabs").tabs("option", "active", 0);
@@ -147,11 +147,10 @@ $( function() {
 							.data('prefixzone', val.prefixzone)
 							.data('map', val.map)
 							);
-			if ( selectedValue === null || selectedValue < val.aventure )
+			if ( selectedValue === null || ( Math.trunc(selectedValue) === Math.trunc(val.aventure) && selectedValue > val.aventure ) )
 				selectedValue = val.aventure;
 		});
-		$('#aventure').val(selectedValue);
-		$("#aventure").selectmenu("refresh");
+		$('#aventure').val(selectedValue).selectmenu("refresh");
 		
 		aventureChanged();
 		
@@ -170,6 +169,37 @@ function aventureChanged() {
 		$('#mapPathfinder').attr('src', map)
 	else
 		$('#mapPathfinder').attr('src', './map/' + map)
+	
+	//Mise à jour de la sous liste
+	var aventuresSimilaires = [];
+	$.each(dataAventure, function(key, av) {
+		if ( Math.trunc(aventure) === Math.trunc(av.aventure) )
+			aventuresSimilaires.push(av);
+	});
+	if ( aventuresSimilaires.length > 1 )
+	{
+		$('#aventureSelectorRadio').empty();
+		aventuresSimilaires.sort(trierAventureReverse);
+		$.each(aventuresSimilaires, function(key, av) {
+			$('#aventureSelectorRadio').append($("<label></label>")
+										.attr("class", ("btn btn-secondary")+(av.aventure===aventure?" active":""))
+										.text(av.aventure)
+										.append($("<input>")
+											.attr("type", "radio")
+											.attr("name", "optionsAventure")
+											.attr("id", "optionAventure"+av.aventure.toString().replace('.', '-'))
+											.attr("autocomplete", "off")
+											//checked ?
+											.data("aventure", av.aventure)
+										));
+		});
+		$('#optionAventure'+aventure.toString().replace('.', '-')).attr("checked", "checked");
+		$('#aventureSelectorRadio').removeAttr("hidden");
+		$('input[name=optionsAventure').change(function(evt) {  $('#aventure').val($(this).data('aventure')).selectmenu("refresh").trigger('selectmenuselect'); });
+	}
+	else
+		$('#aventureSelectorRadio').attr("hidden", "hidden");
+	//-------
 	
 	dataDeBase = null;
 	//De base
