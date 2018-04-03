@@ -1,0 +1,283 @@
+{
+	"rencontres": [
+		{
+			"numero": 1,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "18,99, 425,379",
+			"categorie": "none",
+			"titre": "Arrivée",
+			"description": "Aldern reste à l'extérieur"
+		},
+		{
+			"numero": 2.1,
+			"arearef": null,
+			"shape": "poly",
+			"coords": "424,386, 423,442, 473,443, 473,435, 471,435, 475,426, 481,434, 477,433, 477,446, 417,447, 417,387",
+			"categorie": "dark",
+			"titre": "Entrée par la fenêtre",
+			"description": "Tout le monde rentre par la fenêtre pendant que Talael essaie de forcer la serrure."
+		},
+		{
+			"numero": 2.2,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "428,377, 458,381",
+			"categorie": "dark",
+			"titre": "Entrée par la porte",
+			"description": "Après pas mal d'essais, Talael réussi à crocheter la porte (alors que les autres sont dans la maison)."
+		},
+		{
+			"numero": 3.1,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "519,371, 532,285",
+			"categorie": "dark",
+			"titre": "Blarips fait bande à part",
+			"description": "Et il se met au piano"
+		},
+		{
+			"numero": 3.2,
+			"arearef": null,
+			"shape": "at:meet",
+			"coords": "584,384",
+			"categorie": "spirituel",
+			"titre": "Ulmo dans la danse",
+			"description": "Le piano semble l'avoir motivé."
+		},
+		{
+			"numero": 4.1,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "543,305, 682,319",
+			"categorie": "dark",
+			"titre": "Visite",
+			"description": null
+		},
+		{
+			"numero": 4.2,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "657,384, 731,321",
+			"categorie": "dark",
+			"titre": "Visite",
+			"description": null
+		},
+		{
+			"numero": 5,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "703,374, 263,354",
+			"categorie": "bataille",
+			"titre": "Talael craque et part",
+			"description": "Avec Van Kaer sous le bras"
+		},
+		{
+			"numero": 6,
+			"arearef": null,
+			"shape": "at:duck",
+			"coords": "222,327",
+			"categorie": "bataille",
+			"titre": "Méchants corbeaux",
+			"description": "Ils tombent sur des corbeaux pas contents et font demi tour."
+		},
+		{
+			"numero": 7,
+			"arearef": null,
+			"shape": "fromto:star",
+			"coords": "685,385, 210,283",
+			"categorie": "taverne",
+			"titre": "On s'emmerde dans cette aventure !",
+			"description": "Ulmo en a marre et se casse.<br>\nLes corbeaux ne sont pas de cet avis et il trépasse avant qu'Usui, dans une attitude désespérée fasse tout son possible pour l'aider."
+		},
+		{
+			"numero": 8,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "726,451, 546,461",
+			"categorie": "industrie",
+			"titre": "A l'étage",
+			"description": "Après avoir fait le tour, les survivants montent"
+		},
+		{
+			"numero": 9,
+			"arearef": null,
+			"shape": "poly",
+			"coords": "545,898, 617,900, 659,870, 662,763, 548,759, 548,743, 532,760, 548,777, 548,767, 650,769, 650,867, 615,894, 547,890",
+			"categorie": "dark",
+			"titre": "Ca continue",
+			"description": "Parcours main gauche, puis main droite. <br>\nBeaucoup d'hésitations dans ce manoir moisi !<br>\nMais toutes les pièces sont visitées."
+		},
+		{
+			"numero": 10.1,
+			"arearef": null,
+			"shape": "poly",
+			"coords": "916,819, 917,847, 1023,845, 1023,733, 1042,734, 1042,725, 1059,741, 1044,749, 1042,740, 1029,739, 1029,851, 909,853, 910,818",
+			"categorie": "bataille",
+			"titre": "Un fantôme se fait la malle",
+			"description": null
+		},
+		{
+			"numero": 10.2,
+			"arearef": null,
+			"shape": "at:skull",
+			"coords": "1074,742",
+			"categorie": "commerce",
+			"titre": "Bouh !",
+			"description": null
+		},
+		{
+			"numero": 11,
+			"arearef": null,
+			"shape": "at:star",
+			"coords": "1128,785",
+			"categorie": "administration",
+			"titre": "Van Kaer a un coup de chaud",
+			"description": "Du coup il se jette par la fenêtre !<br>\nHeureusement pour lui une girouette arrête sa chute et il s'en sort avec une fissure anale."
+		},
+		{
+			"numero": 12,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "1041,703, 171,743",
+			"categorie": "industrie",
+			"titre": "On redescend jusqu'au sous-sol",
+			"description": null
+		},
+		{
+			"numero": 13,
+			"arearef": null,
+			"shape": "at:fight",
+			"coords": "70,798",
+			"categorie": "bataille",
+			"titre": "Attaque d'une nuée de rats",
+			"description": null
+		},
+		{
+			"numero": 14,
+			"arearef": null,
+			"shape": "poly",
+			"coords": "174,811, 178,887, 311,893, 312,850, 300,850, 300,876, 200,876, 201,805, 218,806, 220,796, 233,815, 217,821, 217,810, 206,810, 206,867, 289,864, 290,839, 320,840, 319,899, 162,896, 162,817, 163,812",
+			"categorie": "dark",
+			"titre": "On continue de descendre",
+			"description": null
+		},
+		{
+			"numero": 15,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "885,1419, 493,1419",
+			"categorie": "dark",
+			"titre": "Ca sent le renfermé",
+			"description": null
+		},
+		{
+			"numero": 16,
+			"arearef": null,
+			"shape": "at:fight",
+			"coords": "470,1407",
+			"categorie": "bataille",
+			"titre": "Ho, une chauve-souris zombie",
+			"description": "Elle n'est pas contente !"
+		},
+		{
+			"numero": 17,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "527,1410, 552,1339",
+			"categorie": "none",
+			"titre": "On change de route",
+			"description": null
+		},
+		{
+			"numero": 18,
+			"arearef": null,
+			"shape": "at:fight",
+			"coords": "521,1330",
+			"categorie": "dark",
+			"titre": "Des goules",
+			"description": null
+		},
+		{
+			"numero": 19,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "503,1300, 371,1243",
+			"categorie": "none",
+			"titre": "La fatigue se fait sentir",
+			"description": null
+		},
+		{
+			"numero": 20,
+			"arearef": null,
+			"shape": "at:fight",
+			"coords": "357,1202",
+			"categorie": "dark",
+			"titre": "Encore des goules...",
+			"description": null
+		},
+		{
+			"numero": 21,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "400,1246, 538,1238",
+			"categorie": "none",
+			"titre": "On a compris",
+			"description": null
+		},
+		{
+			"numero": 22,
+			"arearef": null,
+			"shape": "at:fight",
+			"coords": "567,1232",
+			"categorie": "bataille",
+			"titre": "Ho putain, des gobelins-goules !",
+			"description": "Et ça glisse à mort en plus !"
+		},
+		{
+			"numero": 23,
+			"arearef": null,
+			"shape": "fromto:star",
+			"coords": "499,1226, 472,1056",
+			"categorie": "commerce",
+			"titre": "Ca glisse",
+			"description": "Passage difficile mais une fois une corde attachée de l'autre côté, ça passe.<br>\nBlarips reste derrière pour tenir la corde."
+		},
+		{
+			"numero": 24,
+			"arearef": null,
+			"shape": "at:skull",
+			"coords": "331,1068",
+			"categorie": "taverne",
+			"titre": "Revoilà le fantôme",
+			"description": "Et elle n'aime pas qu'on lui parle"
+		},
+		{
+			"numero": 25.1,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "463,1094, 497,1252",
+			"categorie": "spirituel",
+			"titre": "On rentre",
+			"description": null
+		},
+		{
+			"numero": 25.2,
+			"arearef": null,
+			"shape": "at:beer",
+			"coords": "507,1138",
+			"categorie": "divers",
+			"titre": "Usui boit la tasse",
+			"description": null
+		},
+		{
+			"numero": 26,
+			"arearef": null,
+			"shape": "fromto:star",
+			"coords": "494,1267, 904,1411",
+			"categorie": "spirituel",
+			"titre": "Bye bye",
+			"description": null
+		}
+	]
+}

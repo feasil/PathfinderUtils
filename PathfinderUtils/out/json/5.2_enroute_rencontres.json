@@ -1,0 +1,13 @@
+{
+	"rencontres": [
+		{
+			"numero": 1,
+			"arearef": "1",
+			"shape": "fromto:star",
+			"coords": "412,173, 31,582",
+			"categorie": "bataille",
+			"titre": "En route vers l'inconnu",
+			"description": null
+		}
+	]
+}

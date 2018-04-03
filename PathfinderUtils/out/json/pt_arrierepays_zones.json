@@ -1,0 +1,28 @@
+{
+	"zones": [
+		{
+			"numero": 1,
+			"shape": "poly",
+			"coords": "408,154, 401,157, 399,170, 397,186, 403,195, 413,199, 426,196, 429,185, 426,170, 418,160, 414,156",
+			"categorie": "administration",
+			"titre": "Pointesable",
+			"description": null
+		},
+		{
+			"numero": 2,
+			"shape": "poly",
+			"coords": "31,571, 20,578, 22,593, 29,595, 38,588, 39,579, 36,574",
+			"categorie": "divers",
+			"titre": "Manoir Ganrenard",
+			"description": null
+		},
+		{
+			"numero": 3,
+			"shape": "poly",
+			"coords": "759,223, 756,231, 760,238, 769,239, 772,231, 772,226, 767,223",
+			"categorie": "dark",
+			"titre": "Antre du dragon",
+			"description": null
+		}
+	]
+}

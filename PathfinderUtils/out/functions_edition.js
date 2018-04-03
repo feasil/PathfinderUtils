@@ -30,7 +30,7 @@ $( function() {
 					Si num&eacute;ro existant : modifie l'&eacute;l&eacute;ment
 					<input class="form-control" id="zo-numero" name="zo-numero" placeholder="Numéro de zone *"  type="number" min="0" step="1" />
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="zo-shape" name="zo-shape" style="width:50%;"><option hidden disabled value="">Forme *</option>
-						<optgroup label="Simple"><option value="at:duck">Canard</option><option value="at:fight">Combat</option><option value="at:skull">Cr&acirc;ne</option><option value="at:star">Etoile</option><option value="at:meet">Rencontre</option></optgroup>
+						<optgroup label="Simple"><option value="at:beer">Bi&egrave;re</option><option value="at:duck">Canard</option><option value="at:fight">Combat</option><option value="at:skull">Cr&acirc;ne</option><option value="at:star">Etoile</option><option value="at:meet">Rencontre</option></optgroup>
 						<optgroup label="Ligne"><option value="fromto:arrow">Fl&egrave;che</option><option value="fromto:star">Etoile</option></optgroup>
 						<optgroup label="Personnalis&eacute;"><option value="poly">Polygone</option></optgroup>
 					</select><button class="btn btn-primary" id="zo-drawcoords" name="zo-drawcoords" data-from="#zo-shape" data-for="#zo-coords" type="button" disabled>Dessiner la forme *</button><input id="zo-coords" name="zo-coords" type="hidden" /><br/>
@@ -50,7 +50,7 @@ $( function() {
 					<input class="form-control" id="re-numero" name="re-numero" placeholder="Numéro de rencontre *"  type="number" min="0" step=".1" />
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-arearef" name="re-arearef"><option hidden disabled value="">Zone environnement associ&eacute;e</option></select><br/>
 					<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="re-shape" name="re-shape" style="width:50%;"><option hidden disabled value="">Forme *</option>
-						<optgroup label="Simple"><option value="at:duck">Canard</option><option value="at:fight">Combat</option><option value="at:skull">Cr&acirc;ne</option><option value="at:star">Etoile</option><option value="at:meet">Rencontre</option></optgroup>
+						<optgroup label="Simple"><option value="at:beer">Bi&egrave;re</option><option value="at:duck">Canard</option><option value="at:fight">Combat</option><option value="at:skull">Cr&acirc;ne</option><option value="at:star">Etoile</option><option value="at:meet">Rencontre</option></optgroup>
 						<optgroup label="Ligne"><option value="fromto:arrow">Fl&egrave;che</option><option value="fromto:star">Etoile</option></optgroup>
 						<optgroup label="Personnalis&eacute;"><option value="poly">Polygone</option></optgroup>
 					</select><button class="btn btn-primary" id="re-drawcoords" name="re-drawcoords" data-from="#re-shape" data-for="#re-coords" type="button" disabled>Dessiner la forme *</button><input id="re-coords" name="re-coords" type="hidden" /><br/>
@@ -450,6 +450,8 @@ function updateEditionZonePreview() {
 				$('#zo-categorie').val(value.categorie);
 				$('#zo-titre').val(value.titre);
 				$('#zo-description').val(value.description);
+				
+				$('#zo-drawcoords').attr('disabled', false);
 				var nbCoords = $('#zo-coords').val().split(",").length / 2;
 				$('#zo-drawcoords').text('Forme OK [' + nbCoords + ']');
 				$('#zo-drawcoords').css('color', '#22FF22;');
@@ -630,6 +632,8 @@ function updateEditionRencontrePreview() {
 				$('#re-categorie').val(value.categorie);
 				$('#re-titre').val(value.titre);
 				$('#re-description').val(value.description);
+				
+				$('#re-drawcoords').attr('disabled', false);
 				var nbCoords = $('#re-coords').val().split(",").length / 2;
 				$('#re-drawcoords').text('Forme OK [' + nbCoords + ']');
 				$('#re-drawcoords').css('color', '#22FF22;');
