@@ -1,0 +1,121 @@
+{
+	"rencontres": [
+		{
+			"numero": 1,
+			"arearef": "37",
+			"shape": "fromto:arrow",
+			"coords": "538,680, 263,643",
+			"categorie": "taverne",
+			"titre": "Direction la Myxine",
+			"description": "Rendez-vous avec Aldern pour boire un coup."
+		},
+		{
+			"numero": 2,
+			"arearef": "33",
+			"shape": "at:beer",
+			"coords": "253,644",
+			"categorie": "administration",
+			"titre": "Retrouvailles",
+			"description": "Aldern paye sa tournée et remercie à nouveau les aventuriers.<br>\nUsui boit l'eau de la Myxine et repart avec la cagnotte.<br>\nJeux de fléchettes et de dés sont de rigueur.<br>\n<br>\nRendes-vous donné pour que tout le monde se retrouve ici le lendemain matin pour partir au manoir Ganrenard (contre 500po)."
+		},
+		{
+			"numero": 3.1,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "291,657, 459,701",
+			"categorie": "dark",
+			"titre": "L'heure de dormir",
+			"description": null
+		},
+		{
+			"numero": 3.2,
+			"arearef": "52",
+			"shape": "fromto:arrow",
+			"coords": "460,703, 536,769",
+			"categorie": "dark",
+			"titre": "Talael rentre chez lui",
+			"description": null
+		},
+		{
+			"numero": 3.3,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "465,702, 536,692",
+			"categorie": "dark",
+			"titre": "Les autres vont à l'auberge",
+			"description": null
+		},
+		{
+			"numero": 4.1,
+			"arearef": "22",
+			"shape": "fromto:arrow",
+			"coords": "527,663, 364,538",
+			"categorie": "divers",
+			"titre": "Chez le libraire",
+			"description": "Une partie du groupe part chez le libraire."
+		},
+		{
+			"numero": 4.2,
+			"arearef": "17",
+			"shape": "fromto:arrow",
+			"coords": "528,659, 476,478",
+			"categorie": "divers",
+			"titre": "Aux solutions en bouteilles",
+			"description": "Certains ont des questions pour l'alchimiste."
+		},
+		{
+			"numero": 4.3,
+			"arearef": "1",
+			"shape": "fromto:arrow",
+			"coords": "528,657, 561,285",
+			"categorie": "divers",
+			"titre": "A la prière",
+			"description": "Et Usui va prier."
+		},
+		{
+			"numero": 4.4,
+			"arearef": "11",
+			"shape": "fromto:arrow",
+			"coords": "361,535, 350,401",
+			"categorie": "administration",
+			"titre": "A la mairie",
+			"description": "Le libraire les redirige à la mairie pour voir les naissances de la famille Ganrenard."
+		},
+		{
+			"numero": 5.1,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "558,288, 270,626",
+			"categorie": "industrie",
+			"titre": "Retour à la Myxine pour le départ",
+			"description": null
+		},
+		{
+			"numero": 5.2,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "469,480, 278,623",
+			"categorie": "industrie",
+			"titre": "Retour à la Myxine pour le départ",
+			"description": null
+		},
+		{
+			"numero": 5.3,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "347,402, 273,626",
+			"categorie": "industrie",
+			"titre": "Retour à la Myxine pour le départ",
+			"description": null
+		},
+		{
+			"numero": 6,
+			"arearef": null,
+			"shape": "at:meet",
+			"coords": "273,617",
+			"categorie": "bataille",
+			"titre": "En route mauvaise troupe",
+			"description": null
+		}
+	]
+}
