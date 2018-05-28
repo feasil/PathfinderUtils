@@ -1,0 +1,184 @@
+{
+	"rencontres": [
+		{
+			"numero": 1,
+			"arearef": "33",
+			"shape": "fromto:arrow",
+			"coords": "704,1108, 287,664",
+			"categorie": "taverne",
+			"titre": "Retour à la Myxine",
+			"description": "A la recherche d'Aldern"
+		},
+		{
+			"numero": 2,
+			"arearef": null,
+			"shape": "at:fight",
+			"coords": "286,643",
+			"categorie": "divers",
+			"titre": "On joue les videurs",
+			"description": "Exclusion de poivrots et discussion avec le tavernier"
+		},
+		{
+			"numero": 3.1,
+			"arearef": "37",
+			"shape": "fromto:arrow",
+			"coords": "307,628, 535,693",
+			"categorie": "taverne",
+			"titre": "Au dodo",
+			"description": "Retrouvaille des poivrots qui se termine bien et petite discussion avec Ameiko."
+		},
+		{
+			"numero": 3.2,
+			"arearef": "52",
+			"shape": "fromto:arrow",
+			"coords": "532,690, 540,765",
+			"categorie": "special",
+			"titre": "Au dodo",
+			"description": null
+		},
+		{
+			"numero": 4.1,
+			"arearef": null,
+			"shape": "at:beer",
+			"coords": "536,685",
+			"categorie": "divers",
+			"titre": "Van Kaer : Petit dej interrompu",
+			"description": "Clash entre deux personnages (Belven Valdemar et Titus Scarnetti). <br>\nIls finissent par sortir pour s'expliquer plus loin."
+		},
+		{
+			"numero": 4.2,
+			"arearef": "1",
+			"shape": "fromto:arrow",
+			"coords": "523,678, 552,280",
+			"categorie": "spirituel",
+			"titre": "Usui : C'est l'heure de prier",
+			"description": "Usui va prier avant d'aller retrouver Blarips à la porte sud."
+		},
+		{
+			"numero": 4.3,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "532,689, 641,756",
+			"categorie": "dark",
+			"titre": "Blarips : A la porte sud",
+			"description": null
+		},
+		{
+			"numero": 4.4,
+			"arearef": "41",
+			"shape": "fromto:arrow",
+			"coords": "546,764, 547,738",
+			"categorie": "commerce",
+			"titre": "Talael : Brocanteur",
+			"description": null
+		},
+		{
+			"numero": 5.1,
+			"arearef": null,
+			"shape": "at:meet",
+			"coords": "651,771",
+			"categorie": "divers",
+			"titre": "Un garde bien sympathique",
+			"description": "Le garde de la porte sud aide les aventuriers (Blarips, Van Kaer et Usui) en répondant volontiers à leurs questions."
+		},
+		{
+			"numero": 5.2,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "541,726, 531,684",
+			"categorie": "dark",
+			"titre": "Talael cherche ses compagnons",
+			"description": "d'abord à l'auberge"
+		},
+		{
+			"numero": 6.1,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "651,769, 555,765",
+			"categorie": "dark",
+			"titre": "Les aventuriers laissent un mot à Talael",
+			"description": "Une carte, une vieille torche, un lézard mort propre, un carreau d’arbalète, une échelle de nabots et le tour est joué !"
+		},
+		{
+			"numero": 6.2,
+			"arearef": null,
+			"shape": "at:star",
+			"coords": "551,764",
+			"categorie": "dark",
+			"titre": "Talael cherche ses compagnons",
+			"description": "Puis il passe chez lui et y trouve le mot de ses amis"
+		},
+		{
+			"numero": 7,
+			"arearef": "45",
+			"shape": "fromto:star",
+			"coords": "559,775, 519,820",
+			"categorie": "spirituel",
+			"titre": "Retrouvailles",
+			"description": "Les compagnons se retrouvent chez Hannah et découvre qu'Ulmo est là, Hannah a pris soin de lui aux frais d'Aldern.<br>\nCe dernier n'est plus la mais il y a laissé une écharpe qui semble attirer l'attention de Blarips."
+		},
+		{
+			"numero": 8,
+			"arearef": "3",
+			"shape": "fromto:arrow",
+			"coords": "496,813, 515,149",
+			"categorie": "taverne",
+			"titre": "A la recherche d'Aldern",
+			"description": "Petite diversion pour chercher dans la chambre, rien de spécial n'y est trouvé."
+		},
+		{
+			"numero": 9,
+			"arearef": "47",
+			"shape": "fromto:arrow",
+			"coords": "511,142, 273,946",
+			"categorie": "divers",
+			"titre": "Direction le manoir Valdemar",
+			"description": "Mais Belven n'y est pas, il est occupé en ville au chantier naval ou à la poissonnerie."
+		},
+		{
+			"numero": 10,
+			"arearef": "46",
+			"shape": "fromto:arrow",
+			"coords": "319,940, 505,846",
+			"categorie": "industrie",
+			"titre": "Passage au chantier naval",
+			"description": "Belven était là mais il est parti."
+		},
+		{
+			"numero": 11,
+			"arearef": "34",
+			"shape": "fromto:arrow",
+			"coords": "482,830, 388,670",
+			"categorie": "commerce",
+			"titre": "Puis à la poissonnerie",
+			"description": "Après un double accident d'huitre, rencontre avec Belven qui s'explique sur l'arrivée du chariot qui a ramené Ulmo et sur son altercation avec Titus."
+		},
+		{
+			"numero": 12,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "398,666, 652,760",
+			"categorie": "administration",
+			"titre": "Retour porte sud",
+			"description": "Personne n'est sorti de la journée (en dehors des aventuriers)"
+		},
+		{
+			"numero": 13.1,
+			"arearef": "29",
+			"shape": "fromto:arrow",
+			"coords": "658,755, 454,623",
+			"categorie": "commerce",
+			"titre": "Talael passe à l'épicerie",
+			"description": "Il a comme une envie de pinard"
+		},
+		{
+			"numero": 13.2,
+			"arearef": null,
+			"shape": "fromto:arrow",
+			"coords": "664,748, 570,681",
+			"categorie": "bataille",
+			"titre": "Les autres rentrent à l'auberge",
+			"description": null
+		}
+	]
+}

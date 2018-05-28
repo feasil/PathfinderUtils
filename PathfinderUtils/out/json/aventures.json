@@ -1,6 +1,13 @@
 {
 	"aventures": [
 		{
+			"aventure": 6,
+			"titre": "Un compagnon disparu",
+			"prefixrencontre": "6_uncompagnondisparu",
+			"prefixzone": "pointesable",
+			"map": "Pointesable.jpg"
+		},
+		{
 			"aventure": 5.3,
 			"titre": "Un manoir peu accueillant",
 			"prefixrencontre": "5.3_retourdunnoble",
