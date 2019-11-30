@@ -1,0 +1,67 @@
+{
+	"rencontres": [
+		{
+			"numero": 1,
+			"arearef": "11",
+			"shape": "fromto:arrow",
+			"coords": "537,679, 366,408",
+			"categorie": "administration",
+			"titre": "Direction la mairie",
+			"description": "Un groupe en manque d'action ? <br>\nQuoi de mieux qu'un passage auprès du maire pour avoir de quoi faire !"
+		},
+		{
+			"numero": 2.1,
+			"arearef": null,
+			"shape": "at:star",
+			"coords": "530,845",
+			"categorie": "special",
+			"titre": "Le sud de la ville est en feu",
+			"description": null
+		},
+		{
+			"numero": 2.2,
+			"arearef": "46",
+			"shape": "fromto:arrow",
+			"coords": "355,425, 516,829",
+			"categorie": "dark",
+			"titre": "En route pour aider à éteindre le feu",
+			"description": "Le flammes consument le chantier naval !"
+		},
+		{
+			"numero": 3,
+			"arearef": null,
+			"shape": "at:loupe",
+			"coords": "540,819",
+			"categorie": "spirituel",
+			"titre": "Inspection des dégats",
+			"description": "Le feu est clairement d'origine criminelle"
+		},
+		{
+			"numero": 4,
+			"arearef": "42",
+			"shape": "fromto:arrow",
+			"coords": "523,824, 456,785",
+			"categorie": "taverne",
+			"titre": "Van Kaer a une subite envie de bière",
+			"description": "Il propose d'aller voir les tavernes à proximité des lieux"
+		},
+		{
+			"numero": 5,
+			"arearef": null,
+			"shape": "at:fight",
+			"coords": "459,775",
+			"categorie": "bataille",
+			"titre": "Dur combat suites à un problème de diplomatie",
+			"description": "La taverne est peuplée de gens qui n'inspirent pas confiance et bien armés.<br>\nUne bagarre éclate et une guerrière y laisse la vie.<br>\nA la sortie, 4 autres personnes attaquent."
+		},
+		{
+			"numero": 6,
+			"arearef": "37",
+			"shape": "fromto:arrow",
+			"coords": "481,769, 540,695",
+			"categorie": "divers",
+			"titre": "Retour à l'auberge",
+			"description": "Retour au dragon rouillé pour panser les plaies et réfléchir au sens de la vie."
+		}
+	]
+}
