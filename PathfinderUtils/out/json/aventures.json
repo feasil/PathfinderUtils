@@ -1,6 +1,13 @@
 {
 	"aventures": [
 		{
+			"aventure": 7,
+			"titre": "Un de perdu, 2 de retrouvés",
+			"prefixrencontre": "7_undeperdudeuxderetrouves",
+			"prefixzone": "pointesable",
+			"map": "Pointesable.jpg"
+		},
+		{
 			"aventure": 6,
 			"titre": "Un compagnon disparu",
 			"prefixrencontre": "6_uncompagnondisparu",
